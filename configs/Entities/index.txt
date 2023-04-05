@@ -1,0 +1,15 @@
+SRMIN 10
+SRMAX 100
+FR    200
+FG    200
+FB    200
+OR    30
+OG    130
+OB    255
+OT    9
+VMIN  3
+VMAX  8
+TL    3
+SI    8
+SMIN  1
+SMAX  3
