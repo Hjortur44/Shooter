@@ -7,25 +7,18 @@ ComponentMemoryPool& ComponentMemoryPool::Instance()
 }
 
 
-const bool ComponentMemoryPool::isActive(const size_t id) const
+const size_t ComponentMemoryPool::getMaxCapacity()
 {
-	return m_actives.at(id);
+	return MAX_CAPACITY;
 }
 
 
-const size_t ComponentMemoryPool::getMaxCapacity() const
-{
-  return MAX_CAPACITY;
-}
-
-
-const size_t ComponentMemoryPool::activateSpot(const std::string& tag)
+const size_t ComponentMemoryPool::getFreeId()
 {
 	for(size_t i = 0; i < m_actives.size(); i++)
   {
     if(!m_actives.at(i))
     {
-      m_tags.at(i)    = tag;
       m_actives.at(i) = true;
 			return i;
     }
@@ -35,40 +28,35 @@ const size_t ComponentMemoryPool::activateSpot(const std::string& tag)
 }
 
 
-void ComponentMemoryPool::deactivateSpot(const size_t id)
+void ComponentMemoryPool::freeUpId(const size_t id)
 {
-	if(id < MAX_CAPACITY)
-	{
-		m_tags.at(id)    = "";
-		m_actives.at(id) = false;
+	m_actives.at(id) = false;
 
-		removeComponent<CTransform>(id);
-		removeComponent<CLifespan>(id);
-		removeComponent<CCollision>(id);
-		removeComponent<CShape>(id);
-		removeComponent<CBoundingBox>(id);
-	}
+  removeComponent<CBoundingBox>(id);
+  removeComponent<CCollision>(id);
+  removeComponent<CLifespan>(id);
+  removeComponent<CShape>(id);
+  removeComponent<CTransform>(id);
 }
 
 
 // private
 ComponentMemoryPool::ComponentMemoryPool()
 {
-  auto& trans = std::get<std::vector<CTransform>>(m_compVecs);
-  auto& life  = std::get<std::vector<CLifespan>>(m_compVecs);
-  auto& coll  = std::get<std::vector<CCollision>>(m_compVecs);
-  auto& sh    = std::get<std::vector<CShape>>(m_compVecs);
-  auto& box   = std::get<std::vector<CBoundingBox>>(m_compVecs);
+  auto& box   = getComponentVector<CBoundingBox>();
+  auto& coll  = getComponentVector<CCollision>();
+  auto& life  = getComponentVector<CLifespan>();
+  auto& sh    = getComponentVector<CShape>();
+  auto& trans = getComponentVector<CTransform>();
 
   for(size_t i = 0; i < MAX_CAPACITY; i++)
   {
-    trans.push_back(CTransform());
-    life.push_back(CLifespan());
-    coll.push_back(CCollision());
-    sh.push_back(CShape());
     box.push_back(CBoundingBox());
+    coll.push_back(CCollision());
+    life.push_back(CLifespan());
+    sh.push_back(CShape());
+    trans.push_back(CTransform());
 
 		m_actives.push_back(false);
-		m_tags.push_back("");
   }
 }

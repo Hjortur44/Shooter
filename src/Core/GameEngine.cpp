@@ -93,11 +93,10 @@ void GameEngine::sRender()
 {
 	m_window.clear();
 
-	for(size_t id = 0; id < m_pool.getMaxCapacity(); id++)
+	std::vector<CShape>& shapes = m_pool.getComponentVector<CShape>();
+	for(CShape& s : shapes)
 	{
-		CShape& s = m_pool.getComponent<CShape>(id);
 		s.update();
-
 		m_window.draw(s.circle);
 	}
 

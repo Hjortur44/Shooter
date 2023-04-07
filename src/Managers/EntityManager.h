@@ -4,29 +4,29 @@
 #include "../Entities/Entity.h"
 #include "../Managers/AssetManager.h"
 #include "../Managers/ConfigurationManager.h"
-#include "../Managers/EntityManager.h"
 
+#include <map>
 #include <vector>
 #include <iostream>
 
-class Spawner
+class EntityManager
 {
- 		ComponentMemoryPool&  m_compPool      = ComponentMemoryPool::Instance();
+		EntityManager();
+
+		void createEntity();
+
 		AssetManager&         m_assetManager  = AssetManager::Instance();
 		ConfigurationManager& m_configManager = ConfigurationManager::Instance();
-		EntityManager&        m_entityManager = EntityManager::Instance();
+
+		std::map<size_t, std::vector<size_t>> m_entities;
+		std::map<std::string, int> m_configMap;
 
 		sf::Texture m_texture;
 
-		std::map<std::string, int> m_configMap;
-
-		size_t m_counter = 0;
-
-		void init();
-
 	public:
-		Spawner();
-		~Spawner();
+    EntityManager(EntityManager&) = delete;
 
-		void spawnEntity();
+    static EntityManager& Instance();
+
+  	const std::map<size_t, std::vector<size_t>>& getEntities() const;
 };

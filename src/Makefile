@@ -1,5 +1,5 @@
 CXX       := g++
-TOP_DIR   := ~/Desktop/sfml/Game
+TOP_DIR   := ~/Desktop/Shooter
 SRC_DIR   := $(TOP_DIR)/src
 BIN_DIR   := $(TOP_DIR)/bin
 OBJ_DIR   := $(BIN_DIR)/obj
@@ -17,6 +17,8 @@ $(SH_FILE): $(OBJ_DIR)
 
 ## compiling, linking and creating executable.
 $(OBJ_DIR): $(CPP_FILES) $(H_FILES) Makefile
+	mkdir -p $(BIN_DIR)
+	mkdir -p $(OBJ_DIR)
 	cd $(OBJ_DIR) && $(CXX) -c $(CPP_FLAGS) $(CPP_FILES)
 
 run:

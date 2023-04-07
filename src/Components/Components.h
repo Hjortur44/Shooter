@@ -7,7 +7,8 @@
 class CBoundingBox
 {
   public:
-    CBoundingBox() {}
+    CBoundingBox();
+		CBoundingBox(Vec2 size);
 
 		Vec2 size   = {0, 0};
     bool active = false;
@@ -17,7 +18,8 @@ class CBoundingBox
 class CCollision
 {
   public:
-    CCollision() {}
+    CCollision();
+    CCollision(size_t radius);
 
 		size_t radius = 0;
     bool   active = false;
@@ -28,17 +30,22 @@ class CLifespan
 {
 
   public:
-    CLifespan() {}
+    CLifespan();
+    CLifespan(size_t total);
 
-    size_t total  = 0;
-    bool   active = false;
+    size_t total     = 0;
+		size_t remaining = 0;
+    bool   active    = false;
 };
 
 
 class CShape
 {
   public:
-    CShape() {}
+    CShape();
+    CShape(size_t radius, size_t points, Vec2 position, const sf::Color& fill, const sf::Color& outline, size_t thickness, const sf::Texture& texture);
+
+		void update();
 
     sf::CircleShape circle;
 		sf::Texture 		texture;
@@ -46,31 +53,22 @@ class CShape
 		sf::Color       outline   = {0, 0, 0};
 		Vec2            position  = {0, 0};
 
+
+		size_t          m_radius    = 0;
+
 		size_t          radius    = 0;
 		size_t          points    = 0;
 		size_t          thickness = 0;
-		float 					angle 		= 0.0f;
+		size_t 					angle 		= 0.0f;
     bool 						active 	  = false;
-
-		inline void update()
-		{
-			circle.setRadius(radius);
-			circle.setPointCount(points);
-			circle.setOrigin(radius, radius);
-			circle.setPosition(position.getX(), position.getY());
-			circle.setFillColor(fill);
-			circle.setOutlineColor(outline);
-			circle.setOutlineThickness(thickness);
-			circle.setRotation(angle);
-			circle.setTexture(&texture);
-		}
 };
 
 
 class CTransform
 {
   public:
-    CTransform() {}
+    CTransform();
+    CTransform(Vec2 position, Vec2 velocityRandom);
 
     Vec2 currentPosition   = {0, 0};
     Vec2 previousPosition  = {0, 0};
@@ -82,5 +80,5 @@ class CTransform
     Vec2 velocityRight     = {1, 0};
 
     bool  active = false;
-    float angle  = 0;
+    size_t angle  = 0;
 };

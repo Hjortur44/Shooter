@@ -7,6 +7,6 @@ void BulletSpawn::shoot()
 {
 	if(m_cont.isRequestingShoot())
 	{
-		m_spawn.spawnEntity("B");
+		m_spawn.spawnEntity();
 	}
 }

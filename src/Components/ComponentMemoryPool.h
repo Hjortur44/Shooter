@@ -20,7 +20,6 @@ class ComponentMemoryPool
     const size_t             MAX_CAPACITY = 1000;
 
     std::vector<bool>        m_actives    = {false};
-    std::vector<std::string> m_tags       = {""};
     ComponentVectors         m_compVecs;
 
     ComponentMemoryPool();
@@ -30,12 +29,16 @@ class ComponentMemoryPool
 
     static ComponentMemoryPool& Instance();
 
-		const bool isActive(const size_t id) const;
+		const size_t getMaxCapacity();
+		const size_t getFreeId();
 
-    const size_t getMaxCapacity() const;
-		const size_t activateSpot(const std::string& tag);
+		void freeUpId(const size_t id);
 
-		void deactivateSpot(const size_t id);
+	  template <typename T>
+		std::vector<T>& getComponentVector()
+		{
+			return std::get<std::vector<T>>(m_compVecs);
+		}
 
     template <typename T>
     T& getComponent(const size_t id)
@@ -43,21 +46,18 @@ class ComponentMemoryPool
 			return std::get<std::vector<T>>(m_compVecs).at(id);
     }
 
-    template <typename T>
-    void addComponent(const size_t id)
+    template <typename T, typename... TArgs>
+    void addComponent(const size_t id, TArgs&&... args)
     {
-			if(m_actives.at(id))
-			{
-	    	auto& comp = std::get<std::vector<T>>(m_compVecs).at(id);
-	    	comp.active = true;
-			}
+	    auto& comp = getComponent<T>(id);
+	    comp = T(std::forward<TArgs>(args)...);
+	    comp.active = true;
     }
 
     template <typename T>
     void removeComponent(const size_t id)
     {
-      auto& comp = std::get<std::vector<T>>(m_compVecs).at(id);
-			comp.active = false;
+      auto& comp = getComponent<T>(id);
 			comp = T();
     }
 };

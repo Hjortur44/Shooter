@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Managers/AssetManager.h"
+#include "../Managers/EntityManager.h"
 
 #include "../Components/ComponentMemoryPool.h"
 
@@ -21,10 +22,12 @@ class GameEngine
 {
     sf::RenderWindow m_window;
 
-		Input&               m_input = Input::Instance();
-		ComponentMemoryPool& m_pool  = ComponentMemoryPool::Instance();
-		Movement             m_movement;
-		BulletSpawn          m_bulletSpawn;
+		EntityManager& 			 m_entityManager = EntityManager::Instance();
+		Input&               m_input         = Input::Instance();
+		ComponentMemoryPool& m_pool          = ComponentMemoryPool::Instance();
+
+		Movement    m_movement;
+		BulletSpawn m_bulletSpawn;
 
     std::string m_currentScene = "";
 
