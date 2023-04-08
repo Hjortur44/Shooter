@@ -7,13 +7,13 @@ ConfigurationManager& ConfigurationManager::Instance()
 }
 
 
-const std::map<std::string, int>& ConfigurationManager::getConfigs() const
+const std::map<std::string, size_t>& ConfigurationManager::getConfigs() const
 {
 	return m_configMap;
 }
 
 
-void ConfigurationManager::setConfigs(std::map<std::string, int>& configMap)
+void ConfigurationManager::setConfigs(std::map<std::string, size_t>& configMap)
 {
 	m_configMap = configMap;
 }

@@ -93,11 +93,10 @@ void GameEngine::sRender()
 {
 	m_window.clear();
 
-	std::vector<CShape>& shapes = m_pool.getComponentVector<CShape>();
-	for(CShape& s : shapes)
+	for(CShape& s : m_pool.getComponentVector<CShape>())
 	{
-		s.update();
-		m_window.draw(s.circle);
+		if(s.active)
+			m_window.draw(s.circle);
 	}
 
   m_window.display();

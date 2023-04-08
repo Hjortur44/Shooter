@@ -17,4 +17,6 @@ class Controls
 		bool isRequestingLeft();
 		bool isRequestingRight();
 		bool isRequestingShoot();
+
+		bool isRequestingDestroy();
 };

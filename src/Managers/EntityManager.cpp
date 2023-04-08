@@ -6,27 +6,22 @@ EntityManager& EntityManager::Instance()
   return INSTANCE;
 }
 
-
-const std::map<size_t, std::vector<size_t>>& EntityManager::getEntities() const
-{
-	return m_entities;
-}
-
-
 // private
 EntityManager::EntityManager()
 {
-	m_configMap = m_configManager.getConfigs();
-
 	createEntity();
 }
 
 
 void EntityManager::createEntity()
 {
-	ComponentMemoryPool& pool = ComponentMemoryPool::Instance();
+	ComponentMemoryPool& componentPool = ComponentMemoryPool::Instance();
 
-	for(size_t i = 0; i < pool.getMaxCapacity(); i++)
+	std::map<std::string, size_t> configMap = ConfigurationManager::Instance().getConfigs();
+
+	const sf::Texture& texture = AssetManager::Instance().getAsset("wood");
+
+	for(size_t i = 0; i < componentPool.getMaxCapacity(); i++)
 	{
 		std::srand(std::time(nullptr) + i);
 		float randMax = RAND_MAX * 1.0f;
@@ -37,51 +32,39 @@ void EntityManager::createEntity()
 		float rVC     = std::rand() / randMax;
 		float rRa     = std::rand() / randMax;
 
-		size_t minS  = m_configMap.at("SMIN");
-		size_t maxS  = m_configMap.at("SMAX") - minS;
-		size_t minV  = m_configMap.at("VMIN");
-		size_t maxV  = m_configMap.at("VMAX") - minV;
-		size_t minR  = m_configMap.at("SRMIN");
-		size_t maxR  = m_configMap.at("SRMAX") - minR;
+		size_t minS  = configMap.at("SMIN");
+		size_t maxS  = configMap.at("SMAX");
+		size_t minV  = configMap.at("VMIN");
+		size_t maxV  = configMap.at("VMAX");
+		size_t minR  = configMap.at("SRMIN");
+		size_t maxR  = configMap.at("SRMAX");
 		size_t minPX = minR;
-		size_t maxPX = 640 - minPX;
+		size_t maxPX = 640;
 		size_t minPY = minR;
-		size_t maxPY = 480 - minPY;
+		size_t maxPY = 480;
 
-		size_t randRad    = minR  + (rRa * maxR);
-		size_t randPosX   = minPX + (rPX * maxPX);
-		size_t randPosY   = minPY + (rPY * maxPY);
- 		size_t randSpeedX = minS  + (rSX * maxS);
-		size_t randSpeedY = minS  + (rSY * maxS);
-		size_t randVCount = minV  + (rVC * maxV);
+		size_t randRad    = minR  + (rRa * (maxR  - minR));
+		size_t randPosX   = minPX + (rPX * (maxPX - minPX));
+		size_t randPosY   = minPY + (rPY * (maxPY - minPY));
+ 		size_t randSpeedX = minS  + (rSX * (maxS  - minS));
+		size_t randSpeedY = minS  + (rSY * (maxS  - minS));
+		size_t randVCount = minV  + (rVC * (maxV  - minV));
 
-		size_t fR = m_configMap.at("FR");
-		size_t fG = m_configMap.at("FG");
-		size_t fB = m_configMap.at("FB");
-		size_t oR = m_configMap.at("OR");
-		size_t oG = m_configMap.at("OG");
-		size_t oB = m_configMap.at("OB");
-		size_t oT = m_configMap.at("OT");
-		size_t tL = m_configMap.at("TL");
+		size_t fR = configMap.at("FR");
+		size_t fG = configMap.at("FG");
+		size_t fB = configMap.at("FB");
+		size_t oR = configMap.at("OR");
+		size_t oG = configMap.at("OG");
+		size_t oB = configMap.at("OB");
+		size_t oT = configMap.at("OT");
+		size_t tL = configMap.at("TL");
 
-		std::vector<size_t> entity;
-		entity.push_back(randPosX);
-		entity.push_back(randPosY);
-		entity.push_back(randSpeedX);
-		entity.push_back(randSpeedY);
-		entity.push_back(randRad);
-		entity.push_back(randVCount);
-		entity.push_back(m_configMap.at("FR"));
-		entity.push_back(m_configMap.at("FG"));
-		entity.push_back(m_configMap.at("FB"));
-		entity.push_back(m_configMap.at("OR"));
-		entity.push_back(m_configMap.at("OG"));
-		entity.push_back(m_configMap.at("OB"));
-		entity.push_back(m_configMap.at("OT"));
-		entity.push_back(m_configMap.at("TL"));
+		sf::Color fill    = sf::Color(fR, fG, fB);
+		sf::Color outline = sf::Color(oR, oG, oB);
 
-		entity.push_back(pool.getFreeId());
-
-		m_entities[i] = entity;
+		componentPool.addComponent<CTransform>(i, Vec2(randPosX,randPosY), Vec2(randSpeedX, randSpeedY), false);
+		componentPool.addComponent<CShape>(i, randRad, randVCount, randPosX, randPosY, fill, outline, oT, texture,  false);
+		componentPool.addComponent<CCollision>(i, randRad,  false);
+		componentPool.addComponent<CLifespan>(i, tL, false);
 	}
 }

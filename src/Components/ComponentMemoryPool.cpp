@@ -13,30 +13,21 @@ const size_t ComponentMemoryPool::getMaxCapacity()
 }
 
 
-const size_t ComponentMemoryPool::getFreeId()
+void ComponentMemoryPool::activateNext()
 {
-	for(size_t i = 0; i < m_actives.size(); i++)
+  if(m_counter < MAX_CAPACITY)
   {
-    if(!m_actives.at(i))
-    {
-      m_actives.at(i) = true;
-			return i;
-    }
+    getComponent<CShape>(m_counter++).active = true;
   }
-
-  return MAX_CAPACITY;
 }
 
 
-void ComponentMemoryPool::freeUpId(const size_t id)
+void ComponentMemoryPool::freeUpId()
 {
-	m_actives.at(id) = false;
+	getComponent<CShape>(m_counter).active = false;
 
-  removeComponent<CBoundingBox>(id);
-  removeComponent<CCollision>(id);
-  removeComponent<CLifespan>(id);
-  removeComponent<CShape>(id);
-  removeComponent<CTransform>(id);
+  if(m_counter > 0)
+		m_counter--;
 }
 
 
@@ -56,7 +47,5 @@ ComponentMemoryPool::ComponentMemoryPool()
     life.push_back(CLifespan());
     sh.push_back(CShape());
     trans.push_back(CTransform());
-
-		m_actives.push_back(false);
   }
 }

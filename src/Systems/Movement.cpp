@@ -60,5 +60,5 @@ void Movement::moving()
 		m_t.currentPosition += m_normDownRight;
 	}
 
-	m_s.position = m_t.currentPosition;
+	m_s.circle.setPosition(m_t.currentPosition.getX(), m_t.currentPosition.getY());
 }

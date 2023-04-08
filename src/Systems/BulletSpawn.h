@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Spawner.h"
+#include "../Components/ComponentMemoryPool.h"
 #include "Controls.h"
 
 class BulletSpawn
 {
-		Controls m_cont;
-		Spawner  m_spawn;
+		Controls             m_cont;
+		ComponentMemoryPool& m_componentPool = ComponentMemoryPool::Instance();
 
 	public:
 		BulletSpawn();

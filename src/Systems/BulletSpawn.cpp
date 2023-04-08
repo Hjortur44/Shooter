@@ -7,6 +7,11 @@ void BulletSpawn::shoot()
 {
 	if(m_cont.isRequestingShoot())
 	{
-		m_spawn.spawnEntity();
+		m_componentPool.activateNext();
+	}
+
+	if(m_cont.isRequestingDestroy())
+	{
+		m_componentPool.freeUpId();
 	}
 }

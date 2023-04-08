@@ -7,8 +7,8 @@
 class Movement
 {
 	ComponentMemoryPool& m_pool = ComponentMemoryPool::Instance();
-	CShape&              m_s    = m_pool.getComponent<CShape>(0);
-	CTransform&          m_t    = m_pool.getComponent<CTransform>(0);
+	CShape&              m_s    = m_pool.getComponent<CShape>(0); // this should be the player shape
+	CTransform&          m_t    = m_pool.getComponent<CTransform>(0); // this should be the player transform
 
 	Controls						 m_cont;
 

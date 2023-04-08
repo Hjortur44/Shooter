@@ -28,3 +28,8 @@ bool Controls::isRequestingShoot()
 {
 	return m_input.isKey(sf::Keyboard::G);
 }
+
+bool Controls::isRequestingDestroy()
+{
+	return m_input.isKey(sf::Keyboard::H);
+}

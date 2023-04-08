@@ -17,12 +17,13 @@ typedef std::tuple<
 
 class ComponentMemoryPool
 {
+    ComponentMemoryPool();
+
     const size_t             MAX_CAPACITY = 1000;
 
-    std::vector<bool>        m_actives    = {false};
     ComponentVectors         m_compVecs;
 
-    ComponentMemoryPool();
+		size_t m_counter = 0;
 
   public:
     ComponentMemoryPool(ComponentMemoryPool&) = delete;
@@ -30,9 +31,9 @@ class ComponentMemoryPool
     static ComponentMemoryPool& Instance();
 
 		const size_t getMaxCapacity();
-		const size_t getFreeId();
 
-		void freeUpId(const size_t id);
+		void activateNext();
+		void freeUpId();
 
 	  template <typename T>
 		std::vector<T>& getComponentVector()
@@ -51,7 +52,6 @@ class ComponentMemoryPool
     {
 	    auto& comp = getComponent<T>(id);
 	    comp = T(std::forward<TArgs>(args)...);
-	    comp.active = true;
     }
 
     template <typename T>

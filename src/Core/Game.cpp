@@ -4,9 +4,9 @@ Game::Game() {}
 
 void Game::readEntityConfigs(const std::string& configIndex)
 {
-	std::map<std::string, int> entityConfigMap;
+	std::map<std::string, size_t> entityConfigMap;
 	std::string name = "";
-	int value = 0;
+	size_t value = 0;
 
 	std::ifstream fin(configIndex);
 

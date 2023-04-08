@@ -6,7 +6,7 @@
 
 class ConfigurationManager
 {
-		std::map<std::string, int> m_configMap;
+		std::map<std::string, size_t> m_configMap;
 
 		ConfigurationManager();
 
@@ -15,7 +15,7 @@ class ConfigurationManager
 
     static ConfigurationManager& Instance();
 
-		const std::map<std::string, int>& getConfigs() const;
+		const std::map<std::string, size_t>& getConfigs() const;
 
-		void setConfigs(std::map<std::string, int>& entityConfigMap);
+		void setConfigs(std::map<std::string, size_t>& entityConfigMap);
 };
