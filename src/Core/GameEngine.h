@@ -2,9 +2,7 @@
 
 #include "../Managers/AssetManager.h"
 #include "../Managers/EntityManager.h"
-
-#include "../Components/ComponentMemoryPool.h"
-
+#include "../MemoryPools/ComponentMemoryPool.h"
 #include "../Scenes/Scene.h"
 #include "../Scenes/Scene_Play.h"
 #include "../Scenes/Scene_Menu.h"
@@ -20,39 +18,39 @@
 
 class GameEngine
 {
-    sf::RenderWindow m_window;
+  sf::RenderWindow m_window;
 
-		EntityManager& 			 m_entityManager = EntityManager::Instance();
-		Input&               m_input         = Input::Instance();
-		ComponentMemoryPool& m_pool          = ComponentMemoryPool::Instance();
+  ComponentMemoryPool& m_compMemPool   = ComponentMemoryPool::Instance();
+  EntityManager&       m_entityManager = EntityManager::Instance();
+  Input&               m_input         = Input::Instance();
 
-		Movement    m_movement;
-		BulletSpawn m_bulletSpawn;
+  Movement    m_movement;
+  BulletSpawn m_bulletSpawn;
 
-    std::string m_currentScene = "";
+  std::string m_currentScene = "";
 
-		bool   m_paused          = false;
-    size_t m_simulationSpeed = 1;
-		size_t m_windowWidth     = 0;
-		size_t m_windowHeight    = 0;
-		size_t m_frameLimit      = 0;
+  bool   m_paused          = false;
+  size_t m_simulationSpeed = 1;
+  size_t m_windowWidth     = 0;
+  size_t m_windowHeight    = 0;
+  size_t m_frameLimit      = 0;
 
-    void init();
-    void sUserInput();
-		void sRender();
-    void setPause(bool paused);
-    void sMovement();
-    void sLifespan();
-    void sEnemySpawner();
-		void sBulletSpawner();
-    void sCollision();
+  void init();
+  void sUserInput();
+  void sRender();
+  void setPause(bool paused);
+  void sMovement();
+  void sLifespan();
+  void sEnemySpawner();
+  void sBulletSpawner();
+  void sCollision();
 
-  public:
-    GameEngine();
+public:
+  GameEngine();
 
-    sf::RenderWindow& window();
+  sf::RenderWindow& window();
 
-    void run();
-    void update();
-    void quit();
+  void run();
+  void update();
+  void quit();
 };

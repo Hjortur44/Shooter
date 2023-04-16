@@ -6,65 +6,197 @@ EntityManager& EntityManager::Instance()
   return INSTANCE;
 }
 
-// private
-EntityManager::EntityManager()
+
+void EntityManager::addBullet()
 {
-	createEntity();
+  m_bulletsToEnable.push_back(m_componentPool.addEntity());
 }
 
 
-void EntityManager::createEntity()
+void EntityManager::addEnemy()
 {
-	ComponentMemoryPool& componentPool = ComponentMemoryPool::Instance();
+  m_enemiesToEnable.push_back(m_componentPool.addEntity());
+}
 
-	std::map<std::string, size_t> configMap = ConfigurationManager::Instance().getConfigs();
 
-	const sf::Texture& texture = AssetManager::Instance().getAsset("wood");
+void EntityManager::addPlayer()
+{
+  m_playersToEnable.push_back(m_componentPool.addEntity());
+}
 
-	for(size_t i = 0; i < componentPool.getMaxCapacity(); i++)
-	{
-		std::srand(std::time(nullptr) + i);
-		float randMax = RAND_MAX * 1.0f;
-		float rPX     = std::rand() / randMax;
-		float rPY     = std::rand() / randMax;
-		float rSX     = std::rand() / randMax;
-		float rSY     = std::rand() / randMax;
-		float rVC     = std::rand() / randMax;
-		float rRa     = std::rand() / randMax;
 
-		size_t minS  = configMap.at("SMIN");
-		size_t maxS  = configMap.at("SMAX");
-		size_t minV  = configMap.at("VMIN");
-		size_t maxV  = configMap.at("VMAX");
-		size_t minR  = configMap.at("SRMIN");
-		size_t maxR  = configMap.at("SRMAX");
-		size_t minPX = minR;
-		size_t maxPX = 640;
-		size_t minPY = minR;
-		size_t maxPY = 480;
+void EntityManager::removeBullet(const size_t id)
+{
+  m_bulletsToDisable.push_back(id);
+}
 
-		size_t randRad    = minR  + (rRa * (maxR  - minR));
-		size_t randPosX   = minPX + (rPX * (maxPX - minPX));
-		size_t randPosY   = minPY + (rPY * (maxPY - minPY));
- 		size_t randSpeedX = minS  + (rSX * (maxS  - minS));
-		size_t randSpeedY = minS  + (rSY * (maxS  - minS));
-		size_t randVCount = minV  + (rVC * (maxV  - minV));
 
-		size_t fR = configMap.at("FR");
-		size_t fG = configMap.at("FG");
-		size_t fB = configMap.at("FB");
-		size_t oR = configMap.at("OR");
-		size_t oG = configMap.at("OG");
-		size_t oB = configMap.at("OB");
-		size_t oT = configMap.at("OT");
-		size_t tL = configMap.at("TL");
+void EntityManager::removeEnemy(const size_t id)
+{
+  m_enemiesToDisable.push_back(id);
+}
 
-		sf::Color fill    = sf::Color(fR, fG, fB);
-		sf::Color outline = sf::Color(oR, oG, oB);
 
-		componentPool.addComponent<CTransform>(i, Vec2(randPosX,randPosY), Vec2(randSpeedX, randSpeedY), false);
-		componentPool.addComponent<CShape>(i, randRad, randVCount, randPosX, randPosY, fill, outline, oT, texture,  false);
-		componentPool.addComponent<CCollision>(i, randRad,  false);
-		componentPool.addComponent<CLifespan>(i, tL, false);
-	}
+void EntityManager::removePlayer(const size_t id)
+{
+  m_playersToDisable.push_back(id);
+}
+
+
+void EntityManager::update()
+{
+  if(!m_bulletsToEnable.empty())
+  {
+    createBullet();
+    m_bulletsToEnable.clear();
+  }
+
+  if(!m_enemiesToEnable.empty())
+  {
+    createEnemy();
+    m_enemiesToEnable.clear();
+  }
+
+  if(!m_playersToEnable.empty())
+  {
+    createPlayer();
+    m_playersToEnable.clear();
+  }
+
+
+  if(!m_bulletsToDisable.empty())
+  {
+    destroyBullet();
+    m_bulletsToDisable.clear();
+  }
+
+  if(!m_enemiesToDisable.empty())
+  {
+    destroyEnemy();
+    m_enemiesToDisable.clear();
+  }
+
+  if(!m_playersToDisable.empty())
+  {
+    destroyPlayer();
+    m_playersToDisable.clear();
+  }
+}
+
+
+// private
+EntityManager::EntityManager()
+{
+  ConfigurationManager& conf = ConfigurationManager::Instance();
+  m_bulletConfigMap = conf.getConfigs("Bullet");
+  m_enemyConfigMap = conf.getConfigs("Enemy");
+  m_playerConfigMap = conf.getConfigs("Player");
+
+  m_texture   = AssetManager::Instance().getAsset("wood");
+}
+
+
+void EntityManager::createBullet()
+{
+  for(size_t id : m_bulletsToEnable)
+  {
+    m_componentPool.modifyComponent<CShape>
+    (
+      id,
+      Vec2(m_bulletConfigMap.at(0), m_bulletConfigMap.at(1)),
+      Vec2(m_bulletConfigMap.at(2), m_bulletConfigMap.at(3)),
+      m_texture
+    );
+
+    m_componentPool.modifyComponent<CTransform>
+    (
+      id,
+      Vec2(m_bulletConfigMap.at(4), m_bulletConfigMap.at(4))
+    );
+
+    m_componentPool.modifyComponent<CLifespan>
+    (
+      id,
+      m_bulletConfigMap.at(5)
+    );
+  }
+}
+
+
+void EntityManager::createEnemy()
+{
+  for(size_t id : m_enemiesToEnable)
+  {
+    m_componentPool.modifyComponent<CShape>
+    (
+      id,
+      Vec2(m_enemyConfigMap.at(0), m_enemyConfigMap.at(1)),
+      Vec2(m_enemyConfigMap.at(2), m_enemyConfigMap.at(3)),
+      m_texture
+    );
+
+    m_componentPool.modifyComponent<CTransform>
+    (
+      id,
+      Vec2(m_enemyConfigMap.at(4), m_enemyConfigMap.at(4))
+    );
+
+    m_componentPool.modifyComponent<CLifespan>
+    (
+      id,
+      m_enemyConfigMap.at(5)
+    );
+  }
+}
+
+
+void EntityManager::createPlayer()
+{
+  for(size_t id : m_playersToEnable)
+  {
+    m_componentPool.modifyComponent<CShape>
+    (
+      id,
+      Vec2(m_playerConfigMap.at(0), m_playerConfigMap.at(1)),
+      Vec2(m_playerConfigMap.at(2), m_playerConfigMap.at(3)),
+      m_texture
+    );
+
+    m_componentPool.modifyComponent<CTransform>
+    (
+      id,
+      Vec2(m_playerConfigMap.at(4), m_playerConfigMap.at(4))
+    );
+
+    m_componentPool.modifyComponent<CLifespan>
+    (
+      id,
+      m_playerConfigMap.at(5)
+    );
+  }
+}
+
+
+void EntityManager::destroyBullet()
+{
+  for(size_t id : m_bulletsToDisable)
+  {
+    m_componentPool.removeEntity(id);
+  }
+}
+
+void EntityManager::destroyEnemy()
+{
+  for(size_t id : m_enemiesToDisable)
+  {
+    m_componentPool.removeEntity(id);
+  }
+}
+
+void EntityManager::destroyPlayer()
+{
+  for(size_t id : m_playersToDisable)
+  {
+    m_componentPool.removeEntity(id);
+  }
 }

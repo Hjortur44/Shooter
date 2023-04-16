@@ -2,9 +2,9 @@
 
 class Spawner
 {
-	public:
-		Spawner();
-		~Spawner();
+public:
+  Spawner();
+  ~Spawner();
 
-		void spawnEntity();
+  void spawnEntity();
 };

@@ -2,4 +2,4 @@
 
 CBoundingBox::CBoundingBox() {}
 
-CBoundingBox::CBoundingBox(Vec2 size, bool active) : size(size), active(active) {}
+CBoundingBox::CBoundingBox(size_t sizeX, size_t sizeY) : sizeX(sizeX), sizeY(sizeY) {}

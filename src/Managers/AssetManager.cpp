@@ -9,19 +9,19 @@ AssetManager& AssetManager::Instance()
 
 const sf::Texture& AssetManager::getAsset(const std::string name) const
 {
-	return m_assetMap.at(name);
+  return m_assetMap.at(name);
 }
 
 
 void AssetManager::setAssets(std::map<std::string, std::string> assetMap)
 {
-	sf::Texture t;
+  sf::Texture t;
 
-	for(const auto& [key, value] : assetMap)
-	{
-		t.loadFromFile(value);
-		m_assetMap[key] = t;
-	}
+  for(const auto& [key, value] : assetMap)
+  {
+    t.loadFromFile(value);
+    m_assetMap[key] = t;
+  }
 }
 
 

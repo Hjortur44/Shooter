@@ -3,7 +3,7 @@
 Scene_Menu::Scene_Menu(const std::string& title)
   : Scene(), m_title(title)
 {
-	init();
+  init();
 }
 
 Scene_Menu::~Scene_Menu() {}

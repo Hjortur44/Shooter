@@ -1,16 +1,16 @@
 #pragma once
 
-#include "../Components/ComponentMemoryPool.h"
+#include "../Managers/EntityManager.h"
 #include "Controls.h"
 
 class BulletSpawn
 {
-		Controls             m_cont;
-		ComponentMemoryPool& m_componentPool = ComponentMemoryPool::Instance();
+  Controls       m_cont;
+  EntityManager& m_entityManager = EntityManager::Instance();
 
-	public:
-		BulletSpawn();
-		~BulletSpawn();
+public:
+  BulletSpawn();
+  ~BulletSpawn();
 
-		void shoot();
+  void shoot();
 };

@@ -7,17 +7,17 @@
 
 class AssetManager
 {
-		// map with all our data classes, i.e. texture
-		std::map<std::string, sf::Texture> m_assetMap;
+  // map with all our data classes, i.e. texture
+  std::map<std::string, sf::Texture> m_assetMap;
 
-		AssetManager();
+  AssetManager();
 
-	public:
-    AssetManager(AssetManager&) = delete;
+public:
+  AssetManager(AssetManager&) = delete;
 
-    static AssetManager& Instance();
+  static AssetManager& Instance();
 
-		const sf::Texture& getAsset(const std::string name) const;
+  const sf::Texture& getAsset(const std::string name) const;
 
-		void setAssets(std::map<std::string, std::string> assetMap);
+  void setAssets(std::map<std::string, std::string> assetMap);
 };

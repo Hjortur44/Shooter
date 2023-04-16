@@ -4,16 +4,16 @@ CShape::CShape() {}
 
 CShape::CShape
 (
-	size_t radius, size_t points,
-	size_t positionX, size_t positionY,
-	const sf::Color& fill, const sf::Color& outline,
-	size_t thickness, const sf::Texture& texture, bool active)
-		: circle(radius, points), active(active)
+  Vec2 shape, Vec2 position, const sf::Texture& texture
+)  : m_circle(shape.getX(), shape.getY())
 {
-  circle.setFillColor(fill);
-  circle.setOrigin(radius, radius);
-  circle.setOutlineColor(outline);
-  circle.setOutlineThickness(thickness);
-	circle.setPosition(positionX, positionY);
-	circle.setTexture(&texture);
+  m_circle.setOrigin(shape.getX(), shape.getY());
+  m_circle.setPosition(position.getX(), position.getY());
+  m_circle.setTexture(&texture);
+}
+
+
+sf::CircleShape CShape::getCircle()
+{
+  return m_circle;
 }

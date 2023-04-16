@@ -1,12 +1,9 @@
 #include "main.h"
 
-#include <iostream>
-
 int main(int argc, char* argv[])
 {
-	std::string topURL = "/home/hjortur/Desktop/sfml/Game";
   Game game;
-	game.readEntityConfigs(topURL + "/configs/Entities/index.txt");
-	game.readAssetTextures(topURL + "/assets/index.txt");
-	game.start();
+  game.readEntityConfigs("/home/hjortur/codeblocks_workspace/Game/configs/Entities/index.txt");
+  game.readAssetTextures("/home/hjortur/codeblocks_workspace/Game/assets/index.txt");
+  game.start();
 }

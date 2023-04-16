@@ -12,12 +12,12 @@ class Scene_Menu : public Scene
 
   void init();
 
-  public:
-    Scene_Menu(const std::string& m_title);
-    ~Scene_Menu();
+public:
+  Scene_Menu(const std::string& m_title);
+  ~Scene_Menu();
 
-   void onEnd();
-   void update();
-   void sDoAction(const Action& action);
-   void sRender();
+  void onEnd();
+  void update();
+  void sDoAction(const Action& action);
+  void sRender();
 };

@@ -1,7 +1,7 @@
 #include "Action.h"
 
 Action::Action(const std::string& type, const std::string& name)
-	: m_type(type), m_name(name) {}
+  : m_type(type), m_name(name) {}
 
 Action::~Action() {}
 

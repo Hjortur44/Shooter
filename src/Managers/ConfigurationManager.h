@@ -2,20 +2,21 @@
 
 #include <string>
 #include <map>
+#include <vector>
 #include <iostream>
 
 class ConfigurationManager
 {
-		std::map<std::string, size_t> m_configMap;
+  std::map<std::string, std::vector<size_t>> m_configMap;
 
-		ConfigurationManager();
+  ConfigurationManager();
 
-	public:
-    ConfigurationManager(ConfigurationManager&) = delete;
+public:
+  ConfigurationManager(ConfigurationManager&) = delete;
 
-    static ConfigurationManager& Instance();
+  static ConfigurationManager& Instance();
 
-		const std::map<std::string, size_t>& getConfigs() const;
+  const std::vector<size_t>& getConfigs(const std::string& entity) const;
 
-		void setConfigs(std::map<std::string, size_t>& entityConfigMap);
+  void setConfigs(std::map<std::string, std::vector<size_t>>& entityConfigMap);
 };

@@ -71,9 +71,11 @@ void Vec2::operator /= (const int val)
   {
     m_x = 0;
     m_y = 0;
-  } else {
+  }
+  else
+  {
     m_x /= val;
-  	m_y /= val;
+    m_y /= val;
   }
 }
 
@@ -86,12 +88,12 @@ int Vec2::dist(const Vec2& rhs)
 
 Vec2 Vec2::normalize(const Vec2& lhs, const Vec2& rhs)
 {
-	int l = lengtSQ(rhs);
-	int dx = lhs.getX() - rhs.getX();
-	int dy = lhs.getY() - rhs.getY();
+  int l = lengtSQ(rhs);
+  int dx = lhs.getX() - rhs.getX();
+  int dy = lhs.getY() - rhs.getY();
 
-	int nx = (dx * dx) / l;
-	int ny = (dy * dy) / l;
+  int nx = (dx * dx) / l;
+  int ny = (dy * dy) / l;
 
   return Vec2(nx, ny);
 }
@@ -99,11 +101,11 @@ Vec2 Vec2::normalize(const Vec2& lhs, const Vec2& rhs)
 
 int Vec2::lengtSQ(const Vec2& rhs)
 {
-	int dx = m_x - rhs.getX();
-	int dy = m_y - rhs.getY();
-	int sq = (dx * dx) + (dy * dy);
+  int dx = m_x - rhs.getX();
+  int dy = m_y - rhs.getY();
+  int sq = (dx * dx) + (dy * dy);
 
-	return sq;
+  return sq;
 }
 
 

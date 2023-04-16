@@ -7,15 +7,15 @@ ConfigurationManager& ConfigurationManager::Instance()
 }
 
 
-const std::map<std::string, size_t>& ConfigurationManager::getConfigs() const
+const std::vector<size_t>& ConfigurationManager::getConfigs(const std::string& entity) const
 {
-	return m_configMap;
+  return m_configMap.at(entity);
 }
 
 
-void ConfigurationManager::setConfigs(std::map<std::string, size_t>& configMap)
+void ConfigurationManager::setConfigs(std::map<std::string, std::vector<size_t>>& entityConfigMap)
 {
-	m_configMap = configMap;
+  m_configMap = entityConfigMap;
 }
 
 

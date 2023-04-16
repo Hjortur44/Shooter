@@ -2,21 +2,21 @@
 
 class Input
 {
-		bool m_keys[256] = {false};
+  bool m_keys[256] = {false};
 
-		// I am using this to get around
-		// the 'Unknown' key value in the sf::Keyboard doc.
-		int m_offset = 1;
+  // I am using this to get around
+  // the 'Unknown' key value in the sf::Keyboard doc.
+  int m_offset = 1;
 
-		Input();
+  Input();
 
-	public:
-    Input(Input&) = delete;
+public:
+  Input(Input&) = delete;
 
-    static Input& Instance();
+  static Input& Instance();
 
-		bool isKey(int key);
+  bool isKey(int key);
 
-		void keyReleased(int key);
-		void keyPressed(int key);
+  void keyReleased(int key);
+  void keyPressed(int key);
 };

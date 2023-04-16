@@ -2,63 +2,49 @@
 
 Movement::Movement()
 {
-	m_normUpLeft.normalize(m_t.velocityUp, m_t.velocityLeft);
-	m_normUpRight.normalize(m_t.velocityUp, m_t.velocityRight);
-	m_normDownLeft.normalize(m_t.velocityDown, m_t.velocityLeft);
-	m_normDownRight.normalize(m_t.velocityDown, m_t.velocityRight);
 }
 
 Movement::~Movement() {}
 
 void Movement::moving()
 {
-	// Straight up
-	if(m_cont.isRequestingUp())
-	{
-		m_t.currentPosition += m_t.velocityUp;
-	}
+  // Straight up
+  if(m_cont.isRequestingUp())
+  {
+  }
 
-	// Straight down
-	if(m_cont.isRequestingDown())
-	{
-		m_t.currentPosition += m_t.velocityDown;
-	}
+  // Straight down
+  if(m_cont.isRequestingDown())
+  {
+  }
 
-	// Straight left
-	if(m_cont.isRequestingLeft())
-	{
-		m_t.currentPosition += m_t.velocityLeft;
-	}
+  // Straight left
+  if(m_cont.isRequestingLeft())
+  {
+  }
 
-	// Straight right
-	if(m_cont.isRequestingRight())
-	{
-		m_t.currentPosition += m_t.velocityRight;
-	}
+  // Straight right
+  if(m_cont.isRequestingRight())
+  {
+  }
 
-	// Diagonal up and left
-	if(m_cont.isRequestingUp() && m_cont.isRequestingLeft())
-	{
-		m_t.currentPosition += m_normUpLeft;
-	}
+  // Diagonal up and left
+  if(m_cont.isRequestingUp() && m_cont.isRequestingLeft())
+  {
+  }
 
-	// Diagonal up and right
-	if(m_cont.isRequestingUp() && m_cont.isRequestingRight())
-	{
-		m_t.currentPosition += m_normUpRight;
-	}
+  // Diagonal up and right
+  if(m_cont.isRequestingUp() && m_cont.isRequestingRight())
+  {
+  }
 
-	// Diagonal down and left
-	if(m_cont.isRequestingDown() && m_cont.isRequestingLeft())
-	{
-		m_t.currentPosition += m_normDownLeft;
-	}
+  // Diagonal down and left
+  if(m_cont.isRequestingDown() && m_cont.isRequestingLeft())
+  {
+  }
 
-	// Diagonal down and right
-	if(m_cont.isRequestingDown() && m_cont.isRequestingRight())
-	{
-		m_t.currentPosition += m_normDownRight;
-	}
-
-	m_s.circle.setPosition(m_t.currentPosition.getX(), m_t.currentPosition.getY());
+  // Diagonal down and right
+  if(m_cont.isRequestingDown() && m_cont.isRequestingRight())
+  {
+  }
 }
