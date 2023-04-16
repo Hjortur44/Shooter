@@ -2,120 +2,120 @@
 
 Vec2::Vec2() {}
 
-Vec2::Vec2(int x, int y) : m_x(x), m_y(y) {}
-
+Vec2::Vec2(float x, float y) : x(x), y(y) {}
 
 Vec2 Vec2::operator + (const Vec2& rhs) const
 {
-  return Vec2(m_x + rhs.getX(), m_y + rhs.getY());
+  return Vec2(x + rhs.x, y + rhs.y);
 }
 
 
 Vec2 Vec2::operator - (const Vec2& rhs) const
 {
-  return Vec2(m_x - rhs.getX(), m_y - rhs.getY());
+  return Vec2(x - rhs.x, y - rhs.y);
 }
 
 
-Vec2 Vec2::operator * (const int val) const
+Vec2 Vec2::operator * (const float val) const
 {
-  return Vec2(m_x * val, m_y * val);
+  return Vec2(x * val, y * val);
 }
 
 
-Vec2 Vec2::operator / (const int val) const
+Vec2 Vec2::operator / (const float val) const
 {
   if(val == 0)
     return Vec2(0, 0);
 
-  return Vec2(m_x / val, m_y / val);
+  return Vec2(x / val, y / val);
 }
 
 
 bool Vec2::operator == (const Vec2& rhs) const
 {
-  return (m_x == rhs.getX() && m_y == rhs.getY());
+  return (x == rhs.x && y == rhs.y);
 }
 
 
 bool Vec2::operator != (const Vec2& rhs) const
 {
-  return (m_x != rhs.getX() && m_y != rhs.getY());
+  return (x != rhs.x && y != rhs.y);
 }
 
 
 void Vec2::operator += (const Vec2& rhs)
 {
-  m_x += rhs.getX();
-  m_y += rhs.getY();
+  x += rhs.x;
+  y += rhs.y;
 }
 
 
 void Vec2::operator -= (const Vec2& rhs)
 {
-  m_x -= rhs.getX();
-  m_y -= rhs.getY();
+  x -= rhs.x;
+  y -= rhs.y;
 }
 
 
-void Vec2::operator *= (const int val)
+void Vec2::operator *= (const float val)
 {
-  m_x *= val;
-  m_y *= val;
+  x *= val;
+  y *= val;
 }
 
 
-void Vec2::operator /= (const int val)
+void Vec2::operator /= (const float val)
 {
   if(val == 0)
   {
-    m_x = 0;
-    m_y = 0;
+    x = 0;
+    y = 0;
   }
   else
   {
-    m_x /= val;
-    m_y /= val;
+    x /= val;
+    y /= val;
   }
 }
 
 
-int Vec2::dist(const Vec2& rhs)
+float Vec2::dist(const Vec2& rhs)
 {
-  return 0;
+  return 0.0f;
 }
 
 
-Vec2 Vec2::normalize(const Vec2& lhs, const Vec2& rhs)
+Vec2 Vec2::normalizeSQ(const Vec2& rhs)
 {
-  int l = lengtSQ(rhs);
-  int dx = lhs.getX() - rhs.getX();
-  int dy = lhs.getY() - rhs.getY();
+  float l = lengtSQ(rhs);
+  float dx = x - rhs.x;
+  float dy = y - rhs.y;
 
-  int nx = (dx * dx) / l;
-  int ny = (dy * dy) / l;
+  float nx = (dx * dx) / l;
+  float ny = (dy * dy) / l;
 
   return Vec2(nx, ny);
 }
 
 
-int Vec2::lengtSQ(const Vec2& rhs)
+Vec2 Vec2::normalizeSQ(const Vec2& lhs, const Vec2& rhs)
 {
-  int dx = m_x - rhs.getX();
-  int dy = m_y - rhs.getY();
-  int sq = (dx * dx) + (dy * dy);
+  float l = lengtSQ(rhs);
+  float dx = lhs.x - rhs.x;
+  float dy = lhs.y - rhs.y;
+
+  float nx = (dx * dx) / l;
+  float ny = (dy * dy) / l;
+
+  return Vec2(nx, ny);
+}
+
+
+float Vec2::lengtSQ(const Vec2& rhs)
+{
+  float dx = x - rhs.x;
+  float dy = y - rhs.y;
+  float sq = (dx * dx) + (dy * dy);
 
   return sq;
-}
-
-
-const int Vec2::getX() const
-{
-  return m_x;
-}
-
-
-const int Vec2::getY() const
-{
-  return m_y;
 }

@@ -101,7 +101,7 @@ void GameEngine::sRender()
   for(size_t i = 0; i < actives.size(); i++)
   {
     if(actives[i])
-      m_window.draw(shapes[i].getCircle());
+      m_window.draw(shapes[i].circle);
 
   }
 

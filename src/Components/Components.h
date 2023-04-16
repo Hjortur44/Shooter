@@ -41,20 +41,13 @@ public:
 
 class CShape
 {
-  sf::CircleShape m_circle;
-
 public:
   CShape();
   CShape(Vec2 shape, Vec2 position, const sf::Texture& texture);
 
-  sf::CircleShape getCircle();
+  sf::CircleShape circle;
+  sf::Texture     texture;
 
-  sf::Texture texture;
-
-  Vec2 position = {0, 0};
-  Vec2 shape    = {0, 0};
-
-  size_t angle  = 0;
   bool   active = false;
 };
 
@@ -65,8 +58,8 @@ public:
   CTransform();
   CTransform(Vec2 velocity);
 
-  Vec2 scale    = {1, 1};
-  Vec2 velocity = {0, 0};
+  Vec2 scale    = {1.0f, 1.0f};
+  Vec2 velocity = {0.0f, 0.0f};
 
   size_t angle = 0;
 };
