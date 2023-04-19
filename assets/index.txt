@@ -1,1 +1,1 @@
-/home/hjortur/Desktop/sfml/Game/assets/wood_texture.png
+wood /home/hjortur/Documents/Gits/Shooter/assets/wood_texture.png

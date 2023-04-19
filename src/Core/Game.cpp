@@ -27,14 +27,16 @@ void Game::readEntityConfigs(const std::string& configIndex)
 void Game::readAssetTextures(const std::string& textureIndex)
 {
   std::map<std::string, std::string> map;
-  std::string name  = "wood";
+  std::string name  = "";
   std::string value = "";
 
   std::ifstream fin(textureIndex);
 
   while(fin.good())
   {
+    fin >> name;
     fin >> value;
+
     map[name] = value;
   }
 
