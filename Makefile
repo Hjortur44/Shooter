@@ -12,6 +12,8 @@ OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(CPP_FILES))
 LIB_DIR   := -L$(SFML_DIR)/lib
 LD_FLAGS  := -O3 -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
+$(shell mkdir -p $(OBJ_DIR))
+
 all: compile $(BIN_DIR)/$(SH_FILE)
 
 $(BIN_DIR)/$(SH_FILE): $(OBJ_FILES)

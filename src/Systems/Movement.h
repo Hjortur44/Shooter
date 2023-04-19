@@ -14,17 +14,14 @@ class Movement
   CTransform& trans = m_compMemPool.getComponent<CTransform>(0);
 
   Controls m_cont;
-  Vec2 s = {0, 0};
+  Vec2 momentum = {0, 0};
 
   Vec2 u = {0, -1};
   Vec2 d = {0, 1};
   Vec2 l = {-1, 0};
   Vec2 r = {1, 0};
 
-  Vec2 ul = {-1, -1};
-  Vec2 ur = {1, -1};
-  Vec2 dl = {-1, 1};
-  Vec2 dr = {1, 1};
+  Vec2 normal = {0, 0};
 
 public:
   Movement();

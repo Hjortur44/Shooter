@@ -85,27 +85,16 @@ float Vec2::dist(const Vec2& rhs)
 }
 
 
-Vec2 Vec2::normalizeSQ(const Vec2& rhs)
+Vec2 Vec2::normalize(const Vec2& lhs, const Vec2& rhs)
 {
-  float l = lengtSQ(rhs);
-  float dx = x - rhs.x;
-  float dy = y - rhs.y;
-
-  float nx = (dx * dx) / l;
-  float ny = (dy * dy) / l;
-
-  return Vec2(nx, ny);
-}
-
-
-Vec2 Vec2::normalizeSQ(const Vec2& lhs, const Vec2& rhs)
-{
-  float l = lengtSQ(rhs);
   float dx = lhs.x - rhs.x;
   float dy = lhs.y - rhs.y;
 
-  float nx = (dx * dx) / l;
-  float ny = (dy * dy) / l;
+  float sq = (dx * dx) + (dy * dy);
+
+
+  float nx = sqrt((dx * dx) / sq);
+  float ny = sqrt((dy * dy) / sq);
 
   return Vec2(nx, ny);
 }

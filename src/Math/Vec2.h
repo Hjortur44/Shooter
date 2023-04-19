@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <cstddef>
 
 class Vec2
@@ -21,8 +22,7 @@ public:
   void operator *= (const float val);
   void operator /= (const float val);
 
-  Vec2 normalizeSQ(const Vec2& rhs);
-  Vec2 normalizeSQ(const Vec2& lhs, const Vec2& rhs);
+  Vec2 normalize(const Vec2& lhs, const Vec2& rhs);
 
   float dist(const Vec2& rhs);
   float lengtSQ(const Vec2& rhs);
