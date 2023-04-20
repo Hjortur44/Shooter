@@ -4,7 +4,7 @@ Game::Game() {}
 
 void Game::readEntityConfigs(const std::string& configIndex)
 {
-  std::map<std::string, std::vector<size_t>> configMap;
+  std::map<std::string, std::vector<int>> configMap;
   std::string entityName = "";
   std::string filename = "";
 
@@ -54,11 +54,11 @@ void Game::start()
 
 
 // private
-std::vector<size_t> Game::configs(const std::string& index)
+std::vector<int> Game::configs(const std::string& index)
 {
-  std::vector<std::size_t> cs;
+  std::vector<int> cs;
   std::ifstream fin(index);
-  size_t value = 0;
+  int value = 0;
 
   while(fin.good())
   {

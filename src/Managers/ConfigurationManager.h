@@ -1,22 +1,23 @@
 #pragma once
 
-#include <string>
-#include <map>
-#include <vector>
 #include <iostream>
+#include <map>
+#include <string>
+#include <vector>
 
 class ConfigurationManager
 {
-  std::map<std::string, std::vector<size_t>> m_configMap;
-
-  ConfigurationManager();
-
 public:
   ConfigurationManager(ConfigurationManager&) = delete;
 
   static ConfigurationManager& Instance();
 
-  const std::vector<size_t>& getConfigs(const std::string& entity) const;
+  const std::vector<int>& getConfigs(const std::string& entity) const;
 
-  void setConfigs(std::map<std::string, std::vector<size_t>>& entityConfigMap);
+  void setConfigs(std::map<std::string, std::vector<int>>& entityConfigMap);
+
+private:
+  ConfigurationManager();
+
+  std::map<std::string, std::vector<int>> m_configMap;
 };

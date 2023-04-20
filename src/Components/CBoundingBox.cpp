@@ -2,4 +2,5 @@
 
 CBoundingBox::CBoundingBox() {}
 
-CBoundingBox::CBoundingBox(size_t sizeX, size_t sizeY) : sizeX(sizeX), sizeY(sizeY) {}
+CBoundingBox::CBoundingBox(const Vec2& dimension, bool active)
+	: dimension(dimension), halfDimension(dimension.x / 2, dimension.y / 2), active(active) {}

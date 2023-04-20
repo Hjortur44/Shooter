@@ -2,4 +2,4 @@
 
 CLifespan::CLifespan() {}
 
-CLifespan::CLifespan(size_t total) : total(total), remaining(total) {}
+CLifespan::CLifespan(int total, bool active) : total(total), remaining(total), active(active) {}

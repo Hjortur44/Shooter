@@ -7,35 +7,35 @@ Controls::~Controls() {}
 
 bool Controls::isRequestingUp()
 {
-  return m_input.isKey(sf::Keyboard::W);
+  return Input::Instance().isKey(sf::Keyboard::W);
 }
 
 
 bool Controls::isRequestingDown()
 {
-  return m_input.isKey(sf::Keyboard::S);
+  return Input::Instance().isKey(sf::Keyboard::S);
 }
 
 
 bool Controls::isRequestingLeft()
 {
-  return m_input.isKey(sf::Keyboard::A);
+  return Input::Instance().isKey(sf::Keyboard::A);
 }
 
 
 bool Controls::isRequestingRight()
 {
-  return m_input.isKey(sf::Keyboard::D);
+  return Input::Instance().isKey(sf::Keyboard::D);
 }
 
 
 bool Controls::isRequestingShoot()
 {
-  return m_input.isKey(sf::Keyboard::G);
+  return Input::Instance().isKey(sf::Keyboard::G);
 }
 
 
 bool Controls::isRequestingDestroy()
 {
-  return m_input.isKey(sf::Keyboard::H);
+  return Input::Instance().isKey(sf::Keyboard::H);
 }

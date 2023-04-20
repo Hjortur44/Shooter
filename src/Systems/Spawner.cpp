@@ -4,7 +4,4 @@ Spawner::Spawner() {}
 
 Spawner::~Spawner() {}
 
-void Spawner::spawnEntity()
-{
-
-}
+void Spawner::spawnEntity() {}

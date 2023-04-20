@@ -29,10 +29,10 @@ void GameEngine::quit()
 
 void GameEngine::update()
 {
-  m_entityManager.update();
+	m_physics.collision();
+  EntityManager::Instance().update();
 
   sUserInput();
-  //sEnemySpawner();
   sBulletSpawner();
   sMovement();
   sRender();
@@ -71,10 +71,10 @@ void GameEngine::sUserInput()
   while(m_window.pollEvent(event))
   {
     if(event.type == sf::Event::KeyPressed)
-      m_input.keyPressed(event.key.code);
+      Input::Instance().keyPressed(event.key.code);
 
     if(event.type == sf::Event::KeyReleased)
-      m_input.keyReleased(event.key.code);
+      Input::Instance().keyReleased(event.key.code);
 
     if(event.type == sf::Event::Closed)
       quit();
@@ -93,12 +93,12 @@ void GameEngine::sUserInput()
 
 void GameEngine::sRender()
 {
-  const std::vector<bool>& actives = m_compMemPool.getActives();
-  std::vector<CShape>&     shapes  = m_compMemPool.getComponentVector<CShape>();
+  const std::vector<bool>& actives = ComponentMemoryPool::Instance().getActives();
+  std::vector<CShape>&     shapes  = ComponentMemoryPool::Instance().getComponentVector<CShape>();
 
   m_window.clear();
 
-  for(size_t i = 0; i < actives.size(); i++)
+  for(int i = 0; i < actives.size(); i++)
   {
     if(actives[i])
       m_window.draw(shapes[i].circle);

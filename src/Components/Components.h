@@ -8,22 +8,25 @@ class CBoundingBox
 {
 public:
   CBoundingBox();
-  CBoundingBox(size_t sizeX, size_t sizeY);
+  CBoundingBox(const Vec2& dimension, bool active);
 
-  size_t sizeX = 0;
-  size_t sizeY = 0;
-  bool   active = false;
+  Vec2 dimension     = {0, 0};
+  Vec2 halfDimension = {0, 0};
+
+  bool active = false;
 };
 
 
 class CCollision
 {
 public:
-  CCollision();
-  CCollision(size_t radius);
+	CCollision();
+  CCollision(bool active);
 
-  size_t radius = 0;
-  bool   active = false;
+	const bool isCollision(const Vec2& posShapeA, const Vec2& posShapeB,
+												 const Vec2& halfDimBoxA, const Vec2& halfDimBoxB);
+
+	bool active = false;
 };
 
 
@@ -31,11 +34,12 @@ class CLifespan
 {
 public:
   CLifespan();
-  CLifespan(size_t total);
+  CLifespan(int total, bool active);
 
-  size_t total     = 0;
-  size_t remaining = 0;
-  bool   active    = false;
+  int remaining = 0;
+  int total     = 0;
+
+	bool active = false;
 };
 
 
@@ -43,12 +47,18 @@ class CShape
 {
 public:
   CShape();
-  CShape(Vec2 shape, Vec2 position, const sf::Texture& texture);
+  CShape(const Vec2& shape,
+				 const Vec2& position,
+				 const sf::Texture& texture,
+				 bool active);
 
   sf::CircleShape circle;
   sf::Texture     texture;
 
-  bool   active = false;
+	Vec2 position = {0, 0};
+	Vec2 shape    = {0, 0};
+
+  bool active = false;
 };
 
 
@@ -56,10 +66,12 @@ class CTransform
 {
 public:
   CTransform();
-  CTransform(Vec2 velocity);
+  CTransform(const Vec2& velocity, bool active);
 
   Vec2 scale    = {1.0f, 1.0f};
   Vec2 velocity = {0.0f, 0.0f};
 
-  size_t angle = 0;
+  int angle = 0;
+
+	bool active = false;
 };

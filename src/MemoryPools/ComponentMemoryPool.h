@@ -2,42 +2,35 @@
 
 #include "../Components/Components.h"
 
+#include <iostream>
 #include <string>
 #include <tuple>
 #include <vector>
-#include <iostream>
 
 typedef std::tuple<
-    std::vector<CTransform>,
-    std::vector<CLifespan>,
+    std::vector<CBoundingBox>,
     std::vector<CCollision>,
+    std::vector<CLifespan>,
     std::vector<CShape>,
-    std::vector<CBoundingBox>
+    std::vector<CTransform>
     > ComponentVectors;
 
 class ComponentMemoryPool
 {
-  ComponentMemoryPool();
-
-  ComponentVectors m_compVecs;
-
-  const size_t MAX_CAPACITY = 3;
-
-  std::vector<bool> m_actives;
-
 public:
   ComponentMemoryPool(ComponentMemoryPool&) = delete;
 
   static ComponentMemoryPool& Instance();
 
+  const int addEntity();
+
   const std::vector<bool> getActives() const;
 
-  const bool isActive(const size_t id) const;
+  const bool isActive(const int id) const;
 
-  const size_t getMaxCapacity() const;
-  const size_t addEntity();
+  const int getMaxCapacity() const;
 
-  void removeEntity(const size_t id);
+  void removeEntity(const int id);
 
   template <typename T>
   std::vector<T>& getComponentVector()
@@ -46,14 +39,23 @@ public:
   }
 
   template <typename T>
-  T& getComponent(const size_t id)
+  T& getComponent(const int id)
   {
     return std::get<std::vector<T>>(m_compVecs).at(id);
   }
 
   template <typename T, typename... TArgs>
-  void modifyComponent(const size_t id, TArgs&&... args)
+  void modifyComponent(const int id, TArgs&&... args)
   {
     getComponent<T>(id) = T(std::forward<TArgs>(args)...);
   }
+
+private:
+  ComponentMemoryPool();
+
+  ComponentVectors m_compVecs;
+
+  const int MAX_CAPACITY = 3;
+
+  std::vector<bool> m_actives;
 };

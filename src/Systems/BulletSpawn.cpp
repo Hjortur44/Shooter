@@ -7,6 +7,6 @@ void BulletSpawn::shoot()
 {
   if(m_cont.isRequestingShoot())
   {
-		m_entityManager.addBullet();
+		EntityManager::Instance().addBullet();
   }
 }

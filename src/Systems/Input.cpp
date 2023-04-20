@@ -2,7 +2,7 @@
 
 Input::Input()
 {
-  for(int i = 0; i < 256; i++)
+  for(int i = 0; i < 257; i++)
     m_keys[i] = false;
 }
 

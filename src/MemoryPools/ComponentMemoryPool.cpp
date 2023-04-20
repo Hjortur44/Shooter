@@ -13,23 +13,23 @@ const std::vector<bool> ComponentMemoryPool::getActives() const
 }
 
 
-const bool ComponentMemoryPool::isActive(const size_t id) const
+const bool ComponentMemoryPool::isActive(const int id) const
 {
   return m_actives.at(id);
 }
 
 
-const size_t ComponentMemoryPool::getMaxCapacity() const
+const int ComponentMemoryPool::getMaxCapacity() const
 {
   return MAX_CAPACITY - 1;
 }
 
 
-const size_t ComponentMemoryPool::addEntity()
+const int ComponentMemoryPool::addEntity()
 {
-  size_t offset = MAX_CAPACITY - 1;
+  int offset = MAX_CAPACITY - 1;
 
-  for(size_t i = 0; i < offset; i++)
+  for(int i = 0; i < offset; i++)
   {
     if(!m_actives[i])
     {
@@ -42,7 +42,7 @@ const size_t ComponentMemoryPool::addEntity()
 }
 
 
-void ComponentMemoryPool::removeEntity(const size_t id)
+void ComponentMemoryPool::removeEntity(const int id)
 {
   if(id < MAX_CAPACITY)
   {
@@ -65,7 +65,7 @@ ComponentMemoryPool::ComponentMemoryPool()
   auto& sh    = std::get<std::vector<CShape>>(m_compVecs);
   auto& trans = std::get<std::vector<CTransform>>(m_compVecs);
 
-  for(size_t i = 0; i < MAX_CAPACITY; i++)
+  for(int i = 0; i < MAX_CAPACITY; i++)
   {
     box.push_back(CBoundingBox());
     coll.push_back(CCollision());
