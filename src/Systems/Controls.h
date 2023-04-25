@@ -6,14 +6,18 @@
 
 class Controls
 {
-public:
-  Controls();
-  ~Controls();
+		Input& m_input = Input::Instance();
 
-  bool isRequestingDestroy();
-  bool isRequestingDown();
-  bool isRequestingLeft();
-  bool isRequestingRight();
-  bool isRequestingShoot();
-  bool isRequestingUp();
+	public:
+		Controls();
+		~Controls();
+
+		// directions
+		bool isRequestingDown();
+		bool isRequestingLeft();
+		bool isRequestingRight();
+		bool isRequestingUp();
+
+		// other actions
+		bool isRequestingShoot();
 };

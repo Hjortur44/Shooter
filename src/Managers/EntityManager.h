@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <map>
-#include <SFML/Graphics.hpp>
+#include <string>
 #include <vector>
 
 class EntityManager
@@ -18,40 +18,19 @@ public:
 
   static EntityManager& Instance();
 
-  const std::vector<Entity>& getEntities();
+	const Entity entity(const size_t id) const;
+	const std::vector<Entity> entities() const;
 
-  void addBullet();
-  void addEnemy();
-  void addPlayer();
+	Entity addEntity();
+	Entity addPlayer();
 
-  void removeBullet(const int id);
-  void removeEnemy(const int id);
-  void removePlayer(const int id);
-
+	void removeEntity(Entity e);
   void update();
 
 private:
-  EntityManager();
+	EntityManager();
 
-  void createBullet();
-  void createEnemy();
-  void createPlayer();
-
-  void destroyBullet();
-  void destroyEnemy();
-  void destroyPlayer();
-
-  std::vector<int> m_bulletsToEnable;
-  std::vector<int> m_enemiesToEnable;
-  std::vector<int> m_playersToEnable;
-
-  std::vector<int> m_bulletsToDisable;
-  std::vector<int> m_enemiesToDisable;
-  std::vector<int> m_playersToDisable;
-
-  std::vector<int> m_bulletConfigMap;
-  std::vector<int> m_enemyConfigMap;
-  std::vector<int> m_playerConfigMap;
-
-  sf::Texture m_texture;
+	std::vector<Entity> m_entities;
+	std::vector<Entity> m_entitiesToAdd;
+	std::vector<Entity> m_entitiesToRemove;
 };

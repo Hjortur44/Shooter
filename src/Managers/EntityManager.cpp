@@ -7,232 +7,59 @@ EntityManager& EntityManager::Instance()
 }
 
 
-void EntityManager::addBullet()
+const Entity EntityManager::entity(const size_t id) const
 {
-  m_bulletsToEnable.push_back(ComponentMemoryPool::Instance().addEntity());
+	return m_entities.at(id);
 }
 
 
-void EntityManager::addEnemy()
+const std::vector<Entity> EntityManager::entities() const
 {
-  m_enemiesToEnable.push_back(ComponentMemoryPool::Instance().addEntity());
+	return m_entities;
 }
 
 
-void EntityManager::addPlayer()
+Entity EntityManager::addEntity()
 {
-  m_playersToEnable.push_back(ComponentMemoryPool::Instance().addEntity());
+	Entity e(ComponentMemoryPool::Instance().activateEntity());
+	m_entitiesToAdd.push_back(e);
+	return e;
 }
 
 
-void EntityManager::removeBullet(const int id)
+Entity EntityManager::addPlayer()
 {
-  m_bulletsToDisable.push_back(id);
+	Entity e(ComponentMemoryPool::Instance().activatePlayer());
+	m_entitiesToAdd.push_back(e);
+	return e;
 }
 
 
-void EntityManager::removeEnemy(const int id)
+void EntityManager::removeEntity(Entity e)
 {
-  m_enemiesToDisable.push_back(id);
-}
-
-
-void EntityManager::removePlayer(const int id)
-{
-  m_playersToDisable.push_back(id);
+	m_entitiesToRemove.push_back(e);
 }
 
 
 void EntityManager::update()
 {
-  if(!m_bulletsToEnable.empty())
-  {
-    createBullet();
+	for(Entity e : m_entitiesToRemove)
+	{
+		ComponentMemoryPool::Instance().deactivateEntity(e.id());
+		m_entities.erase(std::remove_if(m_entities.begin(),
+																	  m_entities.end(),
+																	  [e](const Entity x)
+																		 { return x.id() == e.id(); }));
+	}
 
-  }
+	for(Entity e : m_entitiesToAdd)
+	{
+		m_entities.push_back(e);
+	}
 
-  if(!m_enemiesToEnable.empty())
-  {
-    createEnemy();
-    m_enemiesToEnable.clear();
-  }
-
-  if(!m_playersToEnable.empty())
-  {
-    createPlayer();
-    m_playersToEnable.clear();
-  }
-
-
-  if(!m_bulletsToDisable.empty())
-  {
-    destroyBullet();
-    m_bulletsToDisable.clear();
-  }
-
-  if(!m_enemiesToDisable.empty())
-  {
-    destroyEnemy();
-    m_enemiesToDisable.clear();
-  }
-
-  if(!m_playersToDisable.empty())
-  {
-    destroyPlayer();
-    m_playersToDisable.clear();
-  }
+	m_entitiesToRemove.clear();
+	m_entitiesToAdd.clear();
 }
-
 
 // private
-EntityManager::EntityManager()
-{
-  ConfigurationManager& conf = ConfigurationManager::Instance();
-  m_bulletConfigMap = conf.getConfigs("Bullet");
-  m_enemyConfigMap = conf.getConfigs("Enemy");
-  m_playerConfigMap = conf.getConfigs("Player");
-
-  m_texture = AssetManager::Instance().getAsset("wood");
-}
-
-
-void EntityManager::createBullet()
-{
-  for(int id : m_bulletsToEnable)
-  {
-    ComponentMemoryPool::Instance().modifyComponent<CShape>
-    (
-      id,
-      Vec2(m_bulletConfigMap.at(0), m_bulletConfigMap.at(1)),
-      Vec2(m_bulletConfigMap.at(2), m_bulletConfigMap.at(3)),
-      m_texture,
-			true
-    );
-
-    ComponentMemoryPool::Instance().modifyComponent<CTransform>
-    (
-      id,
-      Vec2(m_bulletConfigMap.at(4), m_bulletConfigMap.at(4)),
-			true
-    );
-
-    ComponentMemoryPool::Instance().modifyComponent<CLifespan>
-    (
-      id,
-      m_bulletConfigMap.at(5),
-			true
-    );
-
-    ComponentMemoryPool::Instance().modifyComponent<CBoundingBox>
-    (
-      id,
-      Vec2(m_bulletConfigMap.at(0),	m_bulletConfigMap.at(0)),
-			true
-    );
-
-    ComponentMemoryPool::Instance().modifyComponent<CCollision>
-    (
-      id,
-			true
-    );
-  }
-
-  m_bulletsToEnable.clear();
-}
-
-
-void EntityManager::createEnemy()
-{
-  for(int id : m_enemiesToEnable)
-  {
-    ComponentMemoryPool::Instance().modifyComponent<CShape>
-    (
-      id,
-      Vec2(m_enemyConfigMap.at(0), m_enemyConfigMap.at(1)),
-      Vec2(m_enemyConfigMap.at(2), m_enemyConfigMap.at(3)),
-      m_texture,
-			true
-    );
-
-    ComponentMemoryPool::Instance().modifyComponent<CTransform>
-    (
-      id,
-      Vec2(m_enemyConfigMap.at(4), m_enemyConfigMap.at(4)),
-			true
-    );
-
-    ComponentMemoryPool::Instance().modifyComponent<CLifespan>
-    (
-      id,
-      m_enemyConfigMap.at(5),
-			true
-    );
-
-    ComponentMemoryPool::Instance().modifyComponent<CCollision>
-    (
-      id,
-			true
-    );
-  }
-}
-
-
-void EntityManager::createPlayer()
-{
-  for(int id : m_playersToEnable)
-  {
-    ComponentMemoryPool::Instance().modifyComponent<CShape>
-    (
-      id,
-      Vec2(m_playerConfigMap.at(0), m_playerConfigMap.at(1)),
-      Vec2(m_playerConfigMap.at(2), m_playerConfigMap.at(3)),
-      m_texture,
-			true
-    );
-
-    ComponentMemoryPool::Instance().modifyComponent<CTransform>
-    (
-      id,
-      Vec2(m_playerConfigMap.at(4), m_playerConfigMap.at(4)),
-			true
-    );
-
-    ComponentMemoryPool::Instance().modifyComponent<CLifespan>
-    (
-      id,
-      m_playerConfigMap.at(5),
-			true
-    );
-
-    ComponentMemoryPool::Instance().modifyComponent<CCollision>
-    (
-      id,
-			true
-    );
-  }
-}
-
-
-void EntityManager::destroyBullet()
-{
-  for(int id : m_bulletsToDisable)
-  {
-    ComponentMemoryPool::Instance().removeEntity(id);
-  }
-}
-
-void EntityManager::destroyEnemy()
-{
-  for(int id : m_enemiesToDisable)
-  {
-    ComponentMemoryPool::Instance().removeEntity(id);
-  }
-}
-
-void EntityManager::destroyPlayer()
-{
-  for(int id : m_playersToDisable)
-  {
-    ComponentMemoryPool::Instance().removeEntity(id);
-  }
-}
+EntityManager::EntityManager(){}

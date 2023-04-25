@@ -23,5 +23,5 @@ public:
   void start();
 
 private:
-  std::vector<int> configs(const std::string& index);
+  std::vector<size_t> configs(const std::string& index);
 };

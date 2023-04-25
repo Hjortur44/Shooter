@@ -3,6 +3,7 @@
 #include "../Components/Components.h"
 
 #include <iostream>
+#include <map>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -22,40 +23,26 @@ public:
 
   static ComponentMemoryPool& Instance();
 
-  const int addEntity();
+  const std::vector<bool> actives() const;
 
-  const std::vector<bool> getActives() const;
+	const size_t activateEntity();
+	const size_t activatePlayer();
+  const size_t poolSize() const;
 
-  const bool isActive(const int id) const;
-
-  const int getMaxCapacity() const;
-
-  void removeEntity(const int id);
+	void deactivateEntity(const size_t id);
 
   template <typename T>
-  std::vector<T>& getComponentVector()
-  {
-    return std::get<std::vector<T>>(m_compVecs);
-  }
-
-  template <typename T>
-  T& getComponent(const int id)
+  T& getComponent(const size_t id)
   {
     return std::get<std::vector<T>>(m_compVecs).at(id);
   }
 
-  template <typename T, typename... TArgs>
-  void modifyComponent(const int id, TArgs&&... args)
-  {
-    getComponent<T>(id) = T(std::forward<TArgs>(args)...);
-  }
-
 private:
-  ComponentMemoryPool();
+  ComponentMemoryPool(const size_t poolSize);
 
   ComponentVectors m_compVecs;
 
-  const int MAX_CAPACITY = 3;
-
   std::vector<bool> m_actives;
+
+  size_t m_poolSize = 0;
 };

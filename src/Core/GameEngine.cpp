@@ -6,14 +6,11 @@ GameEngine::GameEngine()
 }
 
 
-sf::RenderWindow& GameEngine::window()
-{
-  return m_window;
-}
-
-
 void GameEngine::run()
 {
+	Spawner s;
+	s.spawnEntity("Player");
+
   while(m_window.isOpen())
   {
     update();
@@ -29,12 +26,11 @@ void GameEngine::quit()
 
 void GameEngine::update()
 {
-	m_physics.collision();
-  EntityManager::Instance().update();
+	EntityManager::Instance().update(); // this must be on top
 
-  sUserInput();
-  sBulletSpawner();
-  sMovement();
+	sUserInput();
+	m_movement.playerMovement();
+
   sRender();
 }
 
@@ -44,23 +40,6 @@ void GameEngine::init()
 {
   m_window.create(sf::VideoMode(640, 480), "Game");
   m_window.setFramerateLimit(60);
-}
-
-
-void GameEngine::sMovement()
-{
-  m_movement.moving();
-}
-
-
-void GameEngine::sEnemySpawner()
-{
-}
-
-
-void GameEngine::sBulletSpawner()
-{
-  m_bulletSpawn.shoot();
 }
 
 
@@ -93,17 +72,14 @@ void GameEngine::sUserInput()
 
 void GameEngine::sRender()
 {
-  const std::vector<bool>& actives = ComponentMemoryPool::Instance().getActives();
-  std::vector<CShape>&     shapes  = ComponentMemoryPool::Instance().getComponentVector<CShape>();
-
   m_window.clear();
 
-  for(int i = 0; i < actives.size(); i++)
-  {
-    if(actives[i])
-      m_window.draw(shapes[i].circle);
+	for(Entity e : EntityManager::Instance().entities())
+	{
+		CShape& shape = e.getComponent<CShape>();
+		shape.circle.setPosition(shape.position.x, shape.position.y);
+		m_window.draw(shape.circle);
+	}
 
-  }
-
-  m_window.display();
+	m_window.display();
 }

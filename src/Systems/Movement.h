@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Controls.h"
+#include "../Entities/Entity.h"
+#include "../Managers/EntityManager.h"
 #include "../Math/Vec2.h"
-#include "../MemoryPools/ComponentMemoryPool.h"
 
 #include <iostream>
 
@@ -12,18 +13,15 @@ public:
   Movement();
   ~Movement();
 
-  void moving();
+	void playerMovement();
+  void update();
 
 private:
-  CShape&     shape = ComponentMemoryPool::Instance().getComponent<CShape>(0);
-  CTransform& trans = ComponentMemoryPool::Instance().getComponent<CTransform>(0);
+	Controls m_cont;
 
-  Controls m_cont;
-
-  Vec2 momentum = {0, 0};
-  Vec2 normal   = {0, 0};
-  Vec2 d        = {0, 1};
-  Vec2 l        = {-1, 0};
-  Vec2 r        = {1, 0};
-  Vec2 u        = {0, -1};
+	Vec2 m_norm = {0, 0};
+  Vec2 m_d    = {0, 1};
+  Vec2 m_l    = {-1, 0};
+  Vec2 m_r    = {1, 0};
+  Vec2 m_u    = {0, -1};
 };

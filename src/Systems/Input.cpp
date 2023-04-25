@@ -1,12 +1,5 @@
 #include "Input.h"
 
-Input::Input()
-{
-  for(int i = 0; i < 257; i++)
-    m_keys[i] = false;
-}
-
-
 Input& Input::Instance()
 {
   static Input INSTANCE;
@@ -29,4 +22,12 @@ void Input::keyPressed(int key)
 void Input::keyReleased(int key)
 {
   m_keys[key + m_offset] = false;
+}
+
+
+// private
+Input::Input()
+{
+  for(int i = 0; i < 257; i++)
+    m_keys[i] = false;
 }

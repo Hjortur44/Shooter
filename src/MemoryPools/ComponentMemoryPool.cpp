@@ -2,62 +2,55 @@
 
 ComponentMemoryPool& ComponentMemoryPool::Instance()
 {
-  static ComponentMemoryPool INSTANCE;
+  static ComponentMemoryPool INSTANCE(500);
   return INSTANCE;
 }
 
 
-const std::vector<bool> ComponentMemoryPool::getActives() const
+const std::vector<bool> ComponentMemoryPool::actives() const
 {
   return m_actives;
 }
 
 
-const bool ComponentMemoryPool::isActive(const int id) const
+const size_t ComponentMemoryPool::activateEntity()
 {
-  return m_actives.at(id);
+	size_t id = 1;
+
+	for(; id < m_poolSize - 1; id++)
+	{
+		if(!m_actives[id])
+		{
+			m_actives[id] = true;
+			break;
+		}
+	}
+
+	return id;
 }
 
 
-const int ComponentMemoryPool::getMaxCapacity() const
+const size_t ComponentMemoryPool::activatePlayer()
 {
-  return MAX_CAPACITY - 1;
+	m_actives[0] = true;
+	return 0;
 }
 
 
-const int ComponentMemoryPool::addEntity()
+const size_t ComponentMemoryPool::poolSize() const
 {
-  int offset = MAX_CAPACITY - 1;
-
-  for(int i = 0; i < offset; i++)
-  {
-    if(!m_actives[i])
-    {
-      m_actives[i] = true;
-      return i;
-    }
-  }
-
-  return offset;
+  return m_poolSize - 1;
 }
 
 
-void ComponentMemoryPool::removeEntity(const int id)
+void ComponentMemoryPool::deactivateEntity(const size_t id)
 {
-  if(id < MAX_CAPACITY)
-  {
-    m_actives.at(id) = false;
-    std::get<std::vector<CBoundingBox>>(m_compVecs).at(id) = CBoundingBox();
-    std::get<std::vector<CCollision>>(m_compVecs).at(id)   = CCollision();
-    std::get<std::vector<CLifespan>>(m_compVecs).at(id)    = CLifespan();
-    std::get<std::vector<CShape>>(m_compVecs).at(id)       = CShape();
-    std::get<std::vector<CTransform>>(m_compVecs).at(id)   = CTransform();
-  }
+	m_actives[id] = false;
 }
 
 
 // private
-ComponentMemoryPool::ComponentMemoryPool()
+ComponentMemoryPool::ComponentMemoryPool(const size_t poolSize) : m_poolSize(poolSize)
 {
   auto& box   = std::get<std::vector<CBoundingBox>>(m_compVecs);
   auto& coll  = std::get<std::vector<CCollision>>(m_compVecs);
@@ -65,7 +58,7 @@ ComponentMemoryPool::ComponentMemoryPool()
   auto& sh    = std::get<std::vector<CShape>>(m_compVecs);
   auto& trans = std::get<std::vector<CTransform>>(m_compVecs);
 
-  for(int i = 0; i < MAX_CAPACITY; i++)
+  for(int i = 0; i < poolSize; i++)
   {
     box.push_back(CBoundingBox());
     coll.push_back(CCollision());

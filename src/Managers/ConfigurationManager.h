@@ -12,12 +12,12 @@ public:
 
   static ConfigurationManager& Instance();
 
-  const std::vector<int>& getConfigs(const std::string& entity) const;
+  const std::vector<size_t>& getConfigs(const std::string& type) const;
 
-  void setConfigs(std::map<std::string, std::vector<int>>& entityConfigMap);
+  void setConfigs(std::map<std::string, std::vector<size_t>>& entityConfigMap);
 
 private:
   ConfigurationManager();
 
-  std::map<std::string, std::vector<int>> m_configMap;
+  std::map<std::string, std::vector<size_t>> m_configMap;
 };

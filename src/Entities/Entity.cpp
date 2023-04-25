@@ -2,10 +2,9 @@
 
 Entity::Entity() {}
 
-Entity::Entity(int id) : m_id(id) {}
+Entity::Entity(const size_t id) : m_id(id) {}
 
-
-const int Entity::getId() const
+const size_t Entity::id() const
 {
   return m_id;
 }

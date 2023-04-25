@@ -2,4 +2,5 @@
 
 CTransform::CTransform() {}
 
-CTransform::CTransform(const Vec2& velocity, bool active) : velocity(velocity), active(active) {}
+CTransform::CTransform(const Vec2& position, const Vec2& velocity, bool active)
+ : position(position), velocity(velocity), active(active) {}

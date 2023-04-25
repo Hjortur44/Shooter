@@ -2,33 +2,39 @@
 
 Physics::Physics() {}
 Physics::~Physics() {}
+void Physics::collision() {}
 
-void Physics::collision()
+void collision2(const Vec2& playerPosition, const Vec2& playerHalfDimension,
+								const Vec2& opponentPosition, const Vec2& opponentHalfDimension)
 {
-	const int size = ComponentMemoryPool::Instance().getMaxCapacity();
+	Vec2 player   = playerPosition      + playerHalfDimension;
+	Vec2 opponent = opponentPosition    + opponentHalfDimension;
+	Vec2 sum      = playerHalfDimension + opponentHalfDimension;
 
-	for(int i = 0; i < size; i++)
-	{
-	  CBoundingBox& bb0  = ComponentMemoryPool::Instance().getComponent<CBoundingBox>(i);
-		CCollision& coll0  =  ComponentMemoryPool::Instance().getComponent<CCollision>(i);
-		CShape& shape0     = ComponentMemoryPool::Instance().getComponent<CShape>(i);
+	Vec2 diff = player - opponent;
+	Vec2 dist = diff   - sum;
 
-		Vec2 pos0(shape0.circle.getPosition().x, shape0.circle.getPosition().y);
+	Vec2 distSQ = dist * dist;
+	Vec2 sumSQ  = sum  * sum;
 
-		for(int j = 0; j < size; j++)
-		{
-  		CBoundingBox& bb1  = ComponentMemoryPool::Instance().getComponent<CBoundingBox>(j);
-			CShape& shape1     = ComponentMemoryPool::Instance().getComponent<CShape>(j);
+	// Overlaps
+	bool hor = distSQ.y < sumSQ.x;
+	bool ver = distSQ.x < sumSQ.y;
 
-			Vec2 pos1(shape1.circle.getPosition().x, shape1.circle.getPosition().y);
+	// hor && ver;
+}
 
-			bool hasCollide0 = coll0.isCollision(pos0, pos1, bb0.halfDimension, bb1.halfDimension);
+void Physics::outside() {}
 
-			if(hasCollide0)
-			{
-				EntityManager::Instance().removeBullet(j);
-				EntityManager::Instance().removeBullet(i);
-			}
-		}
-	}
+void outside2()
+{
+	const Vec2 pos = {0, 0};
+  const Vec2 dim = {0, 0};
+
+	Vec2 window(500, 480);
+
+	bool hor = (pos.x + dim.x) < 0 || (pos.x > window.x);
+	bool ver = (pos.y + dim.y) < 0 || (pos.y > window.y);
+
+	//hor || ver;
 }

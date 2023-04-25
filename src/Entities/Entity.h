@@ -1,14 +1,30 @@
 #pragma once
 
+#include "../MemoryPools/ComponentMemoryPool.h"
+
 #include <cstddef>
 
 class Entity
 {
-  int m_id = 0;
-
 public:
   Entity();
-  Entity(int id);
+  Entity(const size_t id);
 
-  const int getId() const;
+  const size_t id() const;
+
+  template <typename T>
+  T& getComponent()
+  {
+    return ComponentMemoryPool::Instance().getComponent<T>(m_id);
+  }
+
+  template <typename T, typename... TArgs>
+  void modifyComponent(TArgs&&... args)
+  {
+    auto& comp = ComponentMemoryPool::Instance().getComponent<T>(m_id);
+		comp = T(std::forward<TArgs>(args)...);
+  }
+
+private:
+  size_t m_id = 0;
 };

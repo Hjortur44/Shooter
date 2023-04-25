@@ -5,37 +5,31 @@ Controls::Controls() {}
 Controls::~Controls() {}
 
 
-bool Controls::isRequestingUp()
-{
-  return Input::Instance().isKey(sf::Keyboard::W);
-}
-
-
 bool Controls::isRequestingDown()
 {
-  return Input::Instance().isKey(sf::Keyboard::S);
+	return m_input.isKey(18);
 }
 
 
 bool Controls::isRequestingLeft()
 {
-  return Input::Instance().isKey(sf::Keyboard::A);
+	return m_input.isKey(0);
 }
 
 
 bool Controls::isRequestingRight()
 {
-  return Input::Instance().isKey(sf::Keyboard::D);
+	return m_input.isKey(3);
+}
+
+
+bool Controls::isRequestingUp()
+{
+	return m_input.isKey(22);
 }
 
 
 bool Controls::isRequestingShoot()
 {
-  return Input::Instance().isKey(sf::Keyboard::G);
-}
-
-
-bool Controls::isRequestingDestroy()
-{
-  return Input::Instance().isKey(sf::Keyboard::H);
+	return m_input.isKey(6);
 }

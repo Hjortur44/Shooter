@@ -1,73 +1,67 @@
 #include "Movement.h"
 
-#include <iostream>
-
 Movement::Movement()
 {
-	normal = normal.normalize(Vec2(0, 0), Vec2(1, 1));
+	m_norm = m_norm.normalize(Vec2(0, 0), Vec2(1, 1));
 }
 
 Movement::~Movement() {}
 
-void Movement::moving()
+void Movement::playerMovement()
 {
-	momentum = {0, 0};
+	Entity e = EntityManager::Instance().entity(0);
+	CTransform& t = e.getComponent<CTransform>();
+
+	Vec2 m = Vec2(0, 0);
 
   // Straight up
   if(m_cont.isRequestingUp())
   {
-    momentum = u;
+    m += m_u * t.velocity;
   }
 
   // Straight down
   if(m_cont.isRequestingDown())
   {
-    momentum = d;
+    m += m_d * t.velocity;
   }
 
   // Straight left
   if(m_cont.isRequestingLeft())
   {
-    momentum = l;
+    m += m_l * t.velocity;
   }
 
   // Straight right
   if(m_cont.isRequestingRight())
   {
-    momentum = r;
+    m += m_r * t.velocity;
   }
 
   // Diagonal up and left
   if(m_cont.isRequestingUp() && m_cont.isRequestingLeft())
   {
-		momentum.x = -normal.x;
-		momentum.y = -normal.y;
+		m += Vec2(-m_norm.x, -m_norm.y) * t.velocity;
   }
 
   // Diagonal up and right
   if(m_cont.isRequestingUp() && m_cont.isRequestingRight())
   {
-		momentum.x = normal.x;
-		momentum.y = -normal.y;
+		m += Vec2(m_norm.x, -m_norm.y) * t.velocity;
   }
 
   // Diagonal down and left
   if(m_cont.isRequestingDown() && m_cont.isRequestingLeft())
   {
-		momentum.x = -normal.x;
-		momentum.y = normal.y;
+		m += Vec2(-m_norm.x, m_norm.y) * t.velocity;
   }
 
   // Diagonal down and right
   if(m_cont.isRequestingDown() && m_cont.isRequestingRight())
   {
-		momentum.x = normal.x;
-		momentum.y = normal.y;
+		m += Vec2(m_norm.x, m_norm.y) * t.velocity;
   }
 
-  shape.circle.setPosition
-  (
-    shape.circle.getPosition().x + momentum.x,
-    shape.circle.getPosition().y + momentum.y
-  );
+	t.position += m;
+	e.getComponent<CShape>().position = t.position;
 }
