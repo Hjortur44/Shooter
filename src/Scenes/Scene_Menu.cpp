@@ -11,21 +11,21 @@ Scene_Menu::~Scene_Menu() {}
 
 void Scene_Menu::sDoAction(const Action& action)
 {
-  if(action.getType() == "START")
+  if(action.type() == "START")
   {
-    if(action.getName() == "UP")
+    if(action.name() == "UP")
     {
 
     }
-    else if(action.getName() == "DOWN")
+    else if(action.name() == "DOWN")
     {
 
     }
-    else if(action.getName() == "PLAY")
+    else if(action.name() == "PLAY")
     {
 
     }
-    else if(action.getName() == "QUIT")
+    else if(action.name() == "QUIT")
     {
       onEnd();
     }

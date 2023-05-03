@@ -18,15 +18,14 @@ public:
   Scene();
   ~Scene();
 
-  const ActionMap& getActionMap() const;
+  const ActionMap& actionMap() const;
 
-  bool hasEnded() const;
+  const bool hasEnded() const;
 
-  int currentFrame() const;
-  int height() const;
-  int width() const;
+  const int currentFrame() const;
+  const int height() const;
+  const int width() const;
 
-  void drawLine(const Vec2& p1, const Vec2 p2);
   void registerAction(int inputKey, const std::string& actionName);
   void simulate(const int frames);
 

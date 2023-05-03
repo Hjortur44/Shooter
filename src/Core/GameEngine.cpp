@@ -29,7 +29,7 @@ void GameEngine::update()
 	EntityManager::Instance().update(); // this must be on top
 
 	sUserInput();
-	m_movement.playerMovement();
+	m_physics.update();
 
   sRender();
 }
@@ -76,8 +76,10 @@ void GameEngine::sRender()
 
 	for(Entity e : EntityManager::Instance().entities())
 	{
-		CShape& shape = e.getComponent<CShape>();
-		shape.circle.setPosition(shape.position.x, shape.position.y);
+		CShape&     shape = e.getComponent<CShape>();
+		CTransform& trans = e.getComponent<CTransform>();
+
+		shape.circle.setPosition(trans.position.x, trans.position.y);
 		m_window.draw(shape.circle);
 	}
 

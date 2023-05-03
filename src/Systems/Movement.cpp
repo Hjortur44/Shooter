@@ -1,67 +1,117 @@
 #include "Movement.h"
 
-Movement::Movement()
-{
-	m_norm = m_norm.normalize(Vec2(0, 0), Vec2(1, 1));
-}
+Movement::Movement() {}
 
 Movement::~Movement() {}
 
-void Movement::playerMovement()
+Vec2 Movement::playerMovement()
 {
-	Entity e = EntityManager::Instance().entity(0);
-	CTransform& t = e.getComponent<CTransform>();
+	Input& input = Input::Instance();
+	Vec2 vel(0.0f, 0.0f);
 
-	Vec2 m = Vec2(0, 0);
+	switch(input.keyCount())
+	{
+		case 1:
+			vel = oneKey(input);
+		break;
+		case 2:
+			vel = twoKeys(input);
+		break;
+		case 3:
+			vel = threeKeys(input);
+		break;
+		default:
+			input.keyCountReset();
+	}
 
-  // Straight up
-  if(m_cont.isRequestingUp())
+	return vel;
+}
+
+
+// private
+Vec2 Movement::oneKey(Input& input)
+{
+	Vec2 vel(0.0f, 0.0f);
+
+	if(input.isKey(18))
   {
-    m += m_u * t.velocity;
+    vel += m_d;
   }
 
-  // Straight down
-  if(m_cont.isRequestingDown())
+	if(input.isKey(0))
   {
-    m += m_d * t.velocity;
+    vel += m_l;
   }
 
-  // Straight left
-  if(m_cont.isRequestingLeft())
+	if(input.isKey(3))
   {
-    m += m_l * t.velocity;
+    vel += m_r;
   }
 
-  // Straight right
-  if(m_cont.isRequestingRight())
+  if(input.isKey(22))
   {
-    m += m_r * t.velocity;
+    vel += m_u;
   }
 
-  // Diagonal up and left
-  if(m_cont.isRequestingUp() && m_cont.isRequestingLeft())
+	return vel;
+}
+
+
+Vec2 Movement::twoKeys(Input& input)
+{
+	Vec2 vel(0.0f, 0.0f);
+
+  if(input.isKey(18) && input.isKey(0))
   {
-		m += Vec2(-m_norm.x, -m_norm.y) * t.velocity;
+    vel.x = -m_dig.x;
+		vel.y = m_dig.y;
   }
 
-  // Diagonal up and right
-  if(m_cont.isRequestingUp() && m_cont.isRequestingRight())
+  if(input.isKey(18) && input.isKey(3))
   {
-		m += Vec2(m_norm.x, -m_norm.y) * t.velocity;
+    vel.x = m_dig.x;
+		vel.y = m_dig.y;;
   }
 
-  // Diagonal down and left
-  if(m_cont.isRequestingDown() && m_cont.isRequestingLeft())
+  if(input.isKey(22) && input.isKey(0))
   {
-		m += Vec2(-m_norm.x, m_norm.y) * t.velocity;
+    vel.x = -m_dig.x;
+		vel.y = -m_dig.y;
   }
 
-  // Diagonal down and right
-  if(m_cont.isRequestingDown() && m_cont.isRequestingRight())
+  if(input.isKey(22) && input.isKey(3))
   {
-		m += Vec2(m_norm.x, m_norm.y) * t.velocity;
+    vel.x = m_dig.x;
+		vel.y = -m_dig.y;
   }
 
-	t.position += m;
-	e.getComponent<CShape>().position = t.position;
+	return vel;
+}
+
+
+Vec2 Movement::threeKeys(Input& input)
+{
+	Vec2 vel(0.0f, 0.0f);
+
+  if(input.isKey(22) && input.isKey(0) && input.isKey(3))
+  {
+    vel = m_u;
+  }
+
+  if(input.isKey(18) && input.isKey(0) && input.isKey(3))
+  {
+    vel = m_d;
+  }
+
+  if(input.isKey(0) && input.isKey(18) && input.isKey(22))
+  {
+    vel = m_l;
+  }
+
+  if(input.isKey(3) && input.isKey(18) && input.isKey(22))
+  {
+    vel = m_r;
+  }
+
+	return vel;
 }

@@ -98,20 +98,32 @@ float Vec2::dist(const Vec2& rhs)
 }
 
 
-Vec2 Vec2::normalize(const Vec2& lhs, const Vec2& rhs)
+Vec2 Vec2::normalizeSQ(const Vec2& rhs)
 {
-  float dx = lhs.x - rhs.x;
-  float dy = lhs.y - rhs.y;
-
-  float sq = (dx * dx) + (dy * dy);
-
-
-  float nx = sqrt((dx * dx) / sq);
-  float ny = sqrt((dy * dy) / sq);
+  float dx = (x - rhs.x) * (x - rhs.x);
+  float dy = (y - rhs.y) * (y - rhs.y);
+  float sq = dx + dy;
+  float nx = dx / sq;
+  float ny = dy / sq;
 
   return Vec2(nx, ny);
 }
 
+void Vec2::normalizeTri(const Vec2& rhs)
+{
+	const double pi = std::acos(-1);
+	float y = 4.0f;
+	float x = 4.0f;
+
+	float theta = atan2f(y, x);
+	float ys =  std::sin(theta);
+	float xc = std::cos(theta);
+	float t = tan(theta);
+
+	// deg = rad * 180 / pi
+	float rad = pi / 180.0f; // one rad
+	float deg = theta *  180.0f / pi; // one deg, rad = pi / 180
+}
 
 float Vec2::lengtSQ(const Vec2& rhs)
 {

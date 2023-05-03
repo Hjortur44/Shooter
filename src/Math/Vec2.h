@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cmath>
-#include <cstddef>
+#include <ostream>
 
 class Vec2
 {
@@ -24,11 +24,17 @@ public:
   void operator *= (const float val);
   void operator /= (const float val);
 
-  Vec2 normalize(const Vec2& lhs, const Vec2& rhs);
+  Vec2 normalizeSQ(const Vec2& rhs);
+	void normalizeTri(const Vec2& rhs);
 
   float dist(const Vec2& rhs);
   float lengtSQ(const Vec2& rhs);
 
   float x = 0;
   float y = 0;
+
+	friend std::ostream& operator << (std::ostream& stream, const Vec2& vector)
+	{
+		return stream << vector.x << " " << vector.y << "\n";
+	}
 };

@@ -2,9 +2,14 @@
 
 Physics::Physics() {}
 Physics::~Physics() {}
-void Physics::collision() {}
 
-void collision2(const Vec2& playerPosition, const Vec2& playerHalfDimension,
+void Physics::update()
+{
+	thrust();
+}
+
+// private
+void Physics::collision(const Vec2& playerPosition, const Vec2& playerHalfDimension,
 								const Vec2& opponentPosition, const Vec2& opponentHalfDimension)
 {
 	Vec2 player   = playerPosition      + playerHalfDimension;
@@ -24,9 +29,8 @@ void collision2(const Vec2& playerPosition, const Vec2& playerHalfDimension,
 	// hor && ver;
 }
 
-void Physics::outside() {}
 
-void outside2()
+void Physics::outside()
 {
 	const Vec2 pos = {0, 0};
   const Vec2 dim = {0, 0};
@@ -37,4 +41,14 @@ void outside2()
 	bool ver = (pos.y + dim.y) < 0 || (pos.y > window.y);
 
 	//hor || ver;
+}
+
+
+void Physics::thrust()
+{
+	for(Entity e : EntityManager::Instance().entities())
+	{
+		CTransform& trans = e.getComponent<CTransform>();
+		trans.position += (trans.velocity * m_movement.playerMovement());
+	}
 }
