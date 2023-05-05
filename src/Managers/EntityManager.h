@@ -6,6 +6,7 @@
 #include "../Math/Vec2.h"
 #include "../MemoryPools/ComponentMemoryPool.h"
 
+#include <algorithm>
 #include <iostream>
 #include <map>
 #include <string>
@@ -18,19 +19,22 @@ public:
 
   static EntityManager& Instance();
 
-	const Entity entity(const size_t id) const;
-	const std::vector<Entity> entities() const;
+  const bool isEmpty(const std::string& type) const;
 
-	Entity addEntity();
-	Entity addPlayer();
+	const	std::vector<std::string>& types() const;
+  const std::vector<Entity>& entitiesByType(const std::string& type) const;
 
-	void removeEntity(Entity e);
+	Entity addEntity(const std::string& type);
+
+	void removeEntity(const std::string& type, Entity e);
   void update();
 
 private:
 	EntityManager();
 
-	std::vector<Entity> m_entities;
-	std::vector<Entity> m_entitiesToAdd;
-	std::vector<Entity> m_entitiesToRemove;
+	std::vector<std::string> m_types;
+
+	std::map<std::string, std::vector<Entity>> m_entities;
+	std::map<std::string, std::vector<Entity>> m_entitiesToAdd;
+	std::map<std::string, std::vector<Entity>> m_entitiesToRemove;
 };

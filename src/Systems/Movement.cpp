@@ -4,6 +4,24 @@ Movement::Movement() {}
 
 Movement::~Movement() {}
 
+void Movement::update()
+{
+	for(const std::string& type : EntityManager::Instance().types())
+	{
+		for(Entity e : EntityManager::Instance().entitiesByType(type))
+		{
+			CTransform& trans = e.getComponent<CTransform>();
+
+			if(type == "Player")
+				trans.position += (trans.velocity * playerMovement());
+			else
+				trans.position += trans.velocity;
+		}
+	}
+}
+
+
+// private
 Vec2 Movement::playerMovement()
 {
 	Input& input = Input::Instance();
@@ -28,7 +46,6 @@ Vec2 Movement::playerMovement()
 }
 
 
-// private
 Vec2 Movement::oneKey(Input& input)
 {
 	Vec2 vel(0.0f, 0.0f);

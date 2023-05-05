@@ -5,50 +5,61 @@ Physics::~Physics() {}
 
 void Physics::update()
 {
-	thrust();
+	EntityManager& manager = EntityManager::Instance();
+
+	const std::vector<Entity> pp = manager.entitiesByType("Player");
+	const std::vector<Entity> bb = manager.entitiesByType("Bullet");
+
+	for(Entity p : pp)
+	{
+		CBoundingBox& pbox = p.getComponent<CBoundingBox>();
+		CTransform& ptrans = p.getComponent<CTransform>();
+
+		bool o = outside(ptrans.position, pbox.dimension);
+
+		for(Entity b : bb)
+		{
+			CBoundingBox& bbox = b.getComponent<CBoundingBox>();
+			CTransform& btrans = b.getComponent<CTransform>();
+
+			bool out = outside(btrans.position, bbox.dimension);
+			bool coll = collision(ptrans.position, pbox.halfDimension,
+														 btrans.position, bbox.halfDimension);
+
+			if(coll)
+			{
+				manager.removeEntity("Bullet", b);
+				manager.removeEntity("Player", p);
+			}
+			else if(out)
+			{
+				manager.removeEntity("Bullet", b);
+			}
+		}
+	}
 }
 
 // private
-void Physics::collision(const Vec2& playerPosition, const Vec2& playerHalfDimension,
-								const Vec2& opponentPosition, const Vec2& opponentHalfDimension)
+bool Physics::collision(const Vec2& pPos, const Vec2& pHDim,
+								const Vec2& oPos, const Vec2& oHDim)
 {
-	Vec2 player   = playerPosition      + playerHalfDimension;
-	Vec2 opponent = opponentPosition    + opponentHalfDimension;
-	Vec2 sum      = playerHalfDimension + opponentHalfDimension;
-
-	Vec2 diff = player - opponent;
-	Vec2 dist = diff   - sum;
-
-	Vec2 distSQ = dist * dist;
-	Vec2 sumSQ  = sum  * sum;
+	Vec2 radiusSumSQ = (pHDim + oHDim) * (pHDim + oHDim);
+	Vec2 distSQ = (pPos - oPos) * (pPos - oPos);
 
 	// Overlaps
-	bool hor = distSQ.y < sumSQ.x;
-	bool ver = distSQ.x < sumSQ.y;
+	bool hor = distSQ.y < radiusSumSQ.x;
+	bool ver = distSQ.x < radiusSumSQ.y;
 
-	// hor && ver;
+	return hor && ver;
 }
 
 
-void Physics::outside()
+bool Physics::outside(const Vec2& pos, const Vec2& dim)
 {
-	const Vec2 pos = {0, 0};
-  const Vec2 dim = {0, 0};
+	Vec2 window(640, 480); // the values need to be derived in better way.
 
-	Vec2 window(500, 480);
+	bool hor = (pos.y + dim.y) < 0 || (pos.y - dim.y) > window.y;
+	bool ver = (pos.x + dim.x) < 0 || (pos.x - dim.x) > window.x;
 
-	bool hor = (pos.x + dim.x) < 0 || (pos.x > window.x);
-	bool ver = (pos.y + dim.y) < 0 || (pos.y > window.y);
-
-	//hor || ver;
-}
-
-
-void Physics::thrust()
-{
-	for(Entity e : EntityManager::Instance().entities())
-	{
-		CTransform& trans = e.getComponent<CTransform>();
-		trans.position += (trans.velocity * m_movement.playerMovement());
-	}
+	return hor || ver;
 }

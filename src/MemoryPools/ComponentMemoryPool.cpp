@@ -7,7 +7,7 @@ ComponentMemoryPool& ComponentMemoryPool::Instance()
 }
 
 
-const std::vector<bool> ComponentMemoryPool::actives() const
+const std::vector<bool>& ComponentMemoryPool::actives() const
 {
   return m_actives;
 }
@@ -15,7 +15,7 @@ const std::vector<bool> ComponentMemoryPool::actives() const
 
 const size_t ComponentMemoryPool::activateEntity()
 {
-	size_t id = 1;
+	size_t id = 0;
 
 	for(; id < m_poolSize - 1; id++)
 	{
@@ -27,13 +27,6 @@ const size_t ComponentMemoryPool::activateEntity()
 	}
 
 	return id;
-}
-
-
-const size_t ComponentMemoryPool::activatePlayer()
-{
-	m_actives[0] = true;
-	return 0;
 }
 
 

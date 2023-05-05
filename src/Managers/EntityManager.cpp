@@ -6,55 +6,58 @@ EntityManager& EntityManager::Instance()
   return INSTANCE;
 }
 
-
-const Entity EntityManager::entity(const size_t id) const
+const bool EntityManager::isEmpty(const std::string& type) const
 {
-	return m_entities.at(id);
+	return m_entities.at(type).empty();
+}
+
+const	std::vector<std::string>& EntityManager::types() const
+{
+	return m_types;
+}
+
+const std::vector<Entity>& EntityManager::entitiesByType(const std::string& type) const
+{
+	return m_entities.at(type);
 }
 
 
-const std::vector<Entity> EntityManager::entities() const
-{
-	return m_entities;
-}
-
-
-Entity EntityManager::addEntity()
+Entity EntityManager::addEntity(const std::string& type)
 {
 	Entity e(ComponentMemoryPool::Instance().activateEntity());
-	m_entitiesToAdd.push_back(e);
+	m_entitiesToAdd[type].push_back(e);
+
 	return e;
 }
 
 
-Entity EntityManager::addPlayer()
+void EntityManager::removeEntity(const std::string& type, Entity e)
 {
-	Entity e(ComponentMemoryPool::Instance().activatePlayer());
-	m_entitiesToAdd.push_back(e);
-	return e;
-}
-
-
-void EntityManager::removeEntity(Entity e)
-{
-	m_entitiesToRemove.push_back(e);
+	m_entitiesToRemove[type].push_back(e);
 }
 
 
 void EntityManager::update()
 {
-	for(Entity e : m_entitiesToRemove)
+	for(const auto& [key, value] : m_entitiesToRemove)
 	{
-		ComponentMemoryPool::Instance().deactivateEntity(e.id());
-		m_entities.erase(std::remove_if(m_entities.begin(),
-																	  m_entities.end(),
-																	  [e](const Entity x)
-																		 { return x.id() == e.id(); }));
+		m_entities[key].erase(std::remove_if(m_entities[key].begin(), m_entities[key].end(),
+			[value](const Entity& e) {
+				if(std::find(value.begin(), value.end(), e) != value.end())
+				{
+					ComponentMemoryPool::Instance().deactivateEntity(e.id());
+					return true;
+				}
+				else
+					{ return false; }}));
 	}
 
-	for(Entity e : m_entitiesToAdd)
+	for(const auto& [key, value] : m_entitiesToAdd)
 	{
-		m_entities.push_back(e);
+		for(const Entity& v : value)
+		{
+			m_entities[key].push_back(v);
+		}
 	}
 
 	m_entitiesToRemove.clear();
@@ -62,4 +65,12 @@ void EntityManager::update()
 }
 
 // private
-EntityManager::EntityManager(){}
+EntityManager::EntityManager()
+{
+	m_types.push_back("Bullet");
+	m_types.push_back("Enemy");
+	m_types.push_back("Player");
+
+	for(std::string& t : m_types)
+		m_entities[t] = std::vector<Entity>();
+}

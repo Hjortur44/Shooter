@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Input.h"
+#include "../Managers/EntityManager.h"
 #include "../Math/Vec2.h"
 
 #include <cstddef>
@@ -11,11 +12,10 @@ public:
   Movement();
   ~Movement();
 
-	Vec2 playerMovement();
-
   void update();
 
 private:
+	Vec2 playerMovement();
 	Vec2 oneKey(Input& input);
 	Vec2 twoKeys(Input& input);
 	Vec2 threeKeys(Input& input);

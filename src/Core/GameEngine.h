@@ -2,6 +2,7 @@
 
 #include "../Managers/EntityManager.h"
 #include "../Systems/Input.h"
+#include "../Systems/Movement.h"
 #include "../Systems/Physics.h"
 #include "../Systems/Spawner.h"
 
@@ -27,5 +28,7 @@ private:
 
   sf::RenderWindow m_window;
 
+	Movement m_movement;
 	Physics m_physics;
+	Spawner m_spawner;
 };

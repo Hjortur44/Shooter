@@ -20,14 +20,9 @@ void Spawner::spawnEntity(const std::string& type)
 
 	const sf::Texture& texture = AssetManager::Instance().getAsset("wood");
 
-	Entity e;
-
-	if(type == "Player")
-		e = EntityManager::Instance().addPlayer();
-	else
-		e = EntityManager::Instance().addEntity();
-
+	Entity e = EntityManager::Instance().addEntity(type);
+	e.modifyComponent<CBoundingBox>(Vec2(radius, radius), true);
+	e.modifyComponent<CLifespan>(lifespan, true);
 	e.modifyComponent<CShape>(shape, position, texture, true);
 	e.modifyComponent<CTransform>(position, velocity, true);
-	e.modifyComponent<CLifespan>(lifespan, true);
 }

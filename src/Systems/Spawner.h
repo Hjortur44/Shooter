@@ -6,6 +6,7 @@
 #include "../Managers/EntityManager.h"
 #include "../Math/Vec2.h"
 
+#include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>

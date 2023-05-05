@@ -12,6 +12,9 @@ public:
 
   const size_t id() const;
 
+  bool operator == (const Entity& e) const;
+  bool operator != (const Entity& e) const;
+
   template <typename T>
   T& getComponent()
   {

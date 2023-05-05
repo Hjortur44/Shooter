@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Movement.h"
 #include "../Entities/Entity.h"
 #include "../Managers/EntityManager.h"
 #include "../Math/Vec2.h"
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 class Physics
 {
@@ -17,11 +17,8 @@ public:
 	void update();
 
 private:
-	void collision(const Vec2& playerPosition, const Vec2& playerHalfDimension,
-								const Vec2& opponentPosition, const Vec2& opponentHalfDimension);
+	bool collision(const Vec2& pPos, const Vec2& pHDim,
+									const Vec2& oPos, const Vec2& oHDim);
 
-	void outside();
-	void thrust();
-
-	Movement m_movement;
+	bool outside(const Vec2& pos, const Vec2& dim);
 };

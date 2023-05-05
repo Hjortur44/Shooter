@@ -8,9 +8,6 @@ GameEngine::GameEngine()
 
 void GameEngine::run()
 {
-	Spawner s;
-	s.spawnEntity("Player");
-
   while(m_window.isOpen())
   {
     update();
@@ -29,6 +26,7 @@ void GameEngine::update()
 	EntityManager::Instance().update(); // this must be on top
 
 	sUserInput();
+	m_movement.update();
 	m_physics.update();
 
   sRender();
@@ -49,6 +47,19 @@ void GameEngine::sUserInput()
 
   while(m_window.pollEvent(event))
   {
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				m_spawner.spawnEntity("Bullet");
+			}
+
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+			{
+				m_spawner.spawnEntity("Player");
+			}
+		}
+
     if(event.type == sf::Event::KeyPressed)
       Input::Instance().keyPressed(event.key.code);
 
@@ -58,15 +69,6 @@ void GameEngine::sUserInput()
     if(event.type == sf::Event::Closed)
       quit();
   }
-
-
-  /*
-    if(currentScene()->getActionMap().find(event.key.code) != currentScene()->getActionMap().end())
-    {
-      const std::string actionType = (event.type == sf::Event::KeyPressed) ? "START" : "END";
-      currentScene()->doAction(Action(currentScene()->getActionMap().at(event.key.code), actionType));
-    }
-  */
 }
 
 
@@ -74,13 +76,16 @@ void GameEngine::sRender()
 {
   m_window.clear();
 
-	for(Entity e : EntityManager::Instance().entities())
+	for(const std::string& type : EntityManager::Instance().types())
 	{
-		CShape&     shape = e.getComponent<CShape>();
-		CTransform& trans = e.getComponent<CTransform>();
+		for(Entity e : EntityManager::Instance().entitiesByType(type))
+		{
+			CShape&     shape = e.getComponent<CShape>();
+			CTransform& trans = e.getComponent<CTransform>();
 
-		shape.circle.setPosition(trans.position.x, trans.position.y);
-		m_window.draw(shape.circle);
+			shape.circle.setPosition(trans.position.x, trans.position.y);
+			m_window.draw(shape.circle);
+		}
 	}
 
 	m_window.display();

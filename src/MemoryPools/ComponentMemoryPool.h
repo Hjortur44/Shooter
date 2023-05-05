@@ -23,10 +23,9 @@ public:
 
   static ComponentMemoryPool& Instance();
 
-  const std::vector<bool> actives() const;
+  const std::vector<bool>& actives() const;
 
 	const size_t activateEntity();
-	const size_t activatePlayer();
   const size_t poolSize() const;
 
 	void deactivateEntity(const size_t id);
