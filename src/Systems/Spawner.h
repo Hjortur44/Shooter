@@ -20,4 +20,5 @@ public:
   ~Spawner();
 
   void spawnEntity(const std::string& type);
+	void spawnBullet(const int x, const int y);
 };

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Grid/Grid.h"
+#include "../Math/Vec2.h"
 #include "../Managers/EntityManager.h"
 #include "../Systems/Input.h"
 #include "../Systems/Movement.h"
@@ -26,9 +28,12 @@ private:
 	void sRender();
   void sUserInput();
 
+	sf::Font         m_font;
   sf::RenderWindow m_window;
+	sf::Text         m_text;
 
+	Grid     m_grid;
 	Movement m_movement;
-	Physics m_physics;
-	Spawner m_spawner;
+	Physics  m_physics;
+	Spawner  m_spawner;
 };

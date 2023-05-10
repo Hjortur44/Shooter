@@ -23,6 +23,8 @@ public:
 
   bool operator <  (const float val) const;
   bool operator >  (const float val) const;
+  bool operator < (const Vec2& rhs) const;
+  bool operator > (const Vec2& rhs) const;
   bool operator >= (const float val) const;
   bool operator <= (const float val) const;
   bool operator == (const float val) const;

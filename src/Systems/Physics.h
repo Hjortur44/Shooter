@@ -20,5 +20,6 @@ private:
 	bool collision(const Vec2& pPos, const Vec2& pHDim,
 									const Vec2& oPos, const Vec2& oHDim);
 
+	bool isPlayerDead(const std::string& type, CBoundingBox& pbox, CTransform& ptrans);
 	bool outside(const Vec2& pos, const Vec2& dim);
 };

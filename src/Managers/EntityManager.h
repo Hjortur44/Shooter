@@ -24,6 +24,8 @@ public:
 	const	std::vector<std::string>& types() const;
   const std::vector<Entity>& entitiesByType(const std::string& type) const;
 
+	const Entity& player();
+
 	Entity addEntity(const std::string& type);
 
 	void removeEntity(const std::string& type, Entity e);

@@ -7,39 +7,49 @@ void Physics::update()
 {
 	EntityManager& manager = EntityManager::Instance();
 
-	const std::vector<Entity> pp = manager.entitiesByType("Player");
-	const std::vector<Entity> bb = manager.entitiesByType("Bullet");
-
-	for(Entity p : pp)
+	for(Entity p : manager.entitiesByType("Player"))
 	{
 		CBoundingBox& pbox = p.getComponent<CBoundingBox>();
 		CTransform& ptrans = p.getComponent<CTransform>();
 
-		bool o = outside(ptrans.position, pbox.dimension);
+		bool bulletHit = isPlayerDead("Bullet", pbox, ptrans);
+		bool enemyHit  = isPlayerDead("Enemy", pbox, ptrans);
 
-		for(Entity b : bb)
-		{
-			CBoundingBox& bbox = b.getComponent<CBoundingBox>();
-			CTransform& btrans = b.getComponent<CTransform>();
-
-			bool out = outside(btrans.position, bbox.dimension);
-			bool coll = collision(ptrans.position, pbox.halfDimension,
-														 btrans.position, bbox.halfDimension);
-
-			if(coll)
-			{
-				manager.removeEntity("Bullet", b);
-				manager.removeEntity("Player", p);
-			}
-			else if(out)
-			{
-				manager.removeEntity("Bullet", b);
-			}
-		}
+	//	if(bulletHit || enemyHit)
+		//	manager.removeEntity("Player", p);
 	}
 }
 
 // private
+bool Physics::isPlayerDead(const std::string& type, CBoundingBox& pbox, CTransform& ptrans)
+{
+	EntityManager& manager = EntityManager::Instance();
+	bool isDead = false;
+
+	for(Entity e : manager.entitiesByType(type))
+	{
+		CBoundingBox& ebox = e.getComponent<CBoundingBox>();
+		CTransform& etrans = e.getComponent<CTransform>();
+
+		bool out = outside(etrans.position, ebox.dimension);
+		bool coll = collision(ptrans.position, pbox.halfDimension,
+													 etrans.position, ebox.halfDimension);
+
+		if(coll)
+		{
+			//manager.removeEntity(type, e);
+			isDead = true;
+		}
+		else if(out)
+		{
+			manager.removeEntity(type, e);
+		}
+	}
+
+	return isDead;
+}
+
+
 bool Physics::collision(const Vec2& pPos, const Vec2& pHDim,
 								const Vec2& oPos, const Vec2& oHDim)
 {

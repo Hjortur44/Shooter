@@ -91,6 +91,18 @@ bool Vec2::operator > (const float val) const
 }
 
 
+bool Vec2::operator < (const Vec2& rhs) const
+{
+  return (x < rhs.x && y < rhs.y);
+}
+
+
+bool Vec2::operator > (const Vec2& rhs) const
+{
+  return (x > rhs.x && y > rhs.y);
+}
+
+
 bool Vec2::operator >= (const float val) const
 {
   return (x >= val && y >= val);
@@ -157,7 +169,7 @@ void Vec2::normalizeTri(const Vec2& rhs)
 
 	// deg = rad * 180 / pi
 	float rad = pi / 180.0f; // one rad
-	float deg = theta *  180.0f / pi; // one deg, rad = pi / 180
+	float deg = theta * 180.0f / pi; // one deg, rad = pi / 180
 }
 
 float Vec2::lengtSQ(const Vec2& rhs)

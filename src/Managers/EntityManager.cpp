@@ -16,6 +16,13 @@ const	std::vector<std::string>& EntityManager::types() const
 	return m_types;
 }
 
+
+const Entity& EntityManager::player()
+{
+	return m_entities.at("Player").at(0);
+}
+
+
 const std::vector<Entity>& EntityManager::entitiesByType(const std::string& type) const
 {
 	return m_entities.at(type);

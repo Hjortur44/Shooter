@@ -8,6 +8,9 @@ GameEngine::GameEngine()
 
 void GameEngine::run()
 {
+	m_spawner.spawnEntity("Player");
+	m_spawner.spawnEntity("Enemy");
+
   while(m_window.isOpen())
   {
     update();
@@ -36,8 +39,14 @@ void GameEngine::update()
 // private
 void GameEngine::init()
 {
-  m_window.create(sf::VideoMode(640, 480), "Game");
+	Vec2 window(640, 480);
+  m_window.create(sf::VideoMode(window.x, window.y), "Game");
   m_window.setFramerateLimit(60);
+
+	m_font.loadFromFile("/home/hjortur/Documents/Gits/Shooter/font/arcade_i.TTF");
+	m_text.setFont(m_font);
+	m_text.setCharacterSize(8);
+	m_text.setFillColor(sf::Color::Red);
 }
 
 
@@ -51,12 +60,14 @@ void GameEngine::sUserInput()
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				m_spawner.spawnEntity("Bullet");
+				float x = sf::Mouse::getPosition(m_window).x;
+				float y = sf::Mouse::getPosition(m_window).y;
+
+				m_spawner.spawnBullet(x, y);
 			}
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 			{
-				m_spawner.spawnEntity("Player");
 			}
 		}
 
@@ -86,6 +97,22 @@ void GameEngine::sRender()
 			shape.circle.setPosition(trans.position.x, trans.position.y);
 			m_window.draw(shape.circle);
 		}
+	}
+
+	const std::vector<Vec2> grid = m_grid.grid();
+	for(int i = 0; i < grid.size(); i += 2)
+	{
+		Vec2 p0 = grid[i];
+		Vec2 p1 = grid[i + 1];
+		sf::Vertex line[] = {sf::Vector2f(p0.x,p0.y), sf::Vector2f (p1.x,p1.y)};
+    m_window.draw(line, 2, sf::Lines);
+	}
+
+	for(const auto& [key, value] : m_grid.numbers())
+	{
+		m_text.setString(key);
+		m_text.setPosition(value.x, value.y);
+	  m_window.draw(m_text);
 	}
 
 	m_window.display();
