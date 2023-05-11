@@ -22,5 +22,5 @@ public:
 private:
 	Vec2 m_window = {640.0f, 480.0f};
 
-	int m_rectSize = 64;
+	int m_rectSize = 32;
 };

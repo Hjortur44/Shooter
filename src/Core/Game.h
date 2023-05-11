@@ -23,5 +23,6 @@ public:
   void start();
 
 private:
-  std::vector<size_t> configs(const std::string& index);
+	std::vector<Vec2>   assetConfigs(const std::string& index);
+  std::vector<size_t> entityConfigs(const std::string& index);
 };

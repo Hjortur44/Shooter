@@ -2,6 +2,28 @@
 
 Game::Game() {}
 
+void Game::readAssetConfigs(const std::string& configIndex)
+{
+  std::map<std::string, std::vector<Vec2>> configMap;
+  std::string entityName = "";
+  std::string filename = "";
+
+  std::ifstream fin(configIndex);
+
+  while(fin.good())
+  {
+    fin >> entityName;
+    fin >> filename;
+
+    configMap[entityName] = assetConfigs(filename);
+  }
+
+  fin.close();
+
+ ConfigurationManager::Instance().setAssetConfigs(configMap);
+}
+
+
 void Game::readEntityConfigs(const std::string& configIndex)
 {
   std::map<std::string, std::vector<size_t>> configMap;
@@ -15,12 +37,12 @@ void Game::readEntityConfigs(const std::string& configIndex)
     fin >> entityName;
     fin >> filename;
 
-    configMap[entityName] = configs(filename);
+    configMap[entityName] = entityConfigs(filename);
   }
 
   fin.close();
 
-  ConfigurationManager::Instance().setConfigs(configMap);
+  ConfigurationManager::Instance().setEntityConfigs(configMap);
 }
 
 
@@ -54,7 +76,27 @@ void Game::start()
 
 
 // private
-std::vector<size_t> Game::configs(const std::string& index)
+std::vector<Vec2> Game::assetConfigs(const std::string& index)
+{
+  std::vector<Vec2> cs;
+  std::ifstream fin(index);
+  int x = 0;
+	int y = 0;
+
+  while(fin.good())
+  {
+    fin >> x;
+		fin >> y;
+    cs.push_back(Vec2(x, y));
+  }
+
+  fin.close();
+
+  return cs;
+}
+
+
+std::vector<size_t> Game::entityConfigs(const std::string& index)
 {
   std::vector<size_t> cs;
   std::ifstream fin(index);

@@ -77,6 +77,7 @@ EntityManager::EntityManager()
 	m_types.push_back("Bullet");
 	m_types.push_back("Enemy");
 	m_types.push_back("Player");
+	m_types.push_back("Outer_wall");
 
 	for(std::string& t : m_types)
 		m_entities[t] = std::vector<Entity>();

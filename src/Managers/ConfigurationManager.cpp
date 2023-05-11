@@ -7,15 +7,27 @@ ConfigurationManager& ConfigurationManager::Instance()
 }
 
 
-const std::vector<size_t>& ConfigurationManager::getConfigs(const std::string& type) const
+const std::vector<Vec2>& ConfigurationManager::getAssetConfigs(const std::string& type) const
 {
-  return m_configMap.at(type);
+  return m_assetConfigMap.at(type);
 }
 
 
-void ConfigurationManager::setConfigs(std::map<std::string, std::vector<size_t>>& entityConfigMap)
+const std::vector<size_t>& ConfigurationManager::getEntityConfigs(const std::string& type) const
 {
-  m_configMap = entityConfigMap;
+  return m_entityConfigMap.at(type);
+}
+
+
+void ConfigurationManager::setAssetConfigs(std::map<std::string, std::vector<Vec2>>& assetConfigMap)
+{
+  m_assetConfigMap = assetConfigMap;
+}
+
+
+void ConfigurationManager::setEntityConfigs(std::map<std::string, std::vector<size_t>>& entityConfigMap)
+{
+  m_entityConfigMap = entityConfigMap;
 }
 
 

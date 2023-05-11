@@ -1,5 +1,5 @@
 [ENTITY]
-|    Name    | Id |  Type  |
+|  Variable  | Id |  Type  |
 |--------------------------|
 | Radius     | r  | size_t |
 | Vertices   | v  | size_t |

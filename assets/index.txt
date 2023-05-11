@@ -1,1 +1,2 @@
-wood /home/hjortur/Documents/Gits/Shooter/assets/wood_texture.png
+wood  /home/hjortur/Documents/Gits/Shooter/assets/wood_texture.png
+brick /home/hjortur/Documents/Gits/Shooter/assets/brick.png

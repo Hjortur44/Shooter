@@ -8,8 +8,7 @@ GameEngine::GameEngine()
 
 void GameEngine::run()
 {
-	m_spawner.spawnEntity("Player");
-	m_spawner.spawnEntity("Enemy");
+	m_spawner.spawnOuterWall();
 
   while(m_window.isOpen())
   {
@@ -60,10 +59,10 @@ void GameEngine::sUserInput()
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				float x = sf::Mouse::getPosition(m_window).x;
-				float y = sf::Mouse::getPosition(m_window).y;
+				//float x = sf::Mouse::getPosition(m_window).x;
+				//float y = sf::Mouse::getPosition(m_window).y;
 
-				m_spawner.spawnBullet(x, y);
+				//m_spawner.spawnBullet(x, y);
 			}
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
@@ -94,8 +93,8 @@ void GameEngine::sRender()
 			CShape&     shape = e.getComponent<CShape>();
 			CTransform& trans = e.getComponent<CTransform>();
 
-			shape.circle.setPosition(trans.position.x, trans.position.y);
-			m_window.draw(shape.circle);
+			shape.rectangle.setPosition(trans.position.x, trans.position.y);
+			m_window.draw(shape.rectangle);
 		}
 	}
 

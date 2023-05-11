@@ -49,11 +49,10 @@ public:
 				 const sf::Texture& texture,
 				 bool active);
 
-  sf::CircleShape circle;
-  sf::Texture     texture;
+  sf::RectangleShape rectangle;
+  sf::Texture        texture;
 
 	Vec2 position = {0.0f, 0.0f};
-	Vec2 shape    = {0.0f, 0.0f};
 
   bool active = false;
 };
