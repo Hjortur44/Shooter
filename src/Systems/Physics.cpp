@@ -1,75 +1,60 @@
 #include "Physics.h"
 
 Physics::Physics() {}
+
 Physics::~Physics() {}
 
 void Physics::update()
 {
-	EntityManager& manager = EntityManager::Instance();
+	ComponentManager& compManager = ComponentManager::Instance();
+	Entity            player      = compManager.player();
+	CBoundingBox&     pBox        = player.getComponent<CBoundingBox>();
+	CController&      pCont       = player.getComponent<CController>();
+	CTransform&       pTrans      = player.getComponent<CTransform>();
 
-	for(Entity p : manager.entitiesByType("Player"))
+	pTrans.previousPosition = pTrans.currentPosition;
+	pTrans.currentPosition += (pTrans.velocity * pCont.direction);
+
+	int coll = borderWallCollision(pTrans.currentPosition, pBox.dimension);
+
+	switch(coll)
 	{
-		CBoundingBox& pbox = p.getComponent<CBoundingBox>();
-		CTransform& ptrans = p.getComponent<CTransform>();
-
-		bool bulletHit = isPlayerDead("Bullet", pbox, ptrans);
-		bool enemyHit  = isPlayerDead("Enemy", pbox, ptrans);
-
-	//	if(bulletHit || enemyHit)
-		//	manager.removeEntity("Player", p);
+		case 0:
+			pTrans.currentPosition = pTrans.previousPosition;
+		break;
+		case 1:
+			pTrans.currentPosition.x = pTrans.previousPosition.x;
+		break;
+		case 2:
+			pTrans.currentPosition.y = pTrans.previousPosition.y;
+		break;
 	}
 }
 
-// private
-bool Physics::isPlayerDead(const std::string& type, CBoundingBox& pbox, CTransform& ptrans)
+
+int Physics::borderWallCollision(const Vec2& pPosition, const Vec2& pDimension)
 {
-	EntityManager& manager = EntityManager::Instance();
-	bool isDead = false;
+	ComponentManager& compManager = ComponentManager::Instance();
+	int coll = -1;
 
-	for(Entity e : manager.entitiesByType(type))
+	for(Entity wall : compManager.entitiesByType("Wall"))
 	{
-		CBoundingBox& ebox = e.getComponent<CBoundingBox>();
-		CTransform& etrans = e.getComponent<CTransform>();
+		CBoundingBox& wBox   = wall.getComponent<CBoundingBox>();
+		CTransform&   wTrans = wall.getComponent<CTransform>();
 
-		bool out = outside(etrans.position, ebox.dimension);
-		bool coll = collision(ptrans.position, pbox.halfDimension,
-													 etrans.position, ebox.halfDimension);
+		Vec2 pOrigin = pPosition + (pDimension / 2.0f);
+		Vec2 center = ((Vec2(640.0f, 480.0f) - 32.0f) / 2.0f) + (pDimension / 2.0f);
+		Vec2 centerSQ = (center - 48.0f) * (center - 48.0f);
+		Vec2 deltaSQ = (pOrigin - center) * (pOrigin - center);
+		Vec2 distSQ = centerSQ - deltaSQ;
 
-		if(coll)
-		{
-			//manager.removeEntity(type, e);
-			isDead = true;
-		}
-		else if(out)
-		{
-			manager.removeEntity(type, e);
-		}
+		if(distSQ < 0)
+			coll = 0;
+		else if(distSQ.x < 0)
+			coll = 1;
+		else if(distSQ.y < 0)
+			coll = 2;
 	}
 
-	return isDead;
-}
-
-
-bool Physics::collision(const Vec2& pPos, const Vec2& pHDim,
-								const Vec2& oPos, const Vec2& oHDim)
-{
-	Vec2 radiusSumSQ = (pHDim + oHDim) * (pHDim + oHDim);
-	Vec2 distSQ = (pPos - oPos) * (pPos - oPos);
-
-	// Overlaps
-	bool hor = distSQ.y < radiusSumSQ.x;
-	bool ver = distSQ.x < radiusSumSQ.y;
-
-	return hor && ver;
-}
-
-
-bool Physics::outside(const Vec2& pos, const Vec2& dim)
-{
-	Vec2 window(640, 480); // the values need to be derived in better way.
-
-	bool hor = (pos.y + dim.y) < 0 || (pos.y - dim.y) > window.y;
-	bool ver = (pos.x + dim.x) < 0 || (pos.x - dim.x) > window.x;
-
-	return hor || ver;
+	return coll;
 }

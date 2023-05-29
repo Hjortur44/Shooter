@@ -1,2 +1,4 @@
-wood  /home/hjortur/Documents/Gits/Shooter/assets/wood_texture.png
-brick /home/hjortur/Documents/Gits/Shooter/assets/brick.png
+brick_32_32  /home/hjortur/Documents/Gits/Shooter/assets/brick_32_32.png
+brick_32_480 /home/hjortur/Documents/Gits/Shooter/assets/brick_32_480.png
+brick_640_32 /home/hjortur/Documents/Gits/Shooter/assets/brick_640_32.png
+wood_32_32   /home/hjortur/Documents/Gits/Shooter/assets/wood_32_32.png

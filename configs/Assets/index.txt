@@ -1,1 +1,2 @@
 Outer_wall /home/hjortur/Documents/Gits/Shooter/configs/Assets/outer_wall.txt
+Inner_wall /home/hjortur/Documents/Gits/Shooter/configs/Assets/inner_wall.txt

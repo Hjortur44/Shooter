@@ -1,8 +1,6 @@
 #pragma once
 
 #include "../Entities/Entity.h"
-#include "../Managers/AssetManager.h"
-#include "../Managers/ConfigurationManager.h"
 #include "../Math/Vec2.h"
 #include "../MemoryPools/ComponentMemoryPool.h"
 
@@ -12,16 +10,17 @@
 #include <string>
 #include <vector>
 
-class EntityManager
+class ComponentManager
 {
 public:
-  EntityManager(EntityManager&) = delete;
+  ComponentManager(ComponentManager&) = delete;
 
-  static EntityManager& Instance();
+  static ComponentManager& Instance();
 
   const bool isEmpty(const std::string& type) const;
 
 	const	std::vector<std::string>& types() const;
+
   const std::vector<Entity>& entitiesByType(const std::string& type) const;
 
 	const Entity& player();
@@ -32,7 +31,7 @@ public:
   void update();
 
 private:
-	EntityManager();
+	ComponentManager();
 
 	std::vector<std::string> m_types;
 

@@ -1,7 +1,7 @@
 [ENTITY]
 |  Variable  | Id |  Type  |
 |--------------------------|
-| Radius     | r  | size_t |
-| Vertices   | v  | size_t |
-| Speed      | s  | size_t |
-| Lifespan   | l  | size_t |
+| Position X | px |  int   |
+| Position Y | py |  int   |
+| Speed      | s  |  int   |
+| Lifespan   | l  |  int   |

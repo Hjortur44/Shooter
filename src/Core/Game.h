@@ -24,5 +24,5 @@ public:
 
 private:
 	std::vector<Vec2>   assetConfigs(const std::string& index);
-  std::vector<size_t> entityConfigs(const std::string& index);
+  std::vector<int> entityConfigs(const std::string& index);
 };

@@ -1,35 +1,35 @@
-#include "EntityManager.h"
+#include "ComponentManager.h"
 
-EntityManager& EntityManager::Instance()
+ComponentManager& ComponentManager::Instance()
 {
-  static EntityManager INSTANCE;
+  static ComponentManager INSTANCE;
   return INSTANCE;
 }
 
-const bool EntityManager::isEmpty(const std::string& type) const
+const bool ComponentManager::isEmpty(const std::string& type) const
 {
 	return m_entities.at(type).empty();
 }
 
-const	std::vector<std::string>& EntityManager::types() const
+const	std::vector<std::string>& ComponentManager::types() const
 {
 	return m_types;
 }
 
 
-const Entity& EntityManager::player()
+const Entity& ComponentManager::player()
 {
 	return m_entities.at("Player").at(0);
 }
 
 
-const std::vector<Entity>& EntityManager::entitiesByType(const std::string& type) const
+const std::vector<Entity>& ComponentManager::entitiesByType(const std::string& type) const
 {
 	return m_entities.at(type);
 }
 
 
-Entity EntityManager::addEntity(const std::string& type)
+Entity ComponentManager::addEntity(const std::string& type)
 {
 	Entity e(ComponentMemoryPool::Instance().activateEntity());
 	m_entitiesToAdd[type].push_back(e);
@@ -38,13 +38,13 @@ Entity EntityManager::addEntity(const std::string& type)
 }
 
 
-void EntityManager::removeEntity(const std::string& type, Entity e)
+void ComponentManager::removeEntity(const std::string& type, Entity e)
 {
 	m_entitiesToRemove[type].push_back(e);
 }
 
 
-void EntityManager::update()
+void ComponentManager::update()
 {
 	for(const auto& [key, value] : m_entitiesToRemove)
 	{
@@ -72,12 +72,13 @@ void EntityManager::update()
 }
 
 // private
-EntityManager::EntityManager()
+ComponentManager::ComponentManager()
 {
 	m_types.push_back("Bullet");
 	m_types.push_back("Enemy");
 	m_types.push_back("Player");
-	m_types.push_back("Outer_wall");
+
+	m_types.push_back("Wall");
 
 	for(std::string& t : m_types)
 		m_entities[t] = std::vector<Entity>();

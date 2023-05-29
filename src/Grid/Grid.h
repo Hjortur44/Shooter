@@ -6,21 +6,20 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <SFML/Graphics.hpp>
 
 class Grid
 {
 public:
 	Grid();
-	Grid(const Vec2& window);
+	Grid(const Vec2& window, const int boxSize);
 	~Grid();
 
 	const std::vector<Vec2> grid();
 
-	const std::map<std::string, Vec2> numbers();
+	const std::map<std::string, Vec2> coordNumbers();
 
 private:
-	Vec2 m_window = {640.0f, 480.0f};
+	Vec2 m_window = {0.0f, 0.0f};
 
-	int m_rectSize = 32;
+	int m_boxSize = 0;
 };

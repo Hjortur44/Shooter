@@ -3,7 +3,7 @@
 #include "../Entities/Entity.h"
 #include "../Managers/AssetManager.h"
 #include "../Managers/ConfigurationManager.h"
-#include "../Managers/EntityManager.h"
+#include "../Managers/ComponentManager.h"
 #include "../Math/Vec2.h"
 
 #include <cmath>
@@ -11,17 +11,18 @@
 #include <string>
 #include <vector>
 
-#include <SFML/Graphics.hpp>
-
 class Spawner
 {
 public:
-  Spawner();
+  Spawner(const int baseSize);
   ~Spawner();
 
 	void spawnBullet(const int x, const int y);
 	void spawnEnemy();
 	void spawnPlayer();
 
-	void spawnOuterWall();
+	void spawn();
+
+private:
+	int m_baseSize = 0;
 };

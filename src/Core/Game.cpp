@@ -26,7 +26,7 @@ void Game::readAssetConfigs(const std::string& configIndex)
 
 void Game::readEntityConfigs(const std::string& configIndex)
 {
-  std::map<std::string, std::vector<size_t>> configMap;
+  std::map<std::string, std::vector<int>> configMap;
   std::string entityName = "";
   std::string filename = "";
 
@@ -96,9 +96,9 @@ std::vector<Vec2> Game::assetConfigs(const std::string& index)
 }
 
 
-std::vector<size_t> Game::entityConfigs(const std::string& index)
+std::vector<int> Game::entityConfigs(const std::string& index)
 {
-  std::vector<size_t> cs;
+  std::vector<int> cs;
   std::ifstream fin(index);
   int value = 0;
 

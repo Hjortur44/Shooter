@@ -6,129 +6,117 @@ Movement::~Movement() {}
 
 void Movement::update()
 {
-	for(const std::string& type : EntityManager::Instance().types())
-	{
-		for(Entity e : EntityManager::Instance().entitiesByType(type))
-		{
-			CTransform& trans = e.getComponent<CTransform>();
-
-			if(type == "Player")
-				trans.position += (trans.velocity * playerMovement());
-			else
-				trans.position += trans.velocity;
-		}
-	}
+	Entity player = ComponentManager::Instance().player();
+	CController& cont = player.getComponent<CController>();
+	cont.direction = playerMovement(cont);
 }
 
 
 // private
-Vec2 Movement::playerMovement()
+Vec2 Movement::playerMovement(CController& cont)
 {
-	Input& input = Input::Instance();
-	Vec2 vel(0.0f, 0.0f);
+	Vec2 dir(0.0f, 0.0f);
 
-	switch(input.keyCount())
+	switch(cont.keyCount)
 	{
 		case 1:
-			vel = oneKey(input);
+			dir = oneKey(cont);
 		break;
 		case 2:
-			vel = twoKeys(input);
+			dir = twoKeys(cont);
 		break;
 		case 3:
-			vel = threeKeys(input);
+			dir = threeKeys(cont);
 		break;
-		default:
-			input.keyCountReset();
 	}
 
-	return vel;
+	return dir;
 }
 
 
-Vec2 Movement::oneKey(Input& input)
+Vec2 Movement::oneKey(CController& cont)
 {
-	Vec2 vel(0.0f, 0.0f);
+	Vec2 dir(0.0f, 0.0f);
 
-	if(input.isKey(18))
+	if(cont.down)
   {
-    vel += m_d;
+    dir += m_d;
   }
 
-	if(input.isKey(0))
+	if(cont.left)
   {
-    vel += m_l;
+    dir += m_l;
   }
 
-	if(input.isKey(3))
+	if(cont.right)
   {
-    vel += m_r;
+    dir += m_r;
   }
 
-  if(input.isKey(22))
+  if(cont.up)
   {
-    vel += m_u;
+    dir += m_u;
   }
 
-	return vel;
+	return dir;
 }
 
 
-Vec2 Movement::twoKeys(Input& input)
+Vec2 Movement::twoKeys(CController& cont)
 {
-	Vec2 vel(0.0f, 0.0f);
+	Vec2 dir(0.0f, 0.0f);
 
-  if(input.isKey(18) && input.isKey(0))
+  if(cont.down && cont.left)
   {
-    vel.x = -m_dig.x;
-		vel.y = m_dig.y;
+    dir.x = -m_dig.x;
+		dir.y = m_dig.y;
   }
 
-  if(input.isKey(18) && input.isKey(3))
+  if(cont.down && cont.right)
   {
-    vel.x = m_dig.x;
-		vel.y = m_dig.y;;
+    dir.x = m_dig.x;
+		dir.y = m_dig.y;
   }
 
-  if(input.isKey(22) && input.isKey(0))
+  if(cont.up && cont.left)
   {
-    vel.x = -m_dig.x;
-		vel.y = -m_dig.y;
+    dir.x = -m_dig.x;
+		dir.y = -m_dig.y;
   }
 
-  if(input.isKey(22) && input.isKey(3))
+  if(cont.up && cont.right)
   {
-    vel.x = m_dig.x;
-		vel.y = -m_dig.y;
+    dir.x = m_dig.x;
+		dir.y = -m_dig.y;
   }
 
-	return vel;
+	return dir;
 }
 
 
-Vec2 Movement::threeKeys(Input& input)
+Vec2 Movement::threeKeys(CController& cont)
 {
-	Vec2 vel(0.0f, 0.0f);
+	Vec2 dir(0.0f, 0.0f);
 
-  if(input.isKey(22) && input.isKey(0) && input.isKey(3))
+  if(cont.up && cont.left && cont.right)
   {
-    vel = m_u;
+    dir = m_u;
   }
 
-  if(input.isKey(18) && input.isKey(0) && input.isKey(3))
+  if(cont.down && cont.left && cont.right)
   {
-    vel = m_d;
+    dir = m_d;
   }
 
-  if(input.isKey(0) && input.isKey(18) && input.isKey(22))
+  if(cont.left && cont.down && cont.up)
   {
-    vel = m_l;
+    dir = m_l;
   }
 
-  if(input.isKey(3) && input.isKey(18) && input.isKey(22))
+  if(cont.right && cont.down&& cont.up)
   {
-    vel = m_r;
+    dir = m_r;
   }
 
-	return vel;
+	return dir;
 }

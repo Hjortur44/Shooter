@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Input.h"
-#include "../Managers/EntityManager.h"
+#include "../Entities/Entity.h"
+#include "../Managers/ComponentManager.h"
 #include "../Math/Vec2.h"
 
 #include <cstddef>
@@ -15,10 +15,10 @@ public:
   void update();
 
 private:
-	Vec2 playerMovement();
-	Vec2 oneKey(Input& input);
-	Vec2 twoKeys(Input& input);
-	Vec2 threeKeys(Input& input);
+	Vec2 playerMovement(CController& cont);
+	Vec2 oneKey(CController& cont);
+	Vec2 twoKeys(CController& cont);
+	Vec2 threeKeys(CController& cont);
 
   Vec2 m_dig = {0.707106781f, 0.707106781f};
 

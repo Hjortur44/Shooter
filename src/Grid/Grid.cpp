@@ -1,42 +1,43 @@
 #include "Grid.h"
 
-Grid::Grid() {}
-Grid::Grid(const Vec2& window) : m_window(window) {}
+
+
+Grid::Grid(const Vec2& window, const int boxSize) : m_window(window), m_boxSize(boxSize) {}
 
 Grid::~Grid() {}
 
 const std::vector<Vec2> Grid::grid()
 {
 	std::vector<Vec2> grid;
-	Vec2 size = m_window / m_rectSize;
+	Vec2 size = m_window / m_boxSize;
 
 	for(int i = 0; i < size.y; i++)
 	{
-		grid.push_back(Vec2(0, m_rectSize * i));
-		grid.push_back(Vec2(m_window.x, m_rectSize * i));
+		grid.push_back(Vec2(0, m_boxSize * i));
+		grid.push_back(Vec2(m_window.x, m_boxSize * i));
 	}
 
 	for(int i = 0; i < size.x; i++)
 	{
-		grid.push_back(Vec2(m_rectSize * i, 0));
-		grid.push_back(Vec2(m_rectSize * i, m_window.y));
+		grid.push_back(Vec2(m_boxSize * i, 0));
+		grid.push_back(Vec2(m_boxSize * i, m_window.y));
 	}
 
 	return grid;
 }
 
 
-const std::map<std::string, Vec2> Grid::numbers()
+const std::map<std::string, Vec2> Grid::coordNumbers()
 {
 	std::map<std::string, Vec2> nums;
-	Vec2 size = m_window / m_rectSize;
+	Vec2 size = m_window / m_boxSize;
 
-	for(int i = 0; i < size.x; i++)
+	for(int i = 0; i < size.y; i++)
 	{
-		for(int j = 0; j < size.y; j++)
+		for(int j = 0; j < size.x; j++)
 		{
-			std::string str = "(" + std::to_string(i) + " , " + std::to_string(j) + ")";
-			nums[str] = Vec2(i, j) * m_rectSize;
+			std::string str = std::to_string(i) + ",\n" + std::to_string(j);
+			nums[str] = Vec2(j * m_boxSize, i * m_boxSize);
 		}
 	}
 

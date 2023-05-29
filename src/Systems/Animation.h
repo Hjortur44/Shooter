@@ -1,9 +1,9 @@
 #include "../Math/Vec2.h"
 
+#include <SFML/Graphics.hpp>
+
 #include <cmath>
 #include <string>
-
-#include <SFML/Graphics.hpp>
 
 class Animation
 {

@@ -10,9 +10,9 @@
 
 typedef std::tuple<
     std::vector<CBoundingBox>,
-    std::vector<CCollision>,
+    std::vector<CController>,
     std::vector<CLifespan>,
-    std::vector<CShape>,
+    std::vector<CTexture>,
     std::vector<CTransform>
     > ComponentVectors;
 

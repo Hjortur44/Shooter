@@ -1,16 +1,15 @@
 #pragma once
 
 #include "../Math/Vec2.h"
-#include "../Systems/Action.h"
+#include "../Systems/Spawner.h"
+
+#include <SFML/Graphics.hpp>
 
 #include <iostream>
 #include <map>
 #include <memory>
-#include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
-
-typedef std::map<int, std::string> ActionMap;
 
 class Scene
 {
@@ -18,30 +17,6 @@ public:
   Scene();
   ~Scene();
 
-  const ActionMap& actionMap() const;
-
-  const bool hasEnded() const;
-
-  const int currentFrame() const;
-  const int height() const;
-  const int width() const;
-
-  void registerAction(int inputKey, const std::string& actionName);
-  void simulate(const int frames);
-
-  virtual void sDoAction(const Action& action) = 0;
-  virtual void sRender()                       = 0;
-  virtual void update()                        = 0;
-
 protected:
-  virtual void onEnd() = 0;
-
-  void setPaused(bool paused);
-
-  ActionMap m_actionMap;
-
-  bool m_isPaused = false;
-  bool m_hasEnded = false;
-
-  int m_currentFrame = 0;
+	Spawner m_spawner = {32};
 };

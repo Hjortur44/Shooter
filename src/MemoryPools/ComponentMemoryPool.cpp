@@ -45,18 +45,18 @@ void ComponentMemoryPool::deactivateEntity(const size_t id)
 // private
 ComponentMemoryPool::ComponentMemoryPool(const size_t poolSize) : m_poolSize(poolSize)
 {
-  auto& box   = std::get<std::vector<CBoundingBox>>(m_compVecs);
-  auto& coll  = std::get<std::vector<CCollision>>(m_compVecs);
-  auto& life  = std::get<std::vector<CLifespan>>(m_compVecs);
-  auto& sh    = std::get<std::vector<CShape>>(m_compVecs);
-  auto& trans = std::get<std::vector<CTransform>>(m_compVecs);
+  auto& box     = std::get<std::vector<CBoundingBox>>(m_compVecs);
+	auto& cont    = std::get<std::vector<CController>>(m_compVecs);
+  auto& life    = std::get<std::vector<CLifespan>>(m_compVecs);
+  auto& texture = std::get<std::vector<CTexture>>(m_compVecs);
+  auto& trans   = std::get<std::vector<CTransform>>(m_compVecs);
 
   for(int i = 0; i < poolSize; i++)
   {
     box.push_back(CBoundingBox());
-    coll.push_back(CCollision());
+    cont.push_back(CController());
     life.push_back(CLifespan());
-    sh.push_back(CShape());
+    texture.push_back(CTexture());
     trans.push_back(CTransform());
 
     m_actives.push_back(false);
