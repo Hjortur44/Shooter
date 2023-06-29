@@ -38,6 +38,26 @@ Entity ComponentManager::addEntity(const std::string& type)
 }
 
 
+void ComponentManager::registerType(const std::string& type)
+{
+	bool exists = false;
+
+	for(std::string s : m_types)
+	{
+		if(s == type)
+		{
+			exists = true;
+			break;
+		}
+	}
+
+	if(!exists)
+	{
+		m_types.push_back(type);
+		m_entities[type] = std::vector<Entity>();
+	}
+}
+
 void ComponentManager::removeEntity(const std::string& type, Entity e)
 {
 	m_entitiesToRemove[type].push_back(e);
@@ -72,14 +92,4 @@ void ComponentManager::update()
 }
 
 // private
-ComponentManager::ComponentManager()
-{
-	m_types.push_back("Bullet");
-	m_types.push_back("Enemy");
-	m_types.push_back("Player");
-
-	m_types.push_back("Wall");
-
-	for(std::string& t : m_types)
-		m_entities[t] = std::vector<Entity>();
-}
+ComponentManager::ComponentManager() { registerType("Player"); }

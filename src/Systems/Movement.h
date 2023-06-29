@@ -15,10 +15,10 @@ public:
   void update();
 
 private:
-	Vec2 playerMovement(CController& cont);
-	Vec2 oneKey(CController& cont);
-	Vec2 twoKeys(CController& cont);
-	Vec2 threeKeys(CController& cont);
+	void playerMovement(CCollision& coll, CController& cont);
+	void oneKey(CCollision& coll, CController& cont);
+	void twoKeys(CCollision& coll, CController& cont);
+	void threeKeys(CCollision& coll, CController& cont);
 
   Vec2 m_dig = {0.707106781f, 0.707106781f};
 

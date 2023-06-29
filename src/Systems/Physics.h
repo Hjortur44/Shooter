@@ -17,4 +17,5 @@ public:
 	void update();
 
 	int borderWallCollision(const Vec2& pPosition, const Vec2& pDimension);
+	int wallCollision(const Vec2& pPosition, const Vec2& pDimension);
 };

@@ -27,6 +27,7 @@ public:
 
 	Entity addEntity(const std::string& type);
 
+	void registerType(const std::string& type);
 	void removeEntity(const std::string& type, Entity e);
   void update();
 

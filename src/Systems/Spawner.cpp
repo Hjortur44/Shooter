@@ -73,6 +73,7 @@ void Spawner::spawnPlayer()
 
 	Entity e = ComponentManager::Instance().addEntity("Player");
 	e.modifyComponent<CBoundingBox>(shape, true, true);
+	e.modifyComponent<CCollision>(false, false, true);
 	e.modifyComponent<CController>(0, true);
 	e.modifyComponent<CLifespan>(lifespan, true);
 	e.modifyComponent<CTexture>(textureName, true);
@@ -81,14 +82,35 @@ void Spawner::spawnPlayer()
 
 void Spawner::spawn()
 {
-	std::string textureName = "brick_640_32";
+	std::string type = "InnerWall";
+	std::string textureName = "marbleWall_64_128";
 
-	Vec2 position(0.0f, 0.0f);
+	Vec2 position(320.0f, 32.0f);
 
-	Vec2 shape(640.0f, 32.0f);
+	Vec2 shape(64.0f, 128.0f);
 	Vec2 velocity(0.0f, 0.0f);
 
-	Entity e = ComponentManager::Instance().addEntity("Wall");
+	ComponentManager::Instance().registerType(type);
+
+	Entity e = ComponentManager::Instance().addEntity(type);
+	e.modifyComponent<CBoundingBox>(shape, true, true);
+	e.modifyComponent<CLifespan>(0, true);
+	e.modifyComponent<CTexture>(textureName, true);
+	e.modifyComponent<CTransform>(position, velocity, true);
+
+
+
+	type = "BorderWall";
+	textureName = "brickWall_640_32";
+
+	position = {0.0f, 0.0f};
+
+	shape = {640.0f, 32.0f};
+	velocity = {0.0f, 0.0f};
+
+	ComponentManager::Instance().registerType(type);
+
+	e = ComponentManager::Instance().addEntity(type);
 	e.modifyComponent<CBoundingBox>(shape, true, true);
 	e.modifyComponent<CLifespan>(0, true);
 	e.modifyComponent<CTexture>(textureName, true);
@@ -97,19 +119,19 @@ void Spawner::spawn()
 
 	position = {0.0f, 480.0f-32};
 
-	e = ComponentManager::Instance().addEntity("Wall");
+	e = ComponentManager::Instance().addEntity(type);
 	e.modifyComponent<CBoundingBox>(shape, true, true);
 	e.modifyComponent<CLifespan>(0, true);
 	e.modifyComponent<CTexture>(textureName, true);
 	e.modifyComponent<CTransform>(position, velocity, true);
 
 
-	textureName = "brick_32_480";
+	textureName = "brickWall_32_480";
 
 	position = {0.0f, 32.0f};
-	shape = {32.0f, 480.0f};
+	shape    = {32.0f, 480.0f};
 
-	e = ComponentManager::Instance().addEntity("Wall");
+	e = ComponentManager::Instance().addEntity(type);
 	e.modifyComponent<CBoundingBox>(shape, true, true);
 	e.modifyComponent<CLifespan>(0, true);
 	e.modifyComponent<CTexture>(textureName, true);
@@ -118,7 +140,7 @@ void Spawner::spawn()
 
 	position = {640.0f-32, 32.0f};
 
-	e = ComponentManager::Instance().addEntity("Wall");
+	e = ComponentManager::Instance().addEntity(type);
 	e.modifyComponent<CBoundingBox>(shape, true, true);
 	e.modifyComponent<CLifespan>(0, true);
 	e.modifyComponent<CTexture>(textureName, true);

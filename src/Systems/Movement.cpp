@@ -7,116 +7,120 @@ Movement::~Movement() {}
 void Movement::update()
 {
 	Entity player = ComponentManager::Instance().player();
-	CController& cont = player.getComponent<CController>();
-	cont.direction = playerMovement(cont);
+
+	CCollision&  coll  = player.getComponent<CCollision>();
+	CController& cont  = player.getComponent<CController>();
+	CTransform&  trans = player.getComponent<CTransform>();
+
+	trans.previousPosition = trans.currentPosition;
+	trans.currentPosition += (trans.velocity * cont.directionLR);
+	trans.currentPosition += (trans.velocity * cont.directionUD);
+
+	playerMovement(coll, cont);
 }
 
 
 // private
-Vec2 Movement::playerMovement(CController& cont)
+void Movement::playerMovement(CCollision& coll, CController& cont)
 {
-	Vec2 dir(0.0f, 0.0f);
+	cont.directionLR = {0.0f, 0.0f};
+	cont.directionUD = {0.0f, 0.0f};
 
 	switch(cont.keyCount)
 	{
 		case 1:
-			dir = oneKey(cont);
+			oneKey(coll, cont);
 		break;
 		case 2:
-			dir = twoKeys(cont);
+			twoKeys(coll, cont);
 		break;
 		case 3:
-			dir = threeKeys(cont);
+			threeKeys(coll, cont);
 		break;
 	}
-
-	return dir;
 }
 
 
-Vec2 Movement::oneKey(CController& cont)
+void Movement::oneKey(CCollision& coll, CController& cont)
 {
-	Vec2 dir(0.0f, 0.0f);
+	cont.directionLR = {0.0f, 0.0f};
+	cont.directionUD = {0.0f, 0.0f};
 
-	if(cont.down)
+	if(!coll.collisionD && cont.down)
   {
-    dir += m_d;
+    cont.directionUD += m_d;
   }
 
-	if(cont.left)
+	if(!coll.collisionL && cont.left)
   {
-    dir += m_l;
+    cont.directionLR += m_l;
   }
 
-	if(cont.right)
+	if(!coll.collisionR && cont.right)
   {
-    dir += m_r;
+   cont.directionLR += m_r;
   }
 
-  if(cont.up)
+  if(!coll.collisionU && cont.up)
   {
-    dir += m_u;
+    cont.directionUD += m_u;
   }
-
-	return dir;
 }
 
 
-Vec2 Movement::twoKeys(CController& cont)
+void Movement::twoKeys(CCollision& coll, CController& cont)
 {
-	Vec2 dir(0.0f, 0.0f);
+	cont.directionLR = {0.0f, 0.0f};
+	cont.directionUD = {0.0f, 0.0f};
 
-  if(cont.down && cont.left)
+  if(!coll.collisionD && !coll.collisionL && cont.down && cont.left)
   {
-    dir.x = -m_dig.x;
-		dir.y = m_dig.y;
+    cont.directionLR.x = -m_dig.x;
+		cont.directionUD.y = m_dig.y;
   }
 
-  if(cont.down && cont.right)
+  if(!coll.collisionD && !coll.collisionR && cont.down && cont.right)
   {
-    dir.x = m_dig.x;
-		dir.y = m_dig.y;
+    cont.directionLR.x = m_dig.x;
+		cont.directionUD.y = m_dig.y;
   }
 
-  if(cont.up && cont.left)
+  if(!coll.collisionU && !coll.collisionL && cont.up && cont.left)
   {
-    dir.x = -m_dig.x;
-		dir.y = -m_dig.y;
+    cont.directionLR.x = -m_dig.x;
+		cont.directionUD.y = -m_dig.y;
   }
 
-  if(cont.up && cont.right)
+  if(!coll.collisionU && !coll.collisionR && cont.up && cont.right)
   {
-    dir.x = m_dig.x;
-		dir.y = -m_dig.y;
+    cont.directionLR.x = m_dig.x;
+		cont.directionUD.y = -m_dig.y;
   }
-
-	return dir;
 }
 
 
-Vec2 Movement::threeKeys(CController& cont)
+void Movement::threeKeys(CCollision& coll, CController& cont)
 {
-	Vec2 dir(0.0f, 0.0f);
+	cont.directionLR = {0.0f, 0.0f};
+	cont.directionUD = {0.0f, 0.0f};
 
   if(cont.up && cont.left && cont.right)
   {
-    dir = m_u;
+    cont.directionUD = m_u;
   }
 
   if(cont.down && cont.left && cont.right)
   {
-    dir = m_d;
+    cont.directionUD = m_d;
   }
 
   if(cont.left && cont.down && cont.up)
   {
-    dir = m_l;
+    cont.directionLR = m_l;
   }
 
   if(cont.right && cont.down&& cont.up)
   {
-    dir = m_r;
+    cont.directionLR = m_r;
   }
-
-	return dir;
 }

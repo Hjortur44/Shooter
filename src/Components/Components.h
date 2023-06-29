@@ -16,13 +16,31 @@ public:
 };
 
 
+class CCollision
+{
+public:
+  CCollision();
+ 	CCollision(bool flag, bool collision, bool activate);
+
+	bool collisionL = false;
+	bool collisionR = false;
+	bool collisionU = false;
+	bool collisionD = false;
+
+	bool collision = false;
+	bool flag      = false;
+	bool isActive  = false;
+};
+
+
 class CController
 {
 public:
   CController();
   CController(int keyCount, bool activate);
 
-	Vec2 direction = {0.0f, 0.0f};
+	Vec2 directionLR = {0.0f, 0.0f};
+	Vec2 directionUD = {0.0f, 0.0f};
 
   bool down  = false;
   bool left  = false;
