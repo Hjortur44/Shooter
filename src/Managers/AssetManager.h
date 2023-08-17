@@ -13,12 +13,12 @@ public:
 
   static AssetManager& Instance();
 
-  const sf::Texture& getAsset(const std::string name) const;
+  const sf::Texture getAsset(const std::string name);
 
   void setAssets(std::map<std::string, std::string> assetMap);
 
 private:
   AssetManager();
 
-  std::map<std::string, sf::Texture> m_assetMap;
+  std::map<std::string, std::string> m_assetMap;
 };

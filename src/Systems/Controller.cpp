@@ -18,32 +18,37 @@ void Controller::keyReleased(int key)
 
 void Controller::update()
 {
-	ComponentManager& compManager = ComponentManager::Instance();
-	Entity player = compManager.player();
-	CController& cont = player.getComponent<CController>();
-	Input& input = Input::Instance();
+	EntityComponentsManager& compManager = EntityComponentsManager::Instance();
+	const std::vector<Entity>& ents = compManager.entitiesByType("Player");
 
-	cont.down  = false;
-	cont.left  = false;
-	cont.right = false;
-	cont.up    = false;
-
-	switch(input.keyCount())
+	if(!ents.empty())
 	{
-		case 1:
-			oneKey(input, cont);
-		break;
-		case 2:
-			twoKeys(input, cont);
-		break;
-		case 3:
-			threeKeys(input, cont);
-		break;
-		default:
-			input.keyCountReset();
-	}
+		Entity player = ents.at(0);
+		CController& cont = player.getComponent<CController>();
+		Input& input = Input::Instance();
 
-	cont.keyCount = input.keyCount();
+		cont.down  = false;
+		cont.left  = false;
+		cont.right = false;
+		cont.up    = false;
+
+		switch(input.keyCount())
+		{
+			case 1:
+				oneKey(input, cont);
+			break;
+			case 2:
+				twoKeys(input, cont);
+			break;
+			case 3:
+				threeKeys(input, cont);
+			break;
+			default:
+				input.keyCountReset();
+		}
+
+		cont.keyCount = input.keyCount();
+	}
 }
 
 // private

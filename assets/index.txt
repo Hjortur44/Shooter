@@ -1,5 +1,3 @@
-brick_32_32       /home/hjortur/Documents/Gits/Shooter/assets/brick_32_32.png
-brickWall_32_480  /home/hjortur/Documents/Gits/Shooter/assets/brickWall_32_480.png
-brickWall_640_32  /home/hjortur/Documents/Gits/Shooter/assets/brickWall_640_32.png
-marbleWall_64_128 /home/hjortur/Documents/Gits/Shooter/assets/marbleWall_64_128.png
-wood_32_32        /home/hjortur/Documents/Gits/Shooter/assets/wood_32_32.png
+brick  ../assets/brick.png
+marble ../assets/marble.png
+wood   ../assets/wood.png

@@ -8,7 +8,6 @@ GameEngine::GameEngine()
 
 void GameEngine::run()
 {
-	Scene s;
   while(m_renderer.renderWindow().isOpen())
   {
     update();
@@ -24,7 +23,7 @@ void GameEngine::quit()
 
 void GameEngine::update()
 {
-	ComponentManager::Instance().update(); // this must be on top
+	EntityComponentsManager::Instance().update(); // this must be on top
 
 	sUserInput();
 	sPhysics();
@@ -33,10 +32,7 @@ void GameEngine::update()
 
 
 // private
-void GameEngine::init()
-{
-	m_spawner.spawnPlayer();
-}
+void GameEngine::init() {}
 
 
 void GameEngine::sPhysics()
@@ -60,14 +56,16 @@ void GameEngine::sUserInput()
 
   while(m_renderer.renderWindow().pollEvent(event))
   {
+
+    if(event.type == sf::Event::Closed)
+        m_renderer.renderWindow().close();
+
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
 				//float x = sf::Mouse::getPosition(m_renderer).x;
 				//float y = sf::Mouse::getPosition(m_renderer).y;
-
-				//m_spawner.spawnBullet(x, y);
 			}
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
@@ -80,9 +78,6 @@ void GameEngine::sUserInput()
 
     if(event.type == sf::Event::KeyReleased)
       m_controller.keyReleased(event.key.code);
-
-    if(event.type == sf::Event::Closed)
-      quit();
 
 		m_controller.update();
   }

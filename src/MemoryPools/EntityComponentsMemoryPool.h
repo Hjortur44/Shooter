@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Components/Components.h"
+#include "../EntityComponents/Components.h"
 
 #include <iostream>
 #include <map>
@@ -13,16 +13,17 @@ typedef std::tuple<
     std::vector<CCollision>,
     std::vector<CController>,
     std::vector<CLifespan>,
+    std::vector<CMovement>,
     std::vector<CTexture>,
     std::vector<CTransform>
     > ComponentVectors;
 
-class ComponentMemoryPool
+class EntityComponentsMemoryPool
 {
 public:
-  ComponentMemoryPool(ComponentMemoryPool&) = delete;
+  EntityComponentsMemoryPool(EntityComponentsMemoryPool&) = delete;
 
-  static ComponentMemoryPool& Instance();
+  static EntityComponentsMemoryPool& Instance();
 
   const std::vector<bool>& actives() const;
 
@@ -38,7 +39,7 @@ public:
   }
 
 private:
-  ComponentMemoryPool(const size_t poolSize);
+  EntityComponentsMemoryPool(const size_t poolSize);
 
   ComponentVectors m_compVecs;
 

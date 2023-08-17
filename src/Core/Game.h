@@ -4,6 +4,7 @@
 
 #include "../Managers/AssetManager.h"
 #include "../Managers/ConfigurationManager.h"
+#include "../Managers/MapManager.h"
 
 #include <fstream>
 #include <iostream>
@@ -15,14 +16,14 @@ class Game
 {
 public:
   Game();
+  ~Game();
 
-  void readAssetConfigs(const std::string& configIndex);
-  void readAssetTextures(const std::string& textureIndex);
-  void readEntityConfigs(const std::string& configIndex);
+  void readAssetIndex(const std::string& assetIndex);
+  void readEntityIndex(const std::string& entityIndex);
+  void readMapIndex(const std::string& mapIndex);
 
   void start();
 
 private:
-	std::vector<Vec2>   assetConfigs(const std::string& index);
   std::vector<int> entityConfigs(const std::string& index);
 };

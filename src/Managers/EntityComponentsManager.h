@@ -2,7 +2,7 @@
 
 #include "../Entities/Entity.h"
 #include "../Math/Vec2.h"
-#include "../MemoryPools/ComponentMemoryPool.h"
+#include "../MemoryPools/EntityComponentsMemoryPool.h"
 
 #include <algorithm>
 #include <iostream>
@@ -10,20 +10,16 @@
 #include <string>
 #include <vector>
 
-class ComponentManager
+class EntityComponentsManager
 {
 public:
-  ComponentManager(ComponentManager&) = delete;
+  EntityComponentsManager(EntityComponentsManager&) = delete;
 
-  static ComponentManager& Instance();
-
-  const bool isEmpty(const std::string& type) const;
+  static EntityComponentsManager& Instance();
 
 	const	std::vector<std::string>& types() const;
 
   const std::vector<Entity>& entitiesByType(const std::string& type) const;
-
-	const Entity& player();
 
 	Entity addEntity(const std::string& type);
 
@@ -32,7 +28,9 @@ public:
   void update();
 
 private:
-	ComponentManager();
+	EntityComponentsManager();
+
+	const bool hasType(const std::string& type) const;
 
 	std::vector<std::string> m_types;
 

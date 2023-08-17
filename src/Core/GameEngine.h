@@ -2,13 +2,11 @@
 
 #include "../Grid/Grid.h"
 #include "../Math/Vec2.h"
-#include "../Managers/ComponentManager.h"
-#include "../Scenes/Scene.h"
+#include "../Managers/EntityComponentsManager.h"
 #include "../Systems/Controller.h"
 #include "../Systems/Movement.h"
 #include "../Systems/Physics.h"
 #include "../Systems/Renderer.h"
-#include "../Systems/Spawner.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -40,5 +38,4 @@ private:
 	Movement   m_movement;
 	Physics    m_physics;
   Renderer   m_renderer    = m_winDim;
-	Spawner    m_spawner     = m_bs;
 };

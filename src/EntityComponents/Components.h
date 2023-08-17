@@ -2,17 +2,15 @@
 
 #include "../Math/Vec2.h"
 
+#include <SFML/Graphics.hpp>
+
 class CBoundingBox
 {
 public:
   CBoundingBox();
-  CBoundingBox(const Vec2& dimension, bool activate, bool isCollidable);
+  CBoundingBox(bool activate);
 
-  Vec2 dimension     = {0.0f, 0.0f};
-  Vec2 halfDimension = {0.0f, 0.0f};
-
-  bool isActive     = false;
-  bool isCollidable = false;
+  bool isActive = false;
 };
 
 
@@ -39,8 +37,11 @@ public:
   CController();
   CController(int keyCount, bool activate);
 
-	Vec2 directionLR = {0.0f, 0.0f};
-	Vec2 directionUD = {0.0f, 0.0f};
+	// If x and y == 0 => stop.
+  // If x < 0 => up, else down.
+	// If y < 0 => left, else right.
+	// If x != 0 and y != 0 => diagonal.
+	Vec2 directions = {0.0f, 0.0f};
 
   bool down  = false;
   bool left  = false;
@@ -66,17 +67,39 @@ public:
 };
 
 
+class CMovement
+{
+public:
+  CMovement();
+  CMovement(bool activate);
+
+	const Vec2& diagonal() const;
+	const Vec2& down()     const;
+	const Vec2& left()     const;
+	const Vec2& right()    const;
+	const Vec2& up()       const;
+
+	bool isActive = false;
+
+private:
+  Vec2 m_diagonal = {0.707106781f, 0.707106781f};
+  Vec2 m_down     = {0.0f, 1.0f};
+  Vec2 m_left     = {-1.0f, 0.0f};
+  Vec2 m_right    = {1.0f, 0.0f};
+  Vec2 m_up       = {0.0f, -1.0f};
+};
+
+
 class CTexture
 {
 public:
   CTexture();
-  CTexture(const std::string& name, bool activate);
+  CTexture(const sf::Texture& texture, bool activate);
+
+	sf::Texture texture;
 
 	bool isActive = false;
-
-	std::string name = "";
 };
-
 
 class CTransform
 {

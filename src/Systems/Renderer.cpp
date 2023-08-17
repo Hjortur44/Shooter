@@ -17,9 +17,9 @@ void Renderer::update()
 {
 	m_window.clear();
 
-	coordinateRendering();
+	//coordinateRendering();
 	entityRendering();
-	gridRendering();
+	//gridRendering();
 
 	m_window.display();
 }
@@ -29,6 +29,7 @@ void Renderer::windowDim(const Vec2& winDim)
 {
 	m_winDim = winDim;
 }
+
 
 void Renderer::coordinates(const std::map<std::string, Vec2>& coords)
 {
@@ -48,11 +49,13 @@ void Renderer::init()
   m_window.create(sf::VideoMode(m_winDim.x, m_winDim.y), "Game");
   m_window.setFramerateLimit(60);
 
-	m_font.loadFromFile("/home/hjortur/Documents/Gits/Shooter/font/arcade_i.TTF");
+	m_font.loadFromFile("../font/arcade_i.TTF");
 
 	m_text.setFont(m_font);
 	m_text.setCharacterSize(8);
 	m_text.setFillColor(sf::Color::Red);
+
+	m_scene_play.mapNumber(0);
 }
 
 
@@ -69,18 +72,19 @@ void Renderer::coordinateRendering()
 
 void Renderer::entityRendering()
 {
-	for(const std::string& type : ComponentManager::Instance().types())
+	EntityComponentsManager& ecManager = EntityComponentsManager::Instance();
+
+	for(const std::string& type : ecManager.types())
 	{
-		for(Entity e : ComponentManager::Instance().entitiesByType(type))
+		for(Entity e : ecManager.entitiesByType(type))
 		{
-			CTexture& texture = e.getComponent<CTexture>();
+			CTexture& tex = e.getComponent<CTexture>();
 			CTransform& trans = e.getComponent<CTransform>();
 
-			sf::Sprite sprite;
-			sprite.setTexture(AssetManager::Instance().getAsset(texture.name));
-			sprite.setPosition(trans.currentPosition.x, trans.currentPosition.y);
+			sf::Sprite s(tex.texture);
+			s.setPosition(trans.currentPosition.x, trans.currentPosition.y);
 
-			m_window.draw(sprite);
+		  m_window.draw(s);
 		}
 	}
 }

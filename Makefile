@@ -20,9 +20,9 @@ $(BIN_DIR)/$(SH_FILE): $(OBJ_FILES)
 	$(CXX) $(LIB_DIR) $(OBJ_FILES) -o $(BIN_DIR)/$(SH_FILE) $(LD_FLAGS)
 
 compile:
-	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Components
 	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Core
 	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Entities
+	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/EntityComponents
 	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Grid
 	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Launcher
 	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Managers

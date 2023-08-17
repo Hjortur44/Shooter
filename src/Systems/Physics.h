@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Entities/Entity.h"
-#include "../Managers/ComponentManager.h"
+#include "../Managers/EntityComponentsManager.h"
 #include "../Math/Vec2.h"
 
 #include <iostream>
@@ -16,6 +16,5 @@ public:
 
 	void update();
 
-	int borderWallCollision(const Vec2& pPosition, const Vec2& pDimension);
-	int wallCollision(const Vec2& pPosition, const Vec2& pDimension);
+	const int collisionDistance(const Vec2& pLoc);
 };

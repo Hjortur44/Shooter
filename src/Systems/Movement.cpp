@@ -6,121 +6,116 @@ Movement::~Movement() {}
 
 void Movement::update()
 {
-	Entity player = ComponentManager::Instance().player();
+	std::vector<Entity> allPlayers = EntityComponentsManager::Instance().entitiesByType("Player");
 
-	CCollision&  coll  = player.getComponent<CCollision>();
-	CController& cont  = player.getComponent<CController>();
-	CTransform&  trans = player.getComponent<CTransform>();
+	if(!allPlayers.empty())
+	{
+		Entity player = allPlayers.at(0);
 
-	trans.previousPosition = trans.currentPosition;
-	trans.currentPosition += (trans.velocity * cont.directionLR);
-	trans.currentPosition += (trans.velocity * cont.directionUD);
+		CController& cont  = player.getComponent<CController>();
+		CMovement&   move  = player.getComponent<CMovement>();
+		CTransform&  trans = player.getComponent<CTransform>();
 
-	playerMovement(coll, cont);
+		trans.previousPosition = trans.currentPosition;
+		trans.currentPosition += (trans.velocity * cont.directions);
+
+		playerMovement(cont, move);
+	}
 }
 
-
 // private
-void Movement::playerMovement(CCollision& coll, CController& cont)
+void Movement::playerMovement(CController& cont, CMovement& move)
 {
-	cont.directionLR = {0.0f, 0.0f};
-	cont.directionUD = {0.0f, 0.0f};
+	cont.directions = {0.0f, 0.0f};
 
 	switch(cont.keyCount)
 	{
 		case 1:
-			oneKey(coll, cont);
+			oneKey(cont, move);
 		break;
 		case 2:
-			twoKeys(coll, cont);
+			twoKeys(cont, move);
 		break;
 		case 3:
-			threeKeys(coll, cont);
+			threeKeys(cont, move);
 		break;
 	}
 }
 
 
-void Movement::oneKey(CCollision& coll, CController& cont)
+void Movement::oneKey(CController& cont, CMovement& move)
 {
-	cont.directionLR = {0.0f, 0.0f};
-	cont.directionUD = {0.0f, 0.0f};
-
-	if(!coll.collisionD && cont.down)
+	if(cont.down)
   {
-    cont.directionUD += m_d;
+    cont.directions += move.down();
   }
 
-	if(!coll.collisionL && cont.left)
+	if(cont.left)
   {
-    cont.directionLR += m_l;
+    cont.directions += move.left();
   }
 
-	if(!coll.collisionR && cont.right)
+	if(cont.right)
   {
-   cont.directionLR += m_r;
+   cont.directions += move.right();
   }
 
-  if(!coll.collisionU && cont.up)
+  if(cont.up)
   {
-    cont.directionUD += m_u;
+    cont.directions += move.up();
   }
 }
 
 
-void Movement::twoKeys(CCollision& coll, CController& cont)
+void Movement::twoKeys(CController& cont, CMovement& move)
 {
-	cont.directionLR = {0.0f, 0.0f};
-	cont.directionUD = {0.0f, 0.0f};
+	Vec2 dig = move.diagonal();
 
-  if(!coll.collisionD && !coll.collisionL && cont.down && cont.left)
+  if(cont.down && cont.left)
   {
-    cont.directionLR.x = -m_dig.x;
-		cont.directionUD.y = m_dig.y;
+    cont.directions.x = -dig.x;
+		cont.directions.y = dig.y;
   }
 
-  if(!coll.collisionD && !coll.collisionR && cont.down && cont.right)
+  if(cont.down && cont.right)
   {
-    cont.directionLR.x = m_dig.x;
-		cont.directionUD.y = m_dig.y;
+    cont.directions.x = dig.x;
+		cont.directions.y = dig.y;
   }
 
-  if(!coll.collisionU && !coll.collisionL && cont.up && cont.left)
+  if(cont.up && cont.left)
   {
-    cont.directionLR.x = -m_dig.x;
-		cont.directionUD.y = -m_dig.y;
+    cont.directions.x = -dig.x;
+		cont.directions.y = -dig.y;
   }
 
-  if(!coll.collisionU && !coll.collisionR && cont.up && cont.right)
+  if(cont.up && cont.right)
   {
-    cont.directionLR.x = m_dig.x;
-		cont.directionUD.y = -m_dig.y;
+    cont.directions.x = dig.x;
+		cont.directions.y = -dig.y;
   }
 }
 
 
-void Movement::threeKeys(CCollision& coll, CController& cont)
+void Movement::threeKeys(CController& cont, CMovement& move)
 {
-	cont.directionLR = {0.0f, 0.0f};
-	cont.directionUD = {0.0f, 0.0f};
-
   if(cont.up && cont.left && cont.right)
   {
-    cont.directionUD = m_u;
+    cont.directions = move.up();
   }
 
   if(cont.down && cont.left && cont.right)
   {
-    cont.directionUD = m_d;
+    cont.directions = move.down();
   }
 
   if(cont.left && cont.down && cont.up)
   {
-    cont.directionLR = m_l;
+    cont.directions = move.left();
   }
 
   if(cont.right && cont.down&& cont.up)
   {
-    cont.directionLR = m_r;
+    cont.directions = move.right();
   }
 }

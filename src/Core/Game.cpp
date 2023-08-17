@@ -2,57 +2,15 @@
 
 Game::Game() {}
 
-void Game::readAssetConfigs(const std::string& configIndex)
-{
-  std::map<std::string, std::vector<Vec2>> configMap;
-  std::string entityName = "";
-  std::string filename = "";
+Game::~Game() {}
 
-  std::ifstream fin(configIndex);
-
-  while(fin.good())
-  {
-    fin >> entityName;
-    fin >> filename;
-
-    configMap[entityName] = assetConfigs(filename);
-  }
-
-  fin.close();
-
- ConfigurationManager::Instance().setAssetConfigs(configMap);
-}
-
-
-void Game::readEntityConfigs(const std::string& configIndex)
-{
-  std::map<std::string, std::vector<int>> configMap;
-  std::string entityName = "";
-  std::string filename = "";
-
-  std::ifstream fin(configIndex);
-
-  while(fin.good())
-  {
-    fin >> entityName;
-    fin >> filename;
-
-    configMap[entityName] = entityConfigs(filename);
-  }
-
-  fin.close();
-
-  ConfigurationManager::Instance().setEntityConfigs(configMap);
-}
-
-
-void Game::readAssetTextures(const std::string& textureIndex)
+void Game::readAssetIndex(const std::string& assetIndex)
 {
   std::map<std::string, std::string> map;
   std::string name  = "";
   std::string value = "";
 
-  std::ifstream fin(textureIndex);
+  std::ifstream fin(assetIndex);
 
   while(fin.good())
   {
@@ -68,6 +26,50 @@ void Game::readAssetTextures(const std::string& textureIndex)
 }
 
 
+void Game::readEntityIndex(const std::string& entityIndex)
+{
+  std::map<std::string, std::vector<int>> configMap;
+  std::string entityName = "";
+  std::string filename = "";
+
+  std::ifstream fin(entityIndex);
+
+  while(fin.good())
+  {
+    fin >> entityName;
+    fin >> filename;
+
+    configMap[entityName] = entityConfigs(filename);
+  }
+
+  fin.close();
+
+  ConfigurationManager::Instance().setEntityConfigs(configMap);
+}
+
+
+void Game::readMapIndex(const std::string& mapIndex)
+{
+  std::map<int, std::string> map;
+	int number = 0;
+  std::string value = "";
+
+  std::ifstream fin(mapIndex);
+
+  while(fin.good())
+  {
+    fin >> number;
+    fin >> value;
+
+    map[number] = value;
+  }
+
+  fin.close();
+
+  MapManager::Instance().analizeMapConfigs(map);
+}
+
+
 void Game::start()
 {
   GameEngine engine;
@@ -76,26 +78,6 @@ void Game::start()
 
 
 // private
-std::vector<Vec2> Game::assetConfigs(const std::string& index)
-{
-  std::vector<Vec2> cs;
-  std::ifstream fin(index);
-  int x = 0;
-	int y = 0;
-
-  while(fin.good())
-  {
-    fin >> x;
-		fin >> y;
-    cs.push_back(Vec2(x, y));
-  }
-
-  fin.close();
-
-  return cs;
-}
-
-
 std::vector<int> Game::entityConfigs(const std::string& index)
 {
   std::vector<int> cs;

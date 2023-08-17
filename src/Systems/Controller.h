@@ -2,7 +2,7 @@
 
 #include "Input.h"
 #include "../Entities/Entity.h"
-#include "../Managers/ComponentManager.h"
+#include "../Managers/EntityComponentsManager.h"
 
 class Controller
 {

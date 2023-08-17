@@ -1,0 +1,1 @@
+0 ../maps/map#0/index.txt
