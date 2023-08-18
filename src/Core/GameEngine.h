@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Grid/Grid.h"
 #include "../Math/Vec2.h"
 #include "../Managers/EntityComponentsManager.h"
 #include "../Systems/Controller.h"
@@ -34,8 +33,7 @@ private:
 	int m_bs = 32;
 
 	Controller m_controller;
-	Grid 		   m_grid        = {m_winDim, m_bs};
 	Movement   m_movement;
 	Physics    m_physics;
-  Renderer   m_renderer    = m_winDim;
+  Renderer   m_renderer = m_winDim;
 };

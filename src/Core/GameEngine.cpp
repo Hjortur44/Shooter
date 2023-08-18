@@ -44,8 +44,6 @@ void GameEngine::sPhysics()
 
 void GameEngine::sRender()
 {
-	m_renderer.grid(m_grid.grid());
-	m_renderer.coordinates(m_grid.coordNumbers());
 	m_renderer.update();
 }
 

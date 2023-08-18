@@ -1,5 +1,7 @@
 #include "Controller.h"
 
+// TODO: redo the movement/controller system.
+
 Controller::Controller() {}
 
 Controller::~Controller() {}

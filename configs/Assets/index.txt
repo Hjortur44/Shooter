@@ -1,2 +1,0 @@
-border_wall /home/hjortur/Documents/Gits/Shooter/configs/Assets/border_wall.txt
-inner_wall /home/hjortur/Documents/Gits/Shooter/configs/Assets/inner_wall.txt
