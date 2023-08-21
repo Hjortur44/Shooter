@@ -4,6 +4,18 @@ Movement::Movement() {}
 
 Movement::~Movement() {}
 
+void Movement::keyPressed(int key)
+{
+	Input::Instance().keyPressed(key);
+}
+
+
+void Movement::keyReleased(int key)
+{
+	Input::Instance().keyReleased(key);
+}
+
+
 void Movement::update()
 {
 	std::vector<Entity> allPlayers = EntityComponentsManager::Instance().entitiesByType("Player");
@@ -12,110 +24,119 @@ void Movement::update()
 	{
 		Entity player = allPlayers.at(0);
 
-		CController& cont  = player.getComponent<CController>();
-		CMovement&   move  = player.getComponent<CMovement>();
 		CTransform&  trans = player.getComponent<CTransform>();
 
 		trans.previousPosition = trans.currentPosition;
-		trans.currentPosition += (trans.velocity * cont.directions);
-
-		playerMovement(cont, move);
+		trans.currentPosition += (trans.velocity * playerMovement());
 	}
 }
 
 // private
-void Movement::playerMovement(CController& cont, CMovement& move)
+Vec2 Movement::playerMovement()
 {
-	cont.directions = {0.0f, 0.0f};
+	Input& input = Input::Instance();
+	Vec2 directions = {0.0f, 0.0f};
 
-	switch(cont.keyCount)
+	switch(input.keyCount())
 	{
 		case 1:
-			oneKey(cont, move);
+			directions = oneKey(input);
 		break;
 		case 2:
-			twoKeys(cont, move);
+			directions = twoKeys(input);
 		break;
 		case 3:
-			threeKeys(cont, move);
+			directions = threeKeys(input);
 		break;
 	}
+
+	return directions;
 }
 
 
-void Movement::oneKey(CController& cont, CMovement& move)
+Vec2 Movement::oneKey(Input& input)
 {
-	if(cont.down)
+	Vec2 directions = {0.0f, 0.0f};
+
+	if(input.isKey(18))
   {
-    cont.directions += move.down();
+    directions += m_down;
   }
 
-	if(cont.left)
+	if(input.isKey(0))
   {
-    cont.directions += move.left();
+    directions += m_left;
   }
 
-	if(cont.right)
+	if(input.isKey(3))
   {
-   cont.directions += move.right();
+   directions += m_right;
   }
 
-  if(cont.up)
+  if(input.isKey(22))
   {
-    cont.directions += move.up();
+    directions += m_up;
   }
+
+	return directions;
 }
 
 
-void Movement::twoKeys(CController& cont, CMovement& move)
+Vec2 Movement::twoKeys(Input& input)
 {
-	Vec2 dig = move.diagonal();
+	Vec2 directions = {0.0f, 0.0f};
 
-  if(cont.down && cont.left)
+  if(input.isKey(18) && input.isKey(0))
   {
-    cont.directions.x = -dig.x;
-		cont.directions.y = dig.y;
+    directions.x = -m_diagonal.x;
+		directions.y = m_diagonal.y;
   }
 
-  if(cont.down && cont.right)
+  if(input.isKey(18) && input.isKey(3))
   {
-    cont.directions.x = dig.x;
-		cont.directions.y = dig.y;
+    directions.x = m_diagonal.x;
+		directions.y = m_diagonal.y;
   }
 
-  if(cont.up && cont.left)
+  if(input.isKey(22) && input.isKey(0))
   {
-    cont.directions.x = -dig.x;
-		cont.directions.y = -dig.y;
+    directions.x = -m_diagonal.x;
+		directions.y = -m_diagonal.y;
   }
 
-  if(cont.up && cont.right)
+  if(input.isKey(22) && input.isKey(3))
   {
-    cont.directions.x = dig.x;
-		cont.directions.y = -dig.y;
+    directions.x = m_diagonal.x;
+		directions.y = -m_diagonal.y;
   }
+
+	return directions;
 }
 
 
-void Movement::threeKeys(CController& cont, CMovement& move)
+Vec2 Movement::threeKeys(Input& input)
 {
-  if(cont.up && cont.left && cont.right)
+	Vec2 directions = {0.0f, 0.0f};
+
+  if(input.isKey(22) && input.isKey(0) && input.isKey(3))
   {
-    cont.directions = move.up();
+    directions = m_up;
   }
 
-  if(cont.down && cont.left && cont.right)
+  if(input.isKey(18) && input.isKey(0) && input.isKey(3))
   {
-    cont.directions = move.down();
+    directions = m_down;
   }
 
-  if(cont.left && cont.down && cont.up)
+  if(input.isKey(0) && input.isKey(18) && input.isKey(22))
   {
-    cont.directions = move.left();
+    directions = m_left;
   }
 
-  if(cont.right && cont.down&& cont.up)
+  if(input.isKey(3) && input.isKey(18)&& input.isKey(22))
   {
-    cont.directions = move.right();
+    directions = m_right;
   }
+
+	return directions;
 }

@@ -34,10 +34,8 @@ void GameEngine::update()
 // private
 void GameEngine::init() {}
 
-
 void GameEngine::sPhysics()
 {
-	m_movement.update();
 	m_physics.update();
 }
 
@@ -54,7 +52,6 @@ void GameEngine::sUserInput()
 
   while(m_renderer.renderWindow().pollEvent(event))
   {
-
     if(event.type == sf::Event::Closed)
         m_renderer.renderWindow().close();
 
@@ -66,17 +63,15 @@ void GameEngine::sUserInput()
 				//float y = sf::Mouse::getPosition(m_renderer).y;
 			}
 
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-			{
-			}
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {}
 		}
 
     if(event.type == sf::Event::KeyPressed)
-      m_controller.keyPressed(event.key.code);
+			m_movement.keyPressed(event.key.code);
 
     if(event.type == sf::Event::KeyReleased)
-      m_controller.keyReleased(event.key.code);
-
-		m_controller.update();
+			m_movement.keyReleased(event.key.code);
   }
+
+	m_movement.update();
 }

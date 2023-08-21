@@ -2,7 +2,7 @@
 
 #include "../Managers/EntityComponentsManager.h"
 #include "../Math/Vec2.h"
-#include "../Scenes/Scene_Play.h"
+#include "../Scenes/ScenePlay.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -30,7 +30,7 @@ private:
   sf::RenderWindow m_window;
 	sf::Sprite m_sprite;
 
-	Scene_Play m_scene_play;
+	ScenePlay m_ScenePlay;
 
 	Vec2 m_winDim;
 

@@ -1,16 +1,16 @@
-#include "Scene_Play.h"
+#include "ScenePlay.h"
 
-Scene_Play::Scene_Play() : Scene()
+ScenePlay::ScenePlay() : Scene()
 {
 	EntityComponentsManager::Instance().registerType("Map");
 	m_spawner.spawnPlayer();
 }
 
-Scene_Play::~Scene_Play() {}
+ScenePlay::~ScenePlay() {}
 
-void Scene_Play::update() {}
+void ScenePlay::update() {}
 
-void Scene_Play::mapNumber(const int number)
+void ScenePlay::mapNumber(const int number)
 {
 	AssetManager&            assManager = AssetManager::Instance();
  	EntityComponentsManager& ecManager  = EntityComponentsManager::Instance();

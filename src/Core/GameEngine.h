@@ -2,7 +2,6 @@
 
 #include "../Math/Vec2.h"
 #include "../Managers/EntityComponentsManager.h"
-#include "../Systems/Controller.h"
 #include "../Systems/Movement.h"
 #include "../Systems/Physics.h"
 #include "../Systems/Renderer.h"
@@ -32,7 +31,6 @@ private:
 
 	int m_bs = 32;
 
-	Controller m_controller;
 	Movement   m_movement;
 	Physics    m_physics;
   Renderer   m_renderer = m_winDim;

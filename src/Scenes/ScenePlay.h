@@ -15,11 +15,11 @@
 #include <map>
 #include <vector>
 
-class Scene_Play : public Scene
+class ScenePlay : public Scene
 {
 public:
-  Scene_Play();
-  ~Scene_Play();
+  ScenePlay();
+  ~ScenePlay();
 
 	void mapNumber(const int number);
   void update();

@@ -45,6 +45,6 @@ void Input::keyReleased(int key)
 // private
 Input::Input()
 {
-  for(int i = 0; i < 257; i++)
+  for(int i = m_offset; i < 256; i++)
     m_keys[i] = false;
 }

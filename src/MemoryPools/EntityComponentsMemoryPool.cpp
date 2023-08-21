@@ -46,20 +46,14 @@ void EntityComponentsMemoryPool::deactivateEntity(const size_t id)
 EntityComponentsMemoryPool::EntityComponentsMemoryPool(const size_t poolSize) : m_poolSize(poolSize)
 {
   auto& box   = std::get<std::vector<CBoundingBox>>(m_compVecs);
-	auto& coll  = std::get<std::vector<CCollision>>(m_compVecs);
-	auto& cont  = std::get<std::vector<CController>>(m_compVecs);
   auto& life  = std::get<std::vector<CLifespan>>(m_compVecs);
-  auto& move  = std::get<std::vector<CMovement>>(m_compVecs);
   auto& tex   = std::get<std::vector<CTexture>>(m_compVecs);
   auto& trans = std::get<std::vector<CTransform>>(m_compVecs);
 
   for(int i = 0; i < poolSize; i++)
   {
     box.push_back(CBoundingBox());
-		coll.push_back(CCollision());
-    cont.push_back(CController());
     life.push_back(CLifespan());
-    move.push_back(CMovement());
     tex.push_back(CTexture());
 	  trans.push_back(CTransform());
 

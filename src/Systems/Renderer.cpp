@@ -37,7 +37,7 @@ void Renderer::init()
 
 	//m_font.loadFromFile("../font/arcade_i.TTF");
 
-	m_scene_play.mapNumber(0);
+	m_ScenePlay.mapNumber(0);
 }
 
 
