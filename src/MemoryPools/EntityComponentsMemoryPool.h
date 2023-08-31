@@ -1,6 +1,9 @@
 #pragma once
 
-#include "../EntityComponents/Components.h"
+#include "../EntityComponents/CBoundingBox.h"
+#include "../EntityComponents/CLifespan.h"
+#include "../EntityComponents/CTexture.h"
+#include "../EntityComponents/CTransform.h"
 
 #include <iostream>
 #include <map>

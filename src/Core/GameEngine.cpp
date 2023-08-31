@@ -59,8 +59,7 @@ void GameEngine::sUserInput()
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				//float x = sf::Mouse::getPosition(m_renderer).x;
-				//float y = sf::Mouse::getPosition(m_renderer).y;
+				//sf::Vector2i m = sf::Mouse::getPosition(m_renderer.renderWindow());
 			}
 
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {}

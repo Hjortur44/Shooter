@@ -17,4 +17,7 @@ public:
 	void spawnBullet(const int x, const int y);
 	void spawnEnemy();
 	void spawnPlayer();
+
+private:
+	int m_enemyCount = 0;
 };

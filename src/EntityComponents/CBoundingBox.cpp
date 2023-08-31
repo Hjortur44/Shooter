@@ -1,4 +1,4 @@
-#include "Components.h"
+#include "CBoundingBox.h"
 
 CBoundingBox::CBoundingBox() {}
 

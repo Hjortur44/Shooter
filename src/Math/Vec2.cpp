@@ -170,6 +170,7 @@ Vec2 Vec2::normalizeSQ(const Vec2& rhs)
 
 void Vec2::normalizeTri(const Vec2& rhs)
 {
+/*
 	const double pi = std::acos(-1);
 	float y = 4.0f;
 	float x = 4.0f;
@@ -182,6 +183,7 @@ void Vec2::normalizeTri(const Vec2& rhs)
 	// deg = rad * 180 / pi
 	float rad = pi / 180.0f; // one rad
 	float deg = theta * 180.0f / pi; // one deg, rad = pi / 180
+*/
 }
 
 float Vec2::lengtSQ(const Vec2& rhs)

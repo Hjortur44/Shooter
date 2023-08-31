@@ -50,7 +50,7 @@ EntityComponentsMemoryPool::EntityComponentsMemoryPool(const size_t poolSize) : 
   auto& tex   = std::get<std::vector<CTexture>>(m_compVecs);
   auto& trans = std::get<std::vector<CTransform>>(m_compVecs);
 
-  for(int i = 0; i < poolSize; i++)
+  for(size_t i = 0; i < poolSize; i++)
   {
     box.push_back(CBoundingBox());
     life.push_back(CLifespan());

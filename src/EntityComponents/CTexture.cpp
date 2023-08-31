@@ -1,4 +1,4 @@
-#include "Components.h"
+#include "CTexture.h"
 
 CTexture::CTexture() {}
 

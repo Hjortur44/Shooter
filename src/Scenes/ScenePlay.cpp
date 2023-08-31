@@ -4,6 +4,10 @@ ScenePlay::ScenePlay() : Scene()
 {
 	EntityComponentsManager::Instance().registerType("Map");
 	m_spawner.spawnPlayer();
+	m_spawner.spawnEnemy();
+	m_spawner.spawnEnemy();
+	m_spawner.spawnEnemy();
+	m_spawner.spawnEnemy();
 }
 
 ScenePlay::~ScenePlay() {}

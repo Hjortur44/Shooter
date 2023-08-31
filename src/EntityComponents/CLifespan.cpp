@@ -1,5 +1,5 @@
-#include "Components.h"
+#include "CLifespan.h"
 
 CLifespan::CLifespan() {}
 
-CLifespan::CLifespan(int total, bool activate) : total(total), remaining(total), isActive(activate) {}
+CLifespan::CLifespan(int total, bool activate) : isActive(activate), remaining(total), total(total) {}
