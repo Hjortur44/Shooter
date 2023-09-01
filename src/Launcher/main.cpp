@@ -7,4 +7,6 @@ int main(int argc, char* argv[])
   game.readAssetIndex("../assets/index.txt");
   game.readMapIndex("../maps/index.txt");
   game.start();
+
+	return 0;
 }
