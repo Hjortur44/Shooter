@@ -29,9 +29,11 @@ private:
 
 	Vec2 m_winDim = {640.0f, 480.0f};
 
-	int m_bs = 32;
-
 	Movement   m_movement;
 	Physics    m_physics;
   Renderer   m_renderer = m_winDim;
+
+	std::vector<Entity> m_allPlayers;
+
+	int m_bs = 32;
 };

@@ -16,19 +16,11 @@ void Movement::keyReleased(int key)
 }
 
 
-void Movement::update()
+void Movement::update(Entity& entity)
 {
-	std::vector<Entity> allPlayers = EntityComponentsManager::Instance().entitiesByType("Player");
-
-	if(!allPlayers.empty())
-	{
-		Entity player = allPlayers.at(0);
-
-		CTransform&  trans = player.getComponent<CTransform>();
-
-		trans.previousPosition = trans.currentPosition;
-		trans.currentPosition += (trans.velocity * playerMovement());
-	}
+	CTransform& trans = entity.getComponent<CTransform>();
+	trans.previousPosition = trans.currentPosition;
+	trans.currentPosition += (trans.velocity * playerMovement());
 }
 
 // private

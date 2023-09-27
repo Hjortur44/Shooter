@@ -1,38 +1,39 @@
-CXX       := g++
-TOP_DIR		:= /home/hjortur/Documents/Gits/Shooter
-SRC_DIR		:= src
-BIN_DIR   := bin
-OBJ_DIR   := $(BIN_DIR)/obj
-CPP_DIRS  := $(wildcard $(SRC_DIR)/*)
-SH_FILE   := app
-CPP_FILES := $(shell find $(SRC_DIR) -name "*.cpp")
-H_FILES   := $(shell find $(SRC_DIR) -name "*.h")
-OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(CPP_FILES))
+SHELL = /bin/sh
 
-LIB_DIR   := -L$(SFML_DIR)/lib
-LD_FLAGS  := -O3 -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+.SUFFIXES:
+.SUFFIXES: .cpp .h .d .o
 
-$(shell mkdir -p $(OBJ_DIR))
+CXX      := g++
+CXXFLAGS := -O2 -std=c++2a -Wall -Werror -MMD -MP
+LDFLAGS  := -fstack-protector-all -O2 -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
-all: compile $(BIN_DIR)/$(SH_FILE)
+TOPDIR   := $(shell pwd)
+SRCDIR   := src
+BUILDDIR := $(TOPDIR)/build
+INCDIRS  := $(shell find $(SRCDIR) -type d)
 
-$(BIN_DIR)/$(SH_FILE): $(OBJ_FILES)
-	$(CXX) $(LIB_DIR) $(OBJ_FILES) -o $(BIN_DIR)/$(SH_FILE) $(LD_FLAGS)
+SRCS := $(shell find $(SRCDIR) -name "*.cpp")
+OBJS := $(SRCS:%.cpp=$(BUILDDIR)/%.o)
+DEPS := $(OBJS:.o=.d)
 
-compile:
-	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Core
-	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Entities
-	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/EntityComponents
-	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Grid
-	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Launcher
-	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Managers
-	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Math
-	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/MemoryPools
-	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Scenes
-	$(MAKE) -C /home/hjortur/Documents/Gits/Shooter/src/Systems
+TARGET := Prog
+
+all: $(BUILDDIR)/$(TARGET)
+
+$(BUILDDIR)/$(TARGET): $(OBJS)
+	$(CXX) $^ -o $@ $(LDFLAGS)
+
+$(BUILDDIR)/%.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 run:
-	cd $(BIN_DIR) && ./$(SH_FILE)
+	cd $(BUILDDIR) && ./$(TARGET)
 
 clean:
-	rm -r $(BIN_DIR)
+	rm -r $(BUILDDIR)
+
+-include $(DEPS)
+
+.PHONY: clean
+.PHONY: run

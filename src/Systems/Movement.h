@@ -15,7 +15,7 @@ public:
 
   void keyPressed(int key);
   void keyReleased(int key);
-  void update();
+  void update(Entity& entity);
 
 private:
 	Vec2 playerMovement();

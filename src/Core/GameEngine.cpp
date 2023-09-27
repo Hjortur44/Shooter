@@ -32,7 +32,10 @@ void GameEngine::update()
 
 
 // private
-void GameEngine::init() {}
+void GameEngine::init()
+{
+	m_allPlayers = EntityComponentsManager::Instance().entitiesByType("Player");
+}
 
 void GameEngine::sPhysics()
 {
@@ -72,5 +75,6 @@ void GameEngine::sUserInput()
 			m_movement.keyReleased(event.key.code);
   }
 
-	m_movement.update();
+	if(!m_allPlayers.empty())
+		m_movement.update(m_allPlayers.at(0));
 }
