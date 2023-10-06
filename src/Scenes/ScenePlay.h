@@ -1,19 +1,11 @@
 #pragma once
 
 #include "Scene.h"
-
-#include "../Managers/AssetManager.h"
-#include "../Managers/EntityComponentsManager.h"
 #include "../Managers/MapManager.h"
 #include "../Math/Vec2.h"
+#include "../Systems/Movements/EnemyMovement.h"
+#include "../Systems/Movements/PlayerMovement.h"
 #include "../Systems/Spawner.h"
-
-#include <SFML/Graphics.hpp>
-
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <vector>
 
 class ScenePlay : public Scene
 {
@@ -22,8 +14,11 @@ public:
   ~ScenePlay();
 
 	void mapNumber(const int number);
-  void update();
+  void update() override;
 
 private:
+	EnemyMovement  m_enemyMovement;
+	PlayerMovement m_playerMovement;
+
 	Spawner m_spawner;
 };

@@ -10,7 +10,11 @@ public:
   Entity();
   Entity(const size_t id);
 
+	const bool active() const;
+
   const size_t id() const;
+
+	void active(bool active);
 
   bool operator == (const Entity& e) const;
   bool operator != (const Entity& e) const;
@@ -29,5 +33,7 @@ public:
   }
 
 private:
+	bool m_isActive = true;
+
   size_t m_id = 0;
 };

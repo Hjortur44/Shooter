@@ -35,5 +35,4 @@ clean:
 
 -include $(DEPS)
 
-.PHONY: clean
-.PHONY: run
+.PHONY: run clean

@@ -17,6 +17,7 @@ void Renderer::update()
 {
 	m_window.clear();
 
+	m_scenePlay.update();
 	entityRendering();
 
 	m_window.display();
@@ -30,17 +31,6 @@ void Renderer::windowDim(const Vec2& winDim)
 
 
 // private
-void Renderer::init()
-{
-  m_window.create(sf::VideoMode(m_winDim.x, m_winDim.y), "Game");
-  m_window.setFramerateLimit(60);
-
-	//m_font.loadFromFile("../font/arcade_i.TTF");
-
-	m_ScenePlay.mapNumber(0);
-}
-
-
 void Renderer::entityRendering()
 {
 	EntityComponentsManager& ecManager = EntityComponentsManager::Instance();
@@ -58,4 +48,15 @@ void Renderer::entityRendering()
 		  m_window.draw(s);
 		}
 	}
+}
+
+
+void Renderer::init()
+{
+  m_window.create(sf::VideoMode(m_winDim.x, m_winDim.y), "Game");
+  m_window.setFramerateLimit(60);
+
+	//m_font.loadFromFile("../font/arcade_i.TTF");
+
+	m_scenePlay.mapNumber(0);
 }

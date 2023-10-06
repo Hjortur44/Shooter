@@ -13,6 +13,12 @@ const	std::vector<std::string>& EntityComponentsManager::types() const
 }
 
 
+const std::map<std::string, std::vector<Entity>>& EntityComponentsManager::allEntities() const
+{
+	return m_entities;
+}
+
+
 const std::vector<Entity>& EntityComponentsManager::entitiesByType(const std::string& type) const
 {
 	if(!hasType(type))
@@ -40,6 +46,7 @@ void EntityComponentsManager::registerType(const std::string& type)
 	}
 }
 
+
 void EntityComponentsManager::removeEntity(const std::string& type, Entity e)
 {
 	m_entitiesToRemove[type].push_back(e);
@@ -58,7 +65,7 @@ void EntityComponentsManager::update()
 					return true;
 				}
 				else
-					{ return false; }}));
+				{ return false; }}));
 	}
 
 	for(const auto& [key, value] : m_entitiesToAdd)
@@ -71,14 +78,15 @@ void EntityComponentsManager::update()
 
 	m_entitiesToRemove.clear();
 	m_entitiesToAdd.clear();
-
 }
+
 
 // private
 EntityComponentsManager::EntityComponentsManager()
 {
 	registerType("Empty");
 }
+
 
 const bool EntityComponentsManager::hasType(const std::string& type) const
 {

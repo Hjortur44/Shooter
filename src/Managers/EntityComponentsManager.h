@@ -19,6 +19,7 @@ public:
 
 	const	std::vector<std::string>& types() const;
 
+  const std::map<std::string, std::vector<Entity>>& allEntities() const;
   const std::vector<Entity>& entitiesByType(const std::string& type) const;
 
 	Entity addEntity(const std::string& type);

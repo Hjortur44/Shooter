@@ -2,7 +2,7 @@
 
 #include "../Math/Vec2.h"
 #include "../Managers/EntityComponentsManager.h"
-#include "../Systems/Movement.h"
+#include "../Systems/Input.h"
 #include "../Systems/Physics.h"
 #include "../Systems/Renderer.h"
 
@@ -15,25 +15,17 @@ class GameEngine
 {
 public:
   GameEngine();
+  ~GameEngine();
 
-  void quit();
   void run();
-  void update();
 
 private:
   void init();
 
-	void sPhysics();
-	void sRender();
-  void sUserInput();
-
 	Vec2 m_winDim = {640.0f, 480.0f};
 
-	Movement   m_movement;
-	Physics    m_physics;
-  Renderer   m_renderer = m_winDim;
-
-	std::vector<Entity> m_allPlayers;
+	Physics        m_physics;
+  Renderer       m_renderer = m_winDim;
 
 	int m_bs = 32;
 };

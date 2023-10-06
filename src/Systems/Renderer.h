@@ -23,14 +23,13 @@ public:
 	void update();
 
 private:
-	void init();
-
 	void entityRendering();
+	void init();
 
   sf::RenderWindow m_window;
 	sf::Sprite m_sprite;
 
-	ScenePlay m_ScenePlay;
+	ScenePlay m_scenePlay;
 
 	Vec2 m_winDim;
 

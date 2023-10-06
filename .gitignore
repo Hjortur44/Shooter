@@ -34,4 +34,5 @@
 
 # Folders
 ./bin
+./build
 .fake

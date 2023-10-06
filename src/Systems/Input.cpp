@@ -12,6 +12,7 @@ bool Input::isKey(int key)
   return m_keys[key + m_offset];
 }
 
+
 const int Input::keyCount() const
 {
 	return m_keyCount;

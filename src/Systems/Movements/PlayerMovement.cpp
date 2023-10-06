@@ -1,32 +1,27 @@
-#include "Movement.h"
+#include "PlayerMovement.h"
 
-Movement::Movement() {}
+PlayerMovement::PlayerMovement() {}
 
-Movement::~Movement() {}
+PlayerMovement::~PlayerMovement() {}
 
-void Movement::keyPressed(int key)
+void PlayerMovement::update()
 {
-	Input::Instance().keyPressed(key);
+	EntityComponentsManager& ecManager = EntityComponentsManager::Instance();
+
+	for(Entity ent : ecManager.entitiesByType("Player"))
+	{
+		CTransform& trans = ent.getComponent<CTransform>();
+		trans.previousPosition = trans.currentPosition;
+		trans.currentPosition += (trans.velocity * movement());
+	}
 }
 
-
-void Movement::keyReleased(int key)
-{
-	Input::Instance().keyReleased(key);
-}
-
-
-void Movement::update(Entity& entity)
-{
-	CTransform& trans = entity.getComponent<CTransform>();
-	trans.previousPosition = trans.currentPosition;
-	trans.currentPosition += (trans.velocity * playerMovement());
-}
 
 // private
-Vec2 Movement::playerMovement()
+Vec2 PlayerMovement::movement()
 {
 	Input& input = Input::Instance();
+
 	Vec2 directions = {0.0f, 0.0f};
 
 	switch(input.keyCount())
@@ -46,7 +41,7 @@ Vec2 Movement::playerMovement()
 }
 
 
-Vec2 Movement::oneKey(Input& input)
+Vec2 PlayerMovement::oneKey(Input& input)
 {
 	Vec2 directions = {0.0f, 0.0f};
 
@@ -74,7 +69,7 @@ Vec2 Movement::oneKey(Input& input)
 }
 
 
-Vec2 Movement::twoKeys(Input& input)
+Vec2 PlayerMovement::twoKeys(Input& input)
 {
 	Vec2 directions = {0.0f, 0.0f};
 
@@ -106,7 +101,7 @@ Vec2 Movement::twoKeys(Input& input)
 }
 
 
-Vec2 Movement::threeKeys(Input& input)
+Vec2 PlayerMovement::threeKeys(Input& input)
 {
 	Vec2 directions = {0.0f, 0.0f};
 

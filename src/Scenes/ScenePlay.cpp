@@ -1,6 +1,6 @@
 #include "ScenePlay.h"
 
-ScenePlay::ScenePlay() : Scene()
+ScenePlay::ScenePlay()
 {
 	EntityComponentsManager::Instance().registerType("Map");
 	m_spawner.spawnPlayer();
@@ -12,7 +12,14 @@ ScenePlay::ScenePlay() : Scene()
 
 ScenePlay::~ScenePlay() {}
 
-void ScenePlay::update() {}
+void ScenePlay::update()
+{
+ 	EntityComponentsManager& ecManager  = EntityComponentsManager::Instance();
+	ecManager.update(); 	// this must be on top
+
+	m_enemyMovement.update();
+	m_playerMovement.update();
+}
 
 void ScenePlay::mapNumber(const int number)
 {

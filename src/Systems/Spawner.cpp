@@ -7,7 +7,7 @@ Spawner::~Spawner() {}
 void Spawner::spawnBullet(const int mouseX, const int mouseY)
 {
 	AssetManager&            assManager = AssetManager::Instance();
-	EntityComponentsManager& ecManager = EntityComponentsManager::Instance();
+	EntityComponentsManager& ecManager  = EntityComponentsManager::Instance();
 
 	std::string type = "Bullet";
 
@@ -27,7 +27,7 @@ void Spawner::spawnBullet(const int mouseX, const int mouseY)
 void Spawner::spawnEnemy()
 {
 	AssetManager&            assManager = AssetManager::Instance();
-	EntityComponentsManager& ecManager = EntityComponentsManager::Instance();
+	EntityComponentsManager& ecManager  = EntityComponentsManager::Instance();
 
 	std::string type = "Enemy";
 
@@ -50,7 +50,7 @@ void Spawner::spawnEnemy()
 void Spawner::spawnPlayer()
 {
 	AssetManager&            assManager = AssetManager::Instance();
-	EntityComponentsManager& ecManager = EntityComponentsManager::Instance();
+	EntityComponentsManager& ecManager  = EntityComponentsManager::Instance();
 
 	std::string type = "Player";
 
