@@ -1,11 +1,13 @@
-#include "main.h"
+#include "main.hpp"
 
 int main(int argc, char* argv[])
 {
+	std::string domain = "/home/hjortur/Documents/Gits/Shooter";
+
   Game game;
-  game.readEntityIndex("../configs/Entities/index.txt");
-  game.readAssetIndex("../assets/index.txt");
-  game.readMapIndex("../maps/index.txt");
+  game.readEntityIndex(domain + "/configs/Entities/index.txt");
+  game.readAssetIndex(domain + "/assets/index.txt");
+  game.readMapIndex(domain + "/maps/index.json");
   game.start();
 
 	return 0;

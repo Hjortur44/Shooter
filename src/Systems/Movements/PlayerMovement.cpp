@@ -1,21 +1,10 @@
-#include "PlayerMovement.h"
+#include "PlayerMovement.hpp"
 
 PlayerMovement::PlayerMovement() {}
 
 PlayerMovement::~PlayerMovement() {}
 
-void PlayerMovement::update()
-{
-	EntityComponentsManager& ecManager = EntityComponentsManager::Instance();
-
-	for(Entity ent : ecManager.entitiesByType("Player"))
-	{
-		CTransform& trans = ent.getComponent<CTransform>();
-		trans.previousPosition = trans.currentPosition;
-		trans.currentPosition += (trans.velocity * movement());
-	}
-}
-
+void PlayerMovement::update() {}
 
 // private
 Vec2 PlayerMovement::movement()

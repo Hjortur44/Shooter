@@ -1,4 +1,4 @@
-#include "Grid.h"
+#include "Grid.hpp"
 
 Grid::Grid(const Vec2& window, const int boxSize) : m_size(window / boxSize), m_window(window), m_boxSize(boxSize) {}
 

@@ -1,2 +1,0 @@
-brick 0 ../maps/map#0/map#0_brick.txt
-wood  1 ../maps/map#0/map#0_wood.txt

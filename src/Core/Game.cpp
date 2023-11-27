@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "Game.hpp"
 
 Game::Game() {}
 
@@ -28,7 +28,7 @@ void Game::readAssetIndex(const std::string& assetIndex)
 
 void Game::readEntityIndex(const std::string& entityIndex)
 {
-  std::map<std::string, std::vector<int>> configMap;
+  std::map<std::string, std::vector<int>> configs;
   std::string entityName = "";
   std::string filename = "";
 
@@ -39,34 +39,50 @@ void Game::readEntityIndex(const std::string& entityIndex)
     fin >> entityName;
     fin >> filename;
 
-    configMap[entityName] = entityConfigs(filename);
+    configs[entityName] = entityConfigs(filename);
   }
 
   fin.close();
 
-  ConfigurationManager::Instance().setEntityConfigs(configMap);
+  ConfigurationManager::Instance().setEntityConfigs(configs);
 }
 
 
 void Game::readMapIndex(const std::string& mapIndex)
 {
-  std::map<int, std::string> map;
-	int number = 0;
-  std::string value = "";
+	using Json = nlohmann::json;
 
-  std::ifstream fin(mapIndex);
-
-  while(fin.good())
-  {
-    fin >> number;
-    fin >> value;
-
-    map[number] = value;
-  }
-
+	std::ifstream fin(mapIndex);
+	Json data = Json::parse(fin);
   fin.close();
 
-  MapManager::Instance().analizeMapConfigs(map);
+  std::string domainFolder = data["domainFolder"];
+
+	ConfigMap configs;
+
+  for(const Json& maps : data["maps"])
+  {
+  	std::string conf = maps["confPath"];
+		int number = maps["number"];
+
+ 	 	std::ifstream fin2(domainFolder + conf);
+		Json data2 = Json::parse(fin2);
+ 		fin2.close();
+
+ 		std::map<std::string, std::vector<int>> confs;
+
+ 		for(const Json& tex : data2["textures"])
+  	{
+  		std::string name = tex["name"];
+			std::vector<int> pos = tex["positions"];
+
+			confs[name] = pos;
+	 	}
+
+	 	configs[number] = confs;
+  }
+
+  MapTileManager::Instance().setMapTileConfigs(configs);
 }
 
 
@@ -88,6 +104,34 @@ std::vector<int> Game::entityConfigs(const std::string& index)
   {
     fin >> value;
     cs.push_back(value);
+  }
+
+  fin.close();
+
+  return cs;
+}
+
+
+std::vector<int> Game::mapConfigs(const std::string& index)
+{
+  std::vector<int> cs;
+  std::string filename = "";
+  int value = 0;
+
+  std::ifstream fin(index);
+
+  while(fin.good())
+  {
+		fin >> filename;
+   	std::ifstream fin2(filename);
+
+		while(fin2.good())
+		{
+			fin2 >> value;
+		  cs.push_back(value);
+		}
+
+  	fin2.close();
   }
 
   fin.close();

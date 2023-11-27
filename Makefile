@@ -1,7 +1,7 @@
 SHELL = /bin/sh
 
 .SUFFIXES:
-.SUFFIXES: .cpp .h .d .o
+.SUFFIXES: .cpp .hpp .d .o
 
 CXX      := g++
 CXXFLAGS := -O2 -std=c++2a -Wall -Werror -MMD -MP
