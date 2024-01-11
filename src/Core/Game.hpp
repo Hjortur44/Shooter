@@ -20,13 +20,13 @@ public:
   Game();
   ~Game();
 
+	void readIndex(const std::string& index);
+  void start();
+
+private:
   void readAssetIndex(const std::string& assetIndex);
   void readEntityIndex(const std::string& entityIndex);
   void readMapIndex(const std::string& mapIndex);
 
-  void start();
-
-private:
-  std::vector<int> entityConfigs(const std::string& index);
   std::vector<int> mapConfigs(const std::string& index);
 };

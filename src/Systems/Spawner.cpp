@@ -59,7 +59,9 @@ void Spawner::spawnPlayer()
 	Entity e = ecManager.addEntity();
 
 	CSprite& sp = ecManager.getComponentForEntity<CSprite>(e);
-	sp.sprite.setTexture(m_currentTextures.at(1));
+
+	AssetManager& assManager = AssetManager::Instance();
+	sp.sprite.setTexture(assManager.getAsset("marble"));
 	sp.isActive = true;
 
 	ecManager.modifyComponent<CBoundingBox>(e, true);
@@ -68,16 +70,4 @@ void Spawner::spawnPlayer()
 }
 
 
-void Spawner::update(const int number)
-{
-	if(number != m_currentNumber)
-	{
-		m_currentTextures.clear();
-		m_currentNumber = number;
-	}
-
-	AssetManager& assManager = AssetManager::Instance();
-	m_currentTextures.push_back(assManager.getAsset("brick"));
-	m_currentTextures.push_back(assManager.getAsset("marble"));
-	m_currentTextures.push_back(assManager.getAsset("wood"));
-}
+void Spawner::update(const int number) {}

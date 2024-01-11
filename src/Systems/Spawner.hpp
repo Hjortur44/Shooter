@@ -6,8 +6,6 @@
 #include "../Managers/EntityManager.hpp"
 #include "../Math/Vec2.hpp"
 
-#include <SFML/Graphics.hpp>
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -22,10 +20,4 @@ public:
 	void spawnEnemy();
 	void spawnPlayer();
 	void update(const int number);
-
-private:
-	std::vector<sf::Texture> m_currentTextures;
-
-	int m_currentNumber = -1;
-	int m_enemyCount = 0;
 };

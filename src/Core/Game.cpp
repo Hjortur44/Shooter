@@ -4,47 +4,31 @@ Game::Game() {}
 
 Game::~Game() {}
 
+void Game::readIndex(const std::string& index)
+{
+	if(index == "assets") readAssetIndex(index);
+	else if (index == "entities") readEntityIndex(index);
+	else if (index == "maps") readMapIndex(index);
+}
+
+
+void Game::start()
+{
+  //GameEngine engine;
+  //engine.run();
+}
+
+
+// private
 void Game::readAssetIndex(const std::string& assetIndex)
 {
-  std::map<std::string, std::string> map;
-  std::string name  = "";
-  std::string value = "";
-
-  std::ifstream fin(assetIndex);
-
-  while(fin.good())
-  {
-    fin >> name;
-    fin >> value;
-
-    map[name] = value;
-  }
-
-  fin.close();
-
-  AssetManager::Instance().setAssets(map);
+//	using Json = nlohmann::json;
 }
 
 
 void Game::readEntityIndex(const std::string& entityIndex)
 {
-  std::map<std::string, std::vector<int>> configs;
-  std::string entityName = "";
-  std::string filename = "";
-
-  std::ifstream fin(entityIndex);
-
-  while(fin.good())
-  {
-    fin >> entityName;
-    fin >> filename;
-
-    configs[entityName] = entityConfigs(filename);
-  }
-
-  fin.close();
-
-  ConfigurationManager::Instance().setEntityConfigs(configs);
+//	using Json = nlohmann::json;
 }
 
 
@@ -83,32 +67,6 @@ void Game::readMapIndex(const std::string& mapIndex)
   }
 
   MapTileManager::Instance().setMapTileConfigs(configs);
-}
-
-
-void Game::start()
-{
-  GameEngine engine;
-  engine.run();
-}
-
-
-// private
-std::vector<int> Game::entityConfigs(const std::string& index)
-{
-  std::vector<int> cs;
-  std::ifstream fin(index);
-  int value = 0;
-
-  while(fin.good())
-  {
-    fin >> value;
-    cs.push_back(value);
-  }
-
-  fin.close();
-
-  return cs;
 }
 
 

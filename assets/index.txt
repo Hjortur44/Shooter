@@ -1,3 +1,0 @@
-brick  ../assets/brick.png
-marble ../assets/marble.png
-wood   ../assets/wood.png

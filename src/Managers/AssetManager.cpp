@@ -7,14 +7,19 @@ AssetManager& AssetManager::Instance()
 }
 
 
-const sf::Texture AssetManager::getAsset(const std::string name)
+const sf::Texture& AssetManager::getAsset(const std::string name)
 {
-	std::string path = m_assetMap.at(name);
+	if(!contains(name))
+	{
+		std::string path = m_assetMap.at(name);
 
-	sf::Texture texture;
-	texture.loadFromFile(path);
+		sf::Texture texture;
+		texture.loadFromFile(path);
 
-  return texture;
+		m_textureMap[name] = texture;
+	}
+
+  return m_textureMap.at(name);
 }
 
 
@@ -26,3 +31,13 @@ void AssetManager::setAssets(std::map<std::string, std::string> assetMap)
 
 // private
 AssetManager::AssetManager() {}
+
+bool AssetManager::contains(const std::string& name)
+{
+	bool contains = false;
+
+  if(auto search = m_textureMap.find(name); search != m_textureMap.end())
+  	contains = true;
+
+  return contains;
+}
