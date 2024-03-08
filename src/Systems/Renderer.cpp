@@ -31,33 +31,12 @@ void Renderer::update()
 
 	eventHandler();
 
-	m_scenePlay.update();
-	mapRendering();
-	entityRendering();
-
 	m_window.display();
 }
 
 
 // private
-void Renderer::entityRendering()
-{
-	EntityManager& manager = EntityManager::Instance();
-	std::vector<CSprite>& sprites = manager.getComponentType<CSprite>();
-	std::vector<CTransform>& trans = manager.getComponentType<CTransform>();
-
-	for(size_t i = 0; i < sprites.size(); i++)
-	{
-		CTransform& tr = trans.at(i);
-		Vec2 p = tr.currentPosition;
-
-		CSprite& sp = sprites.at(i);
-		sp.sprite.setPosition(p.x, p.y);
-
-		m_window.draw(sp.sprite);
-	}
-}
-
+void Renderer::entityRendering() {}
 
 void Renderer::eventHandler()
 {
@@ -66,7 +45,7 @@ void Renderer::eventHandler()
 	while(m_window.pollEvent(event))
 	{
 	  if(event.type == sf::Event::Closed)
-	      m_window.close();
+	  	 m_window.close();
 
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
@@ -94,15 +73,7 @@ void Renderer::init()
 
 	//m_font.loadFromFile("../font/arcade_i.TTF");
 
-	m_scenePlay.mapNumber(0);
+	//m_scenePlay.mapNumber(0);
 }
 
-void Renderer::mapRendering()
-{
-	MapTileManager& man = MapTileManager::Instance();
-
-	for(CSprite& sp : man.getComponentType<CSprite>())
-	{
-		m_window.draw(sp.sprite);
-	}
-}
+void Renderer::mapRendering() {}

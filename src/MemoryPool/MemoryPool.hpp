@@ -18,31 +18,25 @@ typedef std::tuple<
     std::vector<CTransform>
     > ComponentVectors;
 
-class EntityPool
+class MemoryPool
 {
 public:
-  EntityPool(EntityPool&) = delete;
+  MemoryPool(MemoryPool&) = delete;
 
-  static EntityPool& Instance();
+  static MemoryPool& Instance();
 
 	const size_t activateEntity();
 
 	void deactivateEntity(const size_t id);
 
   template <typename T>
-  T& getComponentForEntity(const size_t id)
+  T& getComponent(const size_t id)
   {
     return std::get<std::vector<T>>(m_compVecs).at(id);
   }
 
-  template <typename T>
-  std::vector<T>& getComponentType()
-  {
-    return std::get<std::vector<T>>(m_compVecs);
-  }
-
 private:
-  EntityPool(const size_t poolSize);
+  MemoryPool(const size_t poolSize);
 
   ComponentVectors m_compVecs;
 

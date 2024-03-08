@@ -34,6 +34,7 @@ Vec2 PlayerMovement::oneKey(Input& input)
 {
 	Vec2 directions = {0.0f, 0.0f};
 
+	// TODO: check if switch can be used (with ints).
 	if(input.isKey(18))
   {
     directions += m_down;

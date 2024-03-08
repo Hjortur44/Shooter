@@ -1,11 +1,7 @@
 #pragma once
 
 #include "GameEngine.hpp"
-
-#include "../Managers/AssetManager.hpp"
-#include "../Managers/ConfigurationManager.hpp"
-#include "../Managers/MapTileManager.hpp"
-
+#include "../Managers/EntityManager.hpp"
 #include "../../nlohmann/json.hpp"
 
 #include <fstream>
@@ -14,19 +10,17 @@
 #include <string>
 #include <vector>
 
+using Json = nlohmann::json;
+
 class Game
 {
 public:
   Game();
   ~Game();
 
-	void readIndex(const std::string& index);
+	void fileRead(const std::string& type, const std::string& file);
   void start();
 
 private:
-  void readAssetIndex(const std::string& assetIndex);
-  void readEntityIndex(const std::string& entityIndex);
-  void readMapIndex(const std::string& mapIndex);
-
-  std::vector<int> mapConfigs(const std::string& index);
+	std::map<std::string, std::vector<std::string>> m_list;
 };

@@ -3,7 +3,7 @@
 #include "Scene.hpp"
 #include "../Systems/Movements/EnemyMovement.hpp"
 #include "../Systems/Movements/PlayerMovement.hpp"
-#include "../Systems/Spawner.hpp"
+#include "../Systems/Spawners/Spawner.hpp"
 
 class ScenePlay : public Scene
 {
@@ -17,6 +17,4 @@ public:
 private:
 	EnemyMovement  m_enemyMovement;
 	PlayerMovement m_playerMovement;
-
-	Spawner m_spawner;
 };

@@ -4,95 +4,36 @@ Game::Game() {}
 
 Game::~Game() {}
 
-void Game::readIndex(const std::string& index)
+void Game::fileRead(const std::string& type, const std::string& file)
 {
-	if(index == "assets") readAssetIndex(index);
-	else if (index == "entities") readEntityIndex(index);
-	else if (index == "maps") readMapIndex(index);
-}
+	std::ifstream fIn(file);
+	Json data = Json::parse(fIn);
+	fIn.close();
 
+	Json textureFiles = data["texture_files"];
+
+	for(const std::string& png : textureFiles)
+	{
+		m_list["textureFiles"].push_back(png);
+	}
+
+	for(const auto& [key, value] : m_list)
+	{
+		std::cout << key << ": ";
+
+		for(const auto& v : value)
+		{
+			std::cout << v << " ";
+		}
+
+		std::cout << "" << std::endl;
+	}
+
+	EntityManager::Instance();
+}
 
 void Game::start()
 {
-  //GameEngine engine;
-  //engine.run();
-}
-
-
-// private
-void Game::readAssetIndex(const std::string& assetIndex)
-{
-//	using Json = nlohmann::json;
-}
-
-
-void Game::readEntityIndex(const std::string& entityIndex)
-{
-//	using Json = nlohmann::json;
-}
-
-
-void Game::readMapIndex(const std::string& mapIndex)
-{
-	using Json = nlohmann::json;
-
-	std::ifstream fin(mapIndex);
-	Json data = Json::parse(fin);
-  fin.close();
-
-  std::string domainFolder = data["domainFolder"];
-
-	ConfigMap configs;
-
-  for(const Json& maps : data["maps"])
-  {
-  	std::string conf = maps["confPath"];
-		int number = maps["number"];
-
- 	 	std::ifstream fin2(domainFolder + conf);
-		Json data2 = Json::parse(fin2);
- 		fin2.close();
-
- 		std::map<std::string, std::vector<int>> confs;
-
- 		for(const Json& tex : data2["textures"])
-  	{
-  		std::string name = tex["name"];
-			std::vector<int> pos = tex["positions"];
-
-			confs[name] = pos;
-	 	}
-
-	 	configs[number] = confs;
-  }
-
-  MapTileManager::Instance().setMapTileConfigs(configs);
-}
-
-
-std::vector<int> Game::mapConfigs(const std::string& index)
-{
-  std::vector<int> cs;
-  std::string filename = "";
-  int value = 0;
-
-  std::ifstream fin(index);
-
-  while(fin.good())
-  {
-		fin >> filename;
-   	std::ifstream fin2(filename);
-
-		while(fin2.good())
-		{
-			fin2 >> value;
-		  cs.push_back(value);
-		}
-
-  	fin2.close();
-  }
-
-  fin.close();
-
-  return cs;
+	GameEngine gameEngine;
+	gameEngine.run();
 }

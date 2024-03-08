@@ -5,31 +5,31 @@ The structure follows the standard rules of the JSON file format.
 
 The structure of the index file:
 ********************************
--------------------------------------------------------------------------
-|           Looks             |               Description               |
--------------------------------------------------------------------------
-| {                           |                                         |
-|   "domainFolder": <string>, | Domain folder (one above 'src' folder). |
-| 	"maps":             		  | The map list.                           |
-|		[ 	                      |                                         |
-|			{                       |                                         |
-| 			"confPath": <string>, | The configuration file path.            |
-| 			"number": <integer>   | The number of the map.                  |
-| 		},                      |                                         |
-|			{                       |                                         |
-| 			"confPath": <string>, |                                         |
-| 			"number": <integer>   |                                         |
-| 		}                       |                                         |
-|	           .                |                                         |
-|	           .                |                                         |
-|	           .                |                                         |
-|			{                       |                                         |
-| 			"confPath": <string>, |                                         |
-| 			"number": <integer>   |                                         |
-| 		}                       |                                         |
-|		]                         |                                         |
-| }                           |                                         |
--------------------------------------------------------------------------
+---------------------------------------------------------------------------
+|           Looks               |               Description               |
+---------------------------------------------------------------------------
+| {                             |                                         |
+|   "domainFolder": <string>,   | Domain folder (one above 'src' folder). |
+| 	"maps":             		    | The map list.                           |
+|		[ 	                        |                                         |
+|			{                         |                                         |
+| 			"configPath": <string>, | The configuration file path.            |
+| 			"number": <integer>     | The number of the map.                  |
+| 		},                        |                                         |
+|			{                         |                                         |
+| 			"configPath": <string>, |                                         |
+| 			"number": <integer>     |                                         |
+| 		}                         |                                         |
+|	           .                  |                                         |
+|	           .                  |                                         |
+|	           .                  |                                         |
+|			{                         |                                         |
+| 			"configPath": <string>, |                                         |
+| 			"number": <integer>     |                                         |
+| 		}                         |                                         |
+|		]                           |                                         |
+| }                             |                                         |
+---------------------------------------------------------------------------
 
 
 The structure of the configuration file for the map textures (confFile):

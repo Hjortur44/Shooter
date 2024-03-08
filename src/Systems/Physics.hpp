@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Managers/EntityManager.hpp"
 #include "../Math/Vec2.hpp"
 
 #include <iostream>

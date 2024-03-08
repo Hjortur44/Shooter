@@ -1,21 +1,22 @@
-#include "EntityPool.hpp"
+#include "MemoryPool.hpp"
 
-EntityPool& EntityPool::Instance()
+MemoryPool& MemoryPool::Instance()
 {
-  static EntityPool INSTANCE(500);
+  static MemoryPool INSTANCE(500);
   return INSTANCE;
 }
 
 
-const size_t EntityPool::activateEntity()
+const size_t MemoryPool::activateEntity()
 {
 	size_t id = 0;
 
-	for(; id < m_actives.size(); id++)
+	for(size_t i = 1; i < m_actives.size(); i++)
 	{
-		if(!m_actives[id])
+		if(!m_actives[i])
 		{
-			m_actives[id] = true;
+			id = i;
+			m_actives[i] = true;
 			break;
 		}
 	}
@@ -24,7 +25,7 @@ const size_t EntityPool::activateEntity()
 }
 
 
-void EntityPool::deactivateEntity(const size_t id)
+void MemoryPool::deactivateEntity(const size_t id)
 {
 	if(id < m_actives.size())
 		m_actives.at(id) = false;
@@ -32,7 +33,7 @@ void EntityPool::deactivateEntity(const size_t id)
 
 
 // private
-EntityPool::EntityPool(const size_t poolSize)
+MemoryPool::MemoryPool(const size_t poolSize)
 {
   auto& box   = std::get<std::vector<CBoundingBox>>(m_compVecs);
   auto& life  = std::get<std::vector<CLifespan>>(m_compVecs);

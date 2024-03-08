@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../Managers/EntityManager.hpp"
-#include "../Managers/MapTileManager.hpp"
 #include "../Math/Vec2.hpp"
 #include "../Scenes/ScenePlay.hpp"
 

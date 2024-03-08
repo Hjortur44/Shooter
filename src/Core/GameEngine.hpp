@@ -4,8 +4,6 @@
 #include "../Systems/Physics.hpp"
 #include "../Systems/Renderer.hpp"
 
-#include <iostream>
-
 class GameEngine
 {
 public:
