@@ -1,8 +1,5 @@
 #pragma once
 
-#include <cmath>
-#include <ostream>
-
 class Vec2
 {
 public:
@@ -23,10 +20,11 @@ public:
   void operator *= (const float val);
   void operator /= (const float val);
 
-  bool operator <  (const float val) const;
-  bool operator >  (const float val) const;
+  bool operator < (const float val) const;
+  bool operator > (const float val) const;
   bool operator < (const Vec2& rhs) const;
   bool operator > (const Vec2& rhs) const;
+
   bool operator >= (const float val) const;
   bool operator <= (const float val) const;
   bool operator == (const float val) const;
@@ -34,17 +32,16 @@ public:
   bool operator == (const Vec2& rhs) const;
   bool operator != (const Vec2& rhs) const;
 
-  Vec2 normalizeSQ(const Vec2& rhs);
+  const Vec2 normalizeSQ(const Vec2& rhs);
+
 	void normalizeTri(const Vec2& rhs);
 
-  float dist(const Vec2& rhs);
-  float lengtSQ(const Vec2& rhs);
+  const float dist(const Vec2& rhs);
+  const float lengtSQ(const Vec2& rhs);
+  const float x() const;
+  const float y() const;
 
-  float x = 0;
-  float y = 0;
-
-	friend std::ostream& operator << (std::ostream& stream, const Vec2& vector)
-	{
-		return stream << vector.x << " " << vector.y << "\n";
-	}
+private:
+  float m_x = 0.0f;
+  float m_y = 0.0f;
 };

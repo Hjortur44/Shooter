@@ -65,26 +65,26 @@ Vec2 PlayerMovement::twoKeys(Input& input)
 
   if(input.isKey(18) && input.isKey(0))
   {
-    directions.x = -m_diagonal.x;
-		directions.y = m_diagonal.y;
+    //directions.x() = -m_diagonal.x;
+		//directions.y() = m_diagonal.y;
   }
 
   if(input.isKey(18) && input.isKey(3))
   {
-    directions.x = m_diagonal.x;
-		directions.y = m_diagonal.y;
+    //directions.x() = m_diagonal.x;
+		//directions.y() = m_diagonal.y;
   }
 
   if(input.isKey(22) && input.isKey(0))
   {
-    directions.x = -m_diagonal.x;
-		directions.y = -m_diagonal.y;
+    //directions.x() = -m_diagonal.x;
+		//directions.y() = -m_diagonal.y;
   }
 
   if(input.isKey(22) && input.isKey(3))
   {
-    directions.x = m_diagonal.x;
-		directions.y = -m_diagonal.y;
+    //directions.x() = m_diagonal.x;
+		//directions.y() = -m_diagonal.y;
   }
 
 	return directions;

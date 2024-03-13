@@ -5,9 +5,6 @@
 #include "../Components/CSprite.hpp"
 #include "../Components/CTransform.hpp"
 
-#include <iostream>
-#include <map>
-#include <string>
 #include <tuple>
 #include <vector>
 

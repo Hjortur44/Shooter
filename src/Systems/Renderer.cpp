@@ -68,7 +68,7 @@ void Renderer::eventHandler()
 
 void Renderer::init()
 {
-  m_window.create(sf::VideoMode(m_winDim.x, m_winDim.y), "Game");
+  m_window.create(sf::VideoMode(m_winDim.x(), m_winDim.y()), "Game");
   m_window.setFramerateLimit(60);
 
 	//m_font.loadFromFile("../font/arcade_i.TTF");

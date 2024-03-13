@@ -26,6 +26,7 @@ void EntityManager::removeEntity(const Entity entity)
 
 void EntityManager::update()
 {
+	std::cout << m_entitiesToRemove.size() << std::endl;
 	for(Entity e: m_entitiesToRemove)
 	{
     std::erase_if(m_entities, [e](const Entity entity)
@@ -40,6 +41,7 @@ void EntityManager::update()
 	}
 
 	m_entitiesToAdd.clear();
+	m_entitiesToRemove.clear();
 }
 
 

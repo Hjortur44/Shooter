@@ -2,8 +2,6 @@
 
 #include "../../Math/Vec2.hpp"
 
-#include <iostream>
-
 class Movement
 {
 public:
