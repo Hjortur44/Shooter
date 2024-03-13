@@ -46,4 +46,4 @@ void EntityManager::update()
 
 
 // private
-EntityManager::EntityManager() {}
+EntityManager::EntityManager() {addEntity();}

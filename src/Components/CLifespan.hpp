@@ -1,10 +1,16 @@
 #pragma once
 
-class CLifespan
+#include "Component.hpp"
+
+class CLifespan : public Component
 {
 public:
   CLifespan();
   CLifespan(int total, bool activate);
+
+	const bool alive() override;
+
+  void active(const bool activate) override;
 
 	bool isActive = false;
 

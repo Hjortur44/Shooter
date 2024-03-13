@@ -1,10 +1,13 @@
 #pragma once
 
+#include "../Components/Component.hpp"
+
 #include "../Components/CBoundingBox.hpp"
 #include "../Components/CLifespan.hpp"
 #include "../Components/CSprite.hpp"
 #include "../Components/CTransform.hpp"
 
+#include <iostream>
 #include <tuple>
 #include <vector>
 
