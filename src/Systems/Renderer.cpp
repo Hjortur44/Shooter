@@ -30,13 +30,21 @@ void Renderer::update()
 	m_window.clear();
 
 	eventHandler();
+	entityRendering();
+	mapRendering();
 
 	m_window.display();
 }
 
 
 // private
-void Renderer::entityRendering() {}
+void Renderer::entityRendering()
+{
+	for(Entity e : EntityManager::Instance().entities())
+	{
+			m_window.draw(e.getComponent<CSprite>().sprite);
+	}
+}
 
 void Renderer::eventHandler()
 {
@@ -73,7 +81,7 @@ void Renderer::init()
 
 	//m_font.loadFromFile("../font/arcade_i.TTF");
 
-	//m_scenePlay.mapNumber(0);
+	m_scenePlay.mapNumber(0);
 }
 
 void Renderer::mapRendering() {}

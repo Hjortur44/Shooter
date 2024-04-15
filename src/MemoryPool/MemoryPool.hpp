@@ -1,8 +1,7 @@
 #pragma once
 
-#include "../Components/Component.hpp"
-
 #include "../Components/CBoundingBox.hpp"
+#include "../Components/CDirection.hpp"
 #include "../Components/CLifespan.hpp"
 #include "../Components/CSprite.hpp"
 #include "../Components/CTransform.hpp"
@@ -11,25 +10,26 @@
 #include <tuple>
 #include <vector>
 
+class MemoryPool
+{
 typedef std::tuple<
     std::vector<CBoundingBox>,
+    std::vector<CDirection>,
     std::vector<CLifespan>,
     std::vector<CSprite>,
     std::vector<CTransform>
     > ComponentVectors;
 
-class MemoryPool
-{
 public:
   MemoryPool(MemoryPool&) = delete;
 
   static MemoryPool& Instance();
 
-	const size_t activateEntity();
+  const size_t activateEntity();
 
 	void deactivateEntity(const size_t id);
 
-  template <typename T>
+	template <typename T>
   T& getComponent(const size_t id)
   {
     return std::get<std::vector<T>>(m_compVecs).at(id);

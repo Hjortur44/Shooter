@@ -2,16 +2,15 @@
 
 CTransform::CTransform() {}
 
-CTransform::CTransform(const Vec2& position, const Vec2& velocity, bool activate)
- : currentPosition(position), previousPosition(position), velocity(velocity), isActive(activate) {}
+CTransform::~CTransform() {}
 
-const bool CTransform::alive()
+const bool CTransform::active()
 {
 	return m_alive;
 }
 
 
-void CTransform::active(const bool activate)
+void CTransform::activate(const bool activate)
 {
 	m_alive = activate;
 }

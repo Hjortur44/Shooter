@@ -5,7 +5,7 @@ PlayerMovement::PlayerMovement() {}
 PlayerMovement::~PlayerMovement() {}
 
 void PlayerMovement::update() {}
-
+/*
 // private
 Vec2 PlayerMovement::movement()
 {
@@ -117,3 +117,4 @@ Vec2 PlayerMovement::threeKeys(Input& input)
 
 	return directions;
 }
+*/

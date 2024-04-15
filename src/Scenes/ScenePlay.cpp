@@ -6,4 +6,13 @@ ScenePlay::~ScenePlay() {}
 
 void ScenePlay::update() {}
 
-void ScenePlay::mapNumber(const int number) {}
+void ScenePlay::mapNumber(const int number)
+{
+	int num = 1;
+
+	MapSpawner msp;
+	msp.update(num);
+
+	EntitySpawner esp;
+	esp.update(num);
+}

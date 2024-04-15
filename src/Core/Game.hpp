@@ -1,7 +1,9 @@
 #pragma once
 
 #include "GameEngine.hpp"
-#include "../Managers/EntityManager.hpp"
+#include "../Managers/AssetManager.hpp"
+#include "../Managers/MapManager.hpp"
+#include "../Logger/Profiler.hpp"
 #include "../../nlohmann/json.hpp"
 
 #include <fstream>
@@ -18,9 +20,9 @@ public:
   Game();
   ~Game();
 
-	void fileRead(const std::string& type, const std::string& file);
+	void fileRead(const std::string& file);
   void start();
 
 private:
-	std::map<std::string, std::vector<std::string>> m_list;
+	std::vector<std::string> files(const std::string& path, const Json& data);
 };

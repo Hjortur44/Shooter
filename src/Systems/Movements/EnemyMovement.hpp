@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Movement.hpp"
+#include "../../Math/Vec2.hpp"
 
-class EnemyMovement : public Movement
+class EnemyMovement
 {
 public:
   EnemyMovement();

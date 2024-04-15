@@ -1,16 +1,15 @@
 #include "CSprite.hpp"
 
 CSprite::CSprite() {}
+CSprite::~CSprite() {}
 
-CSprite::CSprite(bool activate) : isActive(activate) {}
-
-const bool CSprite::alive()
+const bool CSprite::active()
 {
 	return m_alive;
 }
 
 
-void CSprite::active(const bool activate)
+void CSprite::activate(const bool activate)
 {
 	m_alive = activate;
 }

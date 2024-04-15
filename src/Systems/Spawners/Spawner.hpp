@@ -1,7 +1,12 @@
 #pragma once
 
+#include "../../Entities/Entity.hpp"
+#include "../../Managers/AssetManager.hpp"
 #include "../../Managers/EntityManager.hpp"
+#include "../../Managers/MapManager.hpp"
 #include "../../Math/Vec2.hpp"
+
+#include <SFML/Graphics.hpp>
 
 #include <iostream>
 #include <string>

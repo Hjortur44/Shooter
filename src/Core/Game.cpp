@@ -4,36 +4,60 @@ Game::Game() {}
 
 Game::~Game() {}
 
-void Game::fileRead(const std::string& type, const std::string& file)
+void Game::fileRead(const std::string& file)
 {
 	std::ifstream fIn(file);
 	Json data = Json::parse(fIn);
 	fIn.close();
 
-	Json textureFiles = data["texture_files"];
+	std::string domain = data["domain"];
+	std::string folder = data["folder"];
+	std::string path = domain + folder;
 
-	for(const std::string& png : textureFiles)
+	if(folder == "/assets")
 	{
-		m_list["textureFiles"].push_back(png);
+		AssetManager::Instance().update(data["texture_names"], files(path, data["file_list"]));
 	}
-
-	for(const auto& [key, value] : m_list)
+	else if(folder == "/configurations/maps")
 	{
-		std::cout << key << ": ";
+		int mapNumber = 0;
 
-		for(const auto& v : value)
+		for(const std::string& map : files(path, data["file_list"]))
 		{
-			std::cout << v << " ";
+			std::ifstream fInner(map);
+			Json dataInner = Json::parse(fInner);
+			fInner.close();
+
+			std::map<std::string, std::vector<int>> textures;
+
+			for(const Json& config : dataInner["config_list"])
+			{
+				std::string name = config["texture_name"];
+				std::vector<int> pos = config["positions"];
+				textures[name] = pos;
+			}
+
+			MapManager::Instance().update(mapNumber, textures);
+			mapNumber++;
 		}
-
-		std::cout << "" << std::endl;
 	}
-
-	EntityManager::Instance();
 }
+
 
 void Game::start()
 {
 	GameEngine gameEngine;
 	gameEngine.run();
+}
+
+
+// private
+std::vector<std::string> Game::files(const std::string& path, const Json& data)
+{
+	std::vector<std::string> files;
+
+	for(const std::string& file : data)
+		files.push_back(path + file);
+
+	return files;
 }

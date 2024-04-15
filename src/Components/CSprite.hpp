@@ -2,17 +2,20 @@
 
 #include "Component.hpp"
 
+#include <SFML/Graphics.hpp>
+
 class CSprite : public Component
 {
 public:
   CSprite();
-  CSprite(bool activate);
+  ~CSprite();
 
 	sf::Sprite sprite;
 
-  const bool alive() override;
+ 	const bool active() override;
 
-	void active(const bool activate) override;
+	void activate(const bool activate) override;
 
-	bool isActive = false;
+private:
+	bool m_alive = false;
 };

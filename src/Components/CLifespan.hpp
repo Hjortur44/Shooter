@@ -6,14 +6,15 @@ class CLifespan : public Component
 {
 public:
   CLifespan();
-  CLifespan(int total, bool activate);
-
-	const bool alive() override;
-
-  void active(const bool activate) override;
-
-	bool isActive = false;
+	~CLifespan();
 
   int remaining = 0;
   int total     = 0;
+
+ 	const bool active() override;
+
+	void activate(const bool activate) override;
+
+private:
+	bool m_alive = false;
 };

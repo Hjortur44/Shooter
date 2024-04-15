@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Movement.hpp"
 #include "../Input.hpp"
+#include "../../Math/Vec2.hpp"
 
-class PlayerMovement : public Movement
+class PlayerMovement
 {
 public:
   PlayerMovement();

@@ -1,0 +1,6 @@
+{
+	"domain": "/home/hjortur/Documents/Gits/Shooter",
+	"folder": "/assets",
+	"file_list": ["/textures/brick.png", "/textures/marble.png", "/textures/wood.png"],
+	"texture_names": ["brick", "marble", "wood"]
+}

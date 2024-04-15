@@ -1,17 +1,15 @@
 #include "CLifespan.hpp"
 
 CLifespan::CLifespan() {}
+CLifespan::~CLifespan() {}
 
-CLifespan::CLifespan(int total, bool activate) : isActive(activate), remaining(total), total(total) {}
-
-
-const bool CLifespan::alive()
+const bool CLifespan::active()
 {
 	return m_alive;
 }
 
 
-void CLifespan::active(const bool activate)
+void CLifespan::activate(const bool activate)
 {
 	m_alive = activate;
 }

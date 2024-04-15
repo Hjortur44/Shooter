@@ -7,18 +7,21 @@ EntityManager& EntityManager::Instance()
 }
 
 
+const std::vector<Entity>& EntityManager::entities() const
+{
+	return m_entities;
+}
+
 Entity EntityManager::addEntity()
 {
-	size_t id = MemoryPool::Instance().activateEntity();
-	Entity e(id);
-
-	if(id > 0)
-		m_entitiesToAdd.push_back(e);
+	Entity e(MemoryPool::Instance().activateEntity());
+	m_entitiesToAdd.push_back(e);
 
 	return e;
 }
 
-void EntityManager::removeEntity(const Entity entity)
+
+void EntityManager::removeEntity(const Entity& entity)
 {
 	m_entitiesToRemove.push_back(entity);
 }
@@ -26,12 +29,11 @@ void EntityManager::removeEntity(const Entity entity)
 
 void EntityManager::update()
 {
-	std::cout << m_entitiesToRemove.size() << std::endl;
 	for(Entity e: m_entitiesToRemove)
 	{
-    std::erase_if(m_entities, [e](const Entity entity)
+    std::erase_if(m_entities, [e](const Entity& entity)
     {
-     	return e.id() == entity.id();
+     	return e.m_id == entity.m_id;
     });
 	}
 
@@ -46,4 +48,4 @@ void EntityManager::update()
 
 
 // private
-EntityManager::EntityManager() {addEntity();}
+EntityManager::EntityManager() {}

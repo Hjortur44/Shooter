@@ -3,7 +3,10 @@
 #include "../Entities/Entity.hpp"
 #include "../MemoryPool/MemoryPool.hpp"
 
+#include <numeric>
 #include <vector>
+
+class Entity;
 
 class EntityManager
 {
@@ -12,9 +15,11 @@ public:
 
   static EntityManager& Instance();
 
+	const std::vector<Entity>& entities() const;
+
 	Entity addEntity();
 
-	void removeEntity(const Entity entity);
+	void removeEntity(const Entity& entity);
   void update();
 
 private:

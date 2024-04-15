@@ -1,18 +1,14 @@
 #pragma once
 
 #include "../Math/Vec2.hpp"
-
-#include <SFML/Graphics.hpp>
+#include <iostream>
 
 class Component
 {
 public:
-	~Component();
+	virtual	~Component() = 0;
 
-	virtual const bool alive() = 0;
+	virtual const bool active() = 0;
 
-	virtual void active(const bool activate) = 0;
-
-protected:
-	bool m_alive = false;
+	virtual void activate(const bool activate) = 0;
 };

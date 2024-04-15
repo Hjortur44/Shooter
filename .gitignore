@@ -36,3 +36,6 @@
 ./bin
 ./build
 .fake
+
+# Files
+notes.txt

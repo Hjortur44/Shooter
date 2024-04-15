@@ -2,15 +2,15 @@
 
 CBoundingBox::CBoundingBox() {}
 
-CBoundingBox::CBoundingBox(bool activate)	: isActive(activate) {}
+CBoundingBox::~CBoundingBox() {}
 
-const bool CBoundingBox::alive()
+const bool CBoundingBox::active()
 {
 	return m_alive;
 }
 
 
-void CBoundingBox::active(const bool activate)
+void CBoundingBox::activate(const bool activate)
 {
 	m_alive = activate;
 }

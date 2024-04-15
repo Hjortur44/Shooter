@@ -11,12 +11,11 @@ const size_t MemoryPool::activateEntity()
 {
 	size_t id = 0;
 
-	for(size_t i = 1; i < m_actives.size(); i++)
+	for(; id < m_actives.size(); id++)
 	{
-		if(!m_actives[i])
+		if(!m_actives[id])
 		{
-			id = i;
-			m_actives[i] = true;
+			m_actives[id] = true;
 			break;
 		}
 	}
@@ -27,8 +26,7 @@ const size_t MemoryPool::activateEntity()
 
 void MemoryPool::deactivateEntity(const size_t id)
 {
-	if(id < m_actives.size())
-		m_actives.at(id) = false;
+	m_actives.at(id) = false;
 }
 
 
@@ -36,6 +34,7 @@ void MemoryPool::deactivateEntity(const size_t id)
 MemoryPool::MemoryPool(const size_t poolSize)
 {
   auto& box   = std::get<std::vector<CBoundingBox>>(m_compVecs);
+  auto& dir   = std::get<std::vector<CDirection>>(m_compVecs);
   auto& life  = std::get<std::vector<CLifespan>>(m_compVecs);
   auto& sp    = std::get<std::vector<CSprite>>(m_compVecs);
   auto& trans = std::get<std::vector<CTransform>>(m_compVecs);
@@ -43,6 +42,7 @@ MemoryPool::MemoryPool(const size_t poolSize)
   for(size_t i = 0; i < poolSize; i++)
   {
     box.push_back(CBoundingBox());
+		dir.push_back(CDirection());
     life.push_back(CLifespan());
     sp.push_back(CSprite());
 	  trans.push_back(CTransform());

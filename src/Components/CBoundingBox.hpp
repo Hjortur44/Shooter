@@ -6,11 +6,12 @@ class CBoundingBox : public Component
 {
 public:
   CBoundingBox();
-  CBoundingBox(bool activate);
+ 	~CBoundingBox();
 
-	const bool alive() override;
+  const bool active() override;
 
-  void active(const bool activate) override;
+	void activate(const bool activate) override;
 
-  bool isActive = false;
+private:
+	bool m_alive = false;
 };
